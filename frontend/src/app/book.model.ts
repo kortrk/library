@@ -1,11 +1,13 @@
 export interface Book{
+  // -- always showing --
   title: string;
   author: string;
   // description: string;
   // cover_image: string;
   // average_user_rating: string;
-  // publisher: string;
-  // publication_date: string;
+  // -- for details view --
+  publisher: string;
+  publication_date: string;
   // category: string;
   // isbn: string;
   // page_count: string;

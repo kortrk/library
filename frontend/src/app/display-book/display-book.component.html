@@ -1,5 +1,11 @@
 <div style="background-color:lavender;">
 	<h3>{{book.title}}</h3>
 	<p>By {{book.author}}</p>
+	@if(detailsView){
+		<div><em>Publisher:</em> {{book.publisher}}</div>
+		<div><em>Publication Date:</em> {{book.publication_date}}</div>
+	}
+	<br>
+	<button (click)="toggleDetailsView()">Details</button>
 </div>
 

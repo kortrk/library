@@ -1,0 +1,14 @@
+@if(!authService.loggedIn()){
+  <div style="background-color: palegreen; float:right; padding: 12px">
+    <label for="username">Username:</label>
+    <input id="username" type="text" (keyup.enter)="login(username, password)" style="display: flex; flex-direction: column; align-items: flex-end;" #username>
+    <label for="password">Password:</label>
+    <input id="password" type="text" (keyup.enter)="login(username, password)" style="display: flex; flex-direction: column; align-items: flex-end;" #password>
+    <button (click)="login(username, password)">Login</button>
+  </div>
+} @else {
+  <div style="background-color: palegreen; float: right; padding: 12px">
+    Logged in as <b>{{authService.getUsername()}}</b>.
+    <button (click)="logout()">Log out</button>
+  </div>
+}

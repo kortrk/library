@@ -7,8 +7,8 @@ export class AuthService {
 
   login(username: string, password: string): boolean {
     if (this.validCredentials(username, password)){
-      localStorage.set("username", username)
-      localStorage.set("usertype", UserType.Customer)
+      localStorage.setItem("username", username)
+      localStorage.setItem("usertype", String(UserType.Customer))
       return true;
     }
     return false;
@@ -26,7 +26,7 @@ export class AuthService {
 
   loggedIn(): boolean {
     // will replace to use an HTTP-Only cookie
-    return localStorage.getItem("username") !== null
+    return (localStorage.getItem("username") !== null)
   }
 
   userType(): UserType | void {
@@ -35,6 +35,10 @@ export class AuthService {
       return Number(localStorage.getItem("usertype"))
     }
     // else don't return
+  }
+
+  getUsername(): string | null {
+    return localStorage.getItem("username")
   }
 }
 

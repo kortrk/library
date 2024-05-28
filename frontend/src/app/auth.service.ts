@@ -19,9 +19,25 @@ export class AuthService {
     localStorage.removeItem("usertype")
   }
 
+  signUp(username: string, password: string, signuprole: string){
+    if (this.validLogins.has(username)){
+      alert("Account already exists.");
+      return false
+    };
+    this.validLogins.set(username, password)
+    return true
+  }
+
+  // TEMP
+  validLogins = new Map<string, string>([
+    ["username", "password"]
+  ]);
+
   validCredentials(username: string, password: string): boolean {
     // will eventually be an API call
-    return username === "username" && password == "password"
+    return this.validLogins.has(username) && (
+      this.validLogins.get(username) === password
+    )
   }
 
   loggedIn(): boolean {

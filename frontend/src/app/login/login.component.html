@@ -1,14 +1,34 @@
-@if(!authService.loggedIn()){
-  <div style="background-color: palegreen; float:right; padding: 12px">
-    <label for="username">Username:</label>
-    <input id="username" type="text" (keyup.enter)="login(username, password)" style="display: flex; flex-direction: column; align-items: flex-end;" #username>
-    <label for="password">Password:</label>
-    <input id="password" type="text" (keyup.enter)="login(username, password)" style="display: flex; flex-direction: column; align-items: flex-end;" #password>
-    <button (click)="login(username, password)">Login</button>
-  </div>
-} @else {
+@if(authService.loggedIn()){
   <div style="background-color: palegreen; float: right; padding: 12px">
     Logged in as <b>{{authService.getUsername()}}</b>.
     <button (click)="logout()">Log out</button>
+  </div>
+} @else {
+  <div class="login-or-signup-choice">
+    <select name="login-or-signup" id="login-or-signup" [(ngModel)]="paneSelection">
+      <option value="login">Log In</option>
+      <option value="signup">Sign Up</option>
+    </select>
+  </div>
+
+  <div style="background-color: palegreen; float:right; padding: 12px">
+    <label for="username">Username:</label>
+    <input id="username" type="text" (keyup.enter)="login(username, password)" style="display: flex; flex-direction: column; align-items: flex-end;" #username>
+
+    <label for="password">Password:</label>
+    <input id="password" type="text" (keyup.enter)="login(username, password)" style="display: flex; flex-direction: column; align-items: flex-end;" #password>
+
+    @if(paneSelection === "login"){
+      <button (click)="login(username, password)" style="margin-top: 5px">Login</button>
+    } @else {
+      <label for="roles">I am a:  </label>
+      <select id="roles" name="roles" #signuprole>
+        <option value="patron">Patron</option>
+        <option value="librarian">Librarian</option>
+      </select>
+      <br>
+      <button (click)="signUp(username, password, signuprole)" style="margin-top: 5px">Sign Up</button>
+    }
+
   </div>
 }

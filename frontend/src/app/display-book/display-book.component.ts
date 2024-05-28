@@ -10,15 +10,16 @@ import { Book } from '../book.model'
 })
 export class DisplayBookComponent {
   @Input() book: Book;
-  detailsView: boolean = true;
+  detailsView: boolean = false;
 
   constructor(){
-    this.book = new Book({
-      title: "Murder on the Orient Express",
-      author: "Agatha Christie",
-      publisher: "Zondervan",
-      publication_date: "1924"
-    });
+    this.book = new Book(
+      "Esther",
+      "Mordecai",
+      "Thomas Nelson",
+      "1924",
+      "generic.png"
+    );
   }
 
   toggleDetailsView(){

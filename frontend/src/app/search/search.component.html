@@ -1,3 +1,24 @@
+<label for="searchbar">Search: </label>
+<input type="text" id="searchbar" (keyup.enter)="filter(titleSearch, authorSearch)" #titleSearch>
+<br>
+
+<label for="authorfilter" [hidden]="!showAdvancedSearch">Filter by Author: </label>
+<input type="text" id="authorfilter" [hidden]="!showAdvancedSearch" #authorSearch>
+<br>
+
+<button (click)="toggleAdvancedSearch()">{{showAdvancedSearch ? "Hide ": "Show "}} Advanced Search</button>
+<br>
+<button (click)="clearSearch(titleSearch, authorSearch)" [hidden]="!titleSearchInUse(titleSearch) && !authorSearchInUse(authorSearch)">Clear Search</button>
+<br>
+
+<label for="sort-by">Sort by: </label>
+<select id="sort-by" [(ngModel)]="sortBy" (change)="sort()">
+  @for(sortType of sortTypes; track sortType){
+    <option value={{sortType}}>{{sortType}}</option>
+  }
+</select>
+<br>
+
 @for(book of books; track book){
   <display-book [book]="book"></display-book>
 }

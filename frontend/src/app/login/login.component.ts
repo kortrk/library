@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 export class LoginComponent {
   paneSelection: string
 
+  userRoles = Object.values(UserRole); // for the <select> dropdown to use
+
   constructor(public authService: AuthService){
     this.paneSelection = "login"
   }

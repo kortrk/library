@@ -1,14 +1,32 @@
 import { Injectable } from '@angular/core';
 
-enum UserType {Customer, Librarian};
+export enum UserRole {Patron = "patron", Librarian = "librarian"};
+
+class User{
+  name: string;
+  password: string;
+  role: UserRole;
+
+  constructor(name: string, password: string, role: UserRole){
+    this.name = name;
+    this.password = password;
+    this.role = role;
+  }
+}
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
+  // TEMP
+  users: User[] = [
+    new User("username", "password", UserRole.Patron)
+  ]
+
   login(username: string, password: string): boolean {
-    if (this.validCredentials(username, password)){
+    var validUser = this.findValidUser(username, password)
+    if (validUser){
       localStorage.setItem("username", username)
-      localStorage.setItem("usertype", String(UserType.Customer))
+      localStorage.setItem("userRole", validUser.role)
       return true;
     }
     return false;
@@ -16,45 +34,48 @@ export class AuthService {
 
   logout(){
     localStorage.removeItem("username");
-    localStorage.removeItem("usertype")
+    localStorage.removeItem("userRole")
   }
 
-  signUp(username: string, password: string, signuprole: string){
-    if (this.validLogins.has(username)){
+  signUp(username: string, password: string, signuprole: UserRole){
+    var userExists = this.users.filter((u)=> u.name === username).length > 0
+    if (userExists){
       alert("Account already exists.");
       return false
     };
-    this.validLogins.set(username, password)
+    this.users.push(new User(username, password, signuprole))
+    console.log("users:"); console.log(this.users)
     return true
   }
 
-  // TEMP
-  validLogins = new Map<string, string>([
-    ["username", "password"]
-  ]);
-
-  validCredentials(username: string, password: string): boolean {
+  findValidUser(username: string, password: string): User | undefined {
     // will eventually be an API call
-    return this.validLogins.has(username) && (
-      this.validLogins.get(username) === password
-    )
-  }
-
-  loggedIn(): boolean {
-    // will replace to use an HTTP-Only cookie
-    return (localStorage.getItem("username") !== null)
-  }
-
-  userType(): UserType | void {
-    // will replace to use an HTTP-Only cookie
-    if (this.loggedIn()){
-      return Number(localStorage.getItem("usertype"))
-    }
-    // else don't return
+    return this.users.filter((u)=>
+      u.name === username && u.password === password
+    )[0]
   }
 
   getUsername(): string | null {
     return localStorage.getItem("username")
+  }
+
+  getUserRole(): UserRole | null {
+    // will replace to pull directly from an HTTP-Only cookie
+    var role = localStorage.getItem("userRole");
+    if (role){
+      return role as UserRole;
+    } else {
+      return null;
+    }
+  }
+
+  isLoggedIn(): boolean {
+    // will replace to use an HTTP-Only cookie
+    return (this.getUsername() !== null)
+  }
+
+  isLibrarian(): boolean {
+    return this.getUserRole() === UserRole.Librarian;
   }
 }
 

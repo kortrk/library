@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService, UserRole } from '../auth.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -17,7 +17,6 @@ export class LoginComponent {
   }
 
   login(username: HTMLInputElement, password: HTMLInputElement): boolean{
-    console.log(`Received login attempt with ${username.value} and ${password.value}`)
     if (!this.authService.login(username.value, password.value)) {
       alert('Incorrect credentials.');
     }
@@ -27,9 +26,9 @@ export class LoginComponent {
   logout(){
     this.authService.logout()
   }
-  
+
   signUp(username: HTMLInputElement, password: HTMLInputElement, signuprole: HTMLSelectElement){
-    if (this.authService.signUp(username.value, password.value, signuprole.value)){
+    if (this.authService.signUp(username.value, password.value, signuprole.value as UserRole)){
       this.login(username, password)
     }
   }

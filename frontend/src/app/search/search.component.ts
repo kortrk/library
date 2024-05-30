@@ -46,7 +46,7 @@ export class SearchComponent {
     this.showAdvancedSearch = false;
     this.sortBy = SortType.Title;
 
-    // establish default order and filter
+    // establish default order
     this.sort()
   }
 

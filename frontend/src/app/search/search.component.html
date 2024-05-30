@@ -1,9 +1,10 @@
 <label for="searchbar">Search: </label>
 <input type="text" id="searchbar" (keyup.enter)="filter(titleSearch, authorSearch)" #titleSearch>
+<button (click)="filter(titleSearch, authorSearch)">Go</button>
 <br>
 
 <label for="authorfilter" [hidden]="!showAdvancedSearch">Filter by Author: </label>
-<input type="text" id="authorfilter" [hidden]="!showAdvancedSearch" #authorSearch>
+<input type="text" id="authorfilter" (keyup.enter)="filter(titleSearch, authorSearch)" [hidden]="!showAdvancedSearch" #authorSearch>
 <br>
 
 <button (click)="toggleAdvancedSearch()">{{showAdvancedSearch ? "Hide ": "Show "}} Advanced Search</button>

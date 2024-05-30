@@ -15,8 +15,12 @@ export class SearchComponent {
   books: Book[]
   showAdvancedSearch: boolean
   sortBy: SortType
+  titleSearch: string
+  authorSearch: string
+  availSearch: string
 
-  sortTypes = Object.values(SortType)
+  sortTypes = Object.values(SortType);
+  availTypes = Object.values(AvailType);
 
   constructor(){
     this.allBooks = [
@@ -25,7 +29,8 @@ export class SearchComponent {
         "Mordecai",
         "Zondervan",
         "1924",
-        "generic.png"
+        "generic.png",
+        "Xerxes"
       ),
       new Book(
         "Daniel",
@@ -45,26 +50,63 @@ export class SearchComponent {
     this.books = this.allBooks;
     this.showAdvancedSearch = false;
     this.sortBy = SortType.Title;
+    this.titleSearch = "";
+    this.authorSearch = "";
+    this.availSearch = AvailType.All;
 
     // establish default order
     this.sort()
   }
 
-  filter(titleSearch: HTMLInputElement, authorSearch: HTMLInputElement){
-    this.books = this.allBooks.filter(
-      (b) => b.author.includes(authorSearch.value)
-    ).filter(
-      (b) => b.title.includes(titleSearch.value)
-    )
+  filter(){
+    this.books =
+      this.filterByTitle(
+        this.filterByAuthor(
+          this.filterByAvailability(
+            this.allBooks
+          )
+        )
+      )
     this.sort()
   }
 
+  filterByAuthor(books: Book[]): Book[] {
+    return books.filter(
+      (b) => b.author.includes(this.authorSearch)
+    )
+  }
+
+  filterByTitle(books: Book[]): Book[] {
+    return books.filter(
+      (b) => b.title.includes(this.titleSearch)
+    )
+  }
+
+  filterByAvailability(books: Book[]): Book[] {
+    switch(this.availSearch as AvailType){
+      case AvailType.In: {
+        return books.filter((b) => b.currentBorrower === null)
+      }
+      case AvailType.Out: {
+        return books.filter((b) => b.currentBorrower !== null)
+      }
+      default: {
+        return books
+      }
+    }
+  }
+
   sort(){
+    console.log(`sorting by ${this.sortBy}`)
     this.books = this.books.sort((a, b) =>{
       if (this.sortBy === SortType.Title){
         return a.title < b.title ? -1 : 1
       } else if (this.sortBy === SortType.Author){
         return a.author < b.author ? -1 : 1
+      } else if (this.sortBy === SortType.Availability){
+        var aOut = a.currentBorrower ? 1 : 0
+        var bOut = b.currentBorrower ? 1 : 0
+        return aOut < bOut ? -1 : 1
       }
       return 0;
     })
@@ -74,18 +116,23 @@ export class SearchComponent {
     this.showAdvancedSearch = !this.showAdvancedSearch;
   }
 
-  clearSearch(titleSearch: HTMLInputElement, authorSearch: HTMLInputElement){
-    titleSearch.value = "";
-    authorSearch.value = "";
-    this.filter(titleSearch, authorSearch)
+  clearSearch(){
+    this.titleSearch = "";
+    this.authorSearch = "";
+    this.availSearch = AvailType.All;
+    this.filter()
   }
 
-  titleSearchInUse(titleSearch: HTMLInputElement): boolean{
-    return titleSearch.value.length > 0
+  titleSearchInUse(): boolean{
+    return this.titleSearch.length > 0
   }
 
-  authorSearchInUse(authorSearch: HTMLInputElement): boolean{
-    return authorSearch.value.length > 0
+  authorSearchInUse(): boolean{
+    return this.authorSearch.length > 0
+  }
+
+  availSearchInUse(): boolean{
+    return (this.availSearch as AvailType) !== AvailType.All
   }
 }
 
@@ -93,4 +140,10 @@ export enum SortType{
   Title = "Title",
   Author = "Author",
   Availability = "Availability"
+}
+
+export enum AvailType{
+  In = "In",
+  Out = "Out",
+  All = "All"
 }

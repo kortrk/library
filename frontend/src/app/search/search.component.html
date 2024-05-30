@@ -1,15 +1,23 @@
 <label for="searchbar">Search: </label>
-<input type="text" id="searchbar" (keyup.enter)="filter(titleSearch, authorSearch)" #titleSearch>
-<button (click)="filter(titleSearch, authorSearch)">Go</button>
+<input type="text" id="searchbar" (keyup.enter)="filter()" [(ngModel)]="titleSearch">
+<button (click)="filter()">Go</button>
 <br>
 
 <label for="authorfilter" [hidden]="!showAdvancedSearch">Filter by Author: </label>
-<input type="text" id="authorfilter" (keyup.enter)="filter(titleSearch, authorSearch)" [hidden]="!showAdvancedSearch" #authorSearch>
-<br>
+<input type="text" id="authorfilter" (keyup.enter)="filter()" [hidden]="!showAdvancedSearch" [(ngModel)]="authorSearch">
+<br [hidden]="!showAdvancedSearch">
+
+<label for="availfilter" [hidden]="!showAdvancedSearch">Filter by Availability: </label>
+<select name="availfilter" id="availfilter" [hidden]="!showAdvancedSearch" [(ngModel)]="availSearch">
+  @for(availType of availTypes; track availType){
+    <option value={{availType}}>{{availType}}</option>
+  }
+</select>
+<br [hidden]="!showAdvancedSearch">
 
 <button (click)="toggleAdvancedSearch()">{{showAdvancedSearch ? "Hide ": "Show "}} Advanced Search</button>
 <br>
-<button (click)="clearSearch(titleSearch, authorSearch)" [hidden]="!titleSearchInUse(titleSearch) && !authorSearchInUse(authorSearch)">Clear Search</button>
+<button (click)="clearSearch()" [hidden]="!titleSearchInUse() && !authorSearchInUse() && !availSearchInUse()">Clear Search</button>
 <br>
 
 <label for="sort-by">Sort by: </label>

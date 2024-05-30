@@ -14,19 +14,22 @@ export class Book implements Book{
     // customer_reviews: string;
     // -- my additions --
     image: string;
+    currentBorrower: string | null;
 
 	constructor(
     title: string,
     author: string,
     publisher: string,
     publication_date: string,
-    image: string
+    image: string,
+    currentBorrower: string | null = null
   ) {
     this.title = title;
     this.author = author;
     this.publisher = publisher;
     this.publication_date = publication_date;
     this.image = image;
+    this.currentBorrower = currentBorrower;
   }
 
   imgLoc(): string {

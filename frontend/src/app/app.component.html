@@ -1,8 +1,16 @@
-<header>
+<header style="background-color: rgb(211, 249, 211);">
   <div style="display:flex; flex-direction: row;" >
     <h1 style="align-items: flex-start;">Welcome to the Library</h1>
     <login style="align-items: flex-end; padding-left: 100px;"></login>
   </div>
+
+  <nav>
+    <ul>
+      <li><a routerLink="/about"   routerLinkActive="active" ariaCurrentWhenActive="page">About</a></li>
+      <li><a routerLink="/contact" routerLinkActive="active" ariaCurrentWhenActive="page">Contact</a></li>
+      <li><a routerLink="/search" routerLinkActive="active" ariaCurrentWhenActive="page">Search</a></li>
+    </ul>
+  </nav>
 </header>
 
-<search></search>
+<router-outlet></router-outlet>

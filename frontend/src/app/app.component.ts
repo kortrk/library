@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { DisplayBookComponent } from './display-book/display-book.component';
 import { LoginComponent } from './login/login.component';
 import { SearchComponent } from './search/search.component'
@@ -9,6 +9,8 @@ import { SearchComponent } from './search/search.component'
   standalone: true,
   imports: [
     RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
     DisplayBookComponent,
     LoginComponent,
     SearchComponent

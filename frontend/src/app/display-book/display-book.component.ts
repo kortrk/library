@@ -25,4 +25,9 @@ export class DisplayBookComponent {
   toggleDetailsView(){
     this.detailsView = !this.detailsView;
   }
+
+  assumeLoggedIn(): boolean {
+    console.log(`checking for login: ${localStorage.getItem("username")}`)
+    return localStorage.getItem("username") !== null
+  }
 }

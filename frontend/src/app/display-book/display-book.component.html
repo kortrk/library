@@ -12,4 +12,5 @@
   }
   <br>
   <button (click)="toggleDetailsView()">Details</button>
+  <button [hidden]="!assumeLoggedIn()">Checkout</button>
 </div>

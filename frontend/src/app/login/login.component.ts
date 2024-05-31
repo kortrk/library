@@ -34,4 +34,19 @@ export class LoginComponent {
       this.login(username, password)
     }
   }
+
+  // this could be manipulated - it's only an assumption
+  assumeLoggedIn(): boolean {
+    return this.assumedUsername() !== null
+  }
+
+  // this could be manipulated - it's only an assumption
+  assumedUsername(): string | null {
+    return localStorage.getItem("username")
+  }
+
+  // this could be manipulated - it's only an assumption
+  assumedRole(): string | null {
+    return localStorage.getItem("role")
+  }
 }

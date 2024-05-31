@@ -14,16 +14,42 @@ class User{
   }
 }
 
+// a stand-in class for what will eventually be the db stuff
+class DB{
+  users: User[];
+
+  constructor(users: User[]){
+    this.users = users;
+  }
+
+  hasUser(username: string): boolean {
+    return this.users.filter((u) => u.name === username).length > 0
+  }
+
+  addUser(user: User){
+    this.users.push(user)
+  }
+
+  getUserByCreds(username: string, password: string): User | undefined {
+    // will eventually be an API call
+    return this.users.filter((u)=>
+      u.name === username && u.password === password
+    )[0]
+  }
+
+  validCreds(username: string, password: string): boolean {
+    return this.getUserByCreds(username, password) !== null
+  }
+}
+
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
   // TEMP
-  users: User[] = [
-    new User("username", "password", UserRole.Patron)
-  ]
+  db = new DB([new User("username", "password", UserRole.Patron)])
 
   login(username: string, password: string): boolean {
-    var validUser = this.findValidUser(username, password)
+    var validUser = this.db.getUserByCreds(username, password)
     if (validUser){
       localStorage.setItem("username", username)
       localStorage.setItem("userRole", validUser.role)
@@ -34,48 +60,17 @@ export class AuthService {
 
   logout(){
     localStorage.removeItem("username");
-    localStorage.removeItem("userRole")
+    localStorage.removeItem("userRole");
   }
 
   signUp(username: string, password: string, signuprole: UserRole){
-    var userExists = this.users.filter((u)=> u.name === username).length > 0
-    if (userExists){
+    if (this.db.hasUser(username)){
       alert("Account already exists.");
       return false
     };
-    this.users.push(new User(username, password, signuprole))
-    console.log("users:"); console.log(this.users)
+    this.db.addUser(new User(username, password, signuprole))
+    console.log("users:"); console.log(this.db.users) // temp
     return true
-  }
-
-  findValidUser(username: string, password: string): User | undefined {
-    // will eventually be an API call
-    return this.users.filter((u)=>
-      u.name === username && u.password === password
-    )[0]
-  }
-
-  getUsername(): string | null {
-    return localStorage.getItem("username")
-  }
-
-  getUserRole(): UserRole | null {
-    // will replace to pull directly from an HTTP-Only cookie
-    var role = localStorage.getItem("userRole");
-    if (role){
-      return role as UserRole;
-    } else {
-      return null;
-    }
-  }
-
-  isLoggedIn(): boolean {
-    // will replace to use an HTTP-Only cookie
-    return (this.getUsername() !== null)
-  }
-
-  isLibrarian(): boolean {
-    return this.getUserRole() === UserRole.Librarian;
   }
 }
 

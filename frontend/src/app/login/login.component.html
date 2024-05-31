@@ -1,6 +1,6 @@
-@if(authService.isLoggedIn()){
+@if(assumeLoggedIn()){
   <div style="background-color: palegreen; float: right; padding: 12px">
-    Logged in as <b>{{authService.getUsername()}}</b>.
+    Logged in as <b>{{assumedUsername()}}</b>.
     <button (click)="logout()">Log out</button>
   </div>
 } @else {

@@ -25,7 +25,6 @@ export class SearchComponent {
 
   constructor(){
     this.bookDbService = inject(BookDbService);
-    this.bookDbService.initBooks();
     this.books = this.allBooks();
     this.showAdvancedSearch = false;
     this.sortBy = SortType.Title;

@@ -4,7 +4,9 @@
 <em>Publisher:</em> {{book.publisher}}<br>
 <em>Publication Date:</em> {{book.publisher}}<br>
 @if(!book.currentBorrower){
-  <button>Check Out</button><br>
+  <button [hidden]="!assumeLoggedIn()" [routerLink]="['/checkout', {id: book.id, title: book.title, dueback: book.duedate}]">
+    Check Out
+  </button><br>
 } @else {
   <span style="color: red"><em>Out - due on {{book.duedate}}</em></span><br>
 }

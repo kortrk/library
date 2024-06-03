@@ -32,14 +32,15 @@ export class DetailsBookComponent {
 
   @Input()
   set id(providedId: number) {
-    console.log(`id is being set: ${providedId}`)
     var showBook = this.bookDbService.getBook(providedId);
-    console.log(`found this book for ${providedId}`)
-    console.log(showBook)
     if (showBook){
       this.book = showBook;
     } else {
       this.book = this.defaultBook;
     }
+  }
+
+  assumeLoggedIn(): boolean {
+    return localStorage.getItem("username") !== null
   }
 }

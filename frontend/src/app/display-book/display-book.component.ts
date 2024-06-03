@@ -24,9 +24,4 @@ export class DisplayBookComponent {
       duedate: null
     });
   }
-
-  assumeLoggedIn(): boolean {
-    console.log(`checking for login: ${localStorage.getItem("username")}`)
-    return localStorage.getItem("username") !== null
-  }
 }

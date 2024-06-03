@@ -66,4 +66,16 @@ export class BookDbService {
     if (foundBook) return foundBook;
     return null;
   }
+
+  borrowBook(id: number, duedate: string): boolean {
+    var books = this.getAllBooks();
+    var book = books.filter((b) => b.id == id)[0];
+    if (!book) return false;
+    var username = localStorage.getItem('username');
+    if (!username) return false;
+    book.currentBorrower = localStorage.getItem('username');
+    book.duedate = duedate;
+    localStorage.setItem('books', JSON.stringify(books));
+    return true;
+  }
 }

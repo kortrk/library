@@ -1,0 +1,4 @@
+<p>Checking out {{bookTitle}}.</p>
+<p>This will be due on {{xDaysFromNow()}}.</p>
+<button (click)="borrow()">Confirm</button>
+<button [routerLink]="['/details', {id: bookId}]">Cancel</button>

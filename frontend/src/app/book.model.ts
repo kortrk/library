@@ -13,6 +13,7 @@ export class Book implements Book{
     // page_count: string;
     // customer_reviews: string;
     // -- my additions --
+    id: number;
     image: string;
     currentBorrower: string | null;
 
@@ -21,6 +22,7 @@ export class Book implements Book{
     author: string,
     publisher: string,
     publication_date: string,
+    id: number,
     image: string,
     currentBorrower: string | null = null
   ) {
@@ -28,6 +30,7 @@ export class Book implements Book{
     this.author = author;
     this.publisher = publisher;
     this.publication_date = publication_date;
+    this.id = id;
     this.image = image;
     this.currentBorrower = currentBorrower;
   }

@@ -29,6 +29,7 @@ export class SearchComponent {
         "Mordecai",
         "Zondervan",
         "1924",
+        0,
         "generic.png",
         "Xerxes"
       ),
@@ -37,6 +38,7 @@ export class SearchComponent {
         "Daniel",
         "Penguin",
         "1833",
+        1,
         "generic.png"
       ),
       new Book(
@@ -44,6 +46,7 @@ export class SearchComponent {
         "Solomon",
         "Simon & Schuster",
         "1234",
+        2,
         "generic.png"
       )
     ]

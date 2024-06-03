@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { Book } from '../book.model'
+import { Book } from '../book.model';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'display-book',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './display-book.component.html',
   styleUrl: './display-book.component.css'
 })

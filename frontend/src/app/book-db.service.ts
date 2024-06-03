@@ -55,4 +55,12 @@ export class BookDbService {
       return [];
     }
   }
+
+  getBook(id: number): Book | null {
+    var foundBook = this.getAllBooks().filter((b) =>
+      b.id == id // == is needed here, rather than ===
+    )[0]
+    if (foundBook) return foundBook;
+    return null;
+  }
 }

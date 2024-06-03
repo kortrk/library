@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Book } from '../book.model';
 import { DisplayBookComponent } from '../display-book/display-book.component'
 import { FormsModule, NgModel } from '@angular/forms';
+import { BookDbService } from '../book-db.service'
 
 @Component({
   selector: 'search',
@@ -11,18 +12,20 @@ import { FormsModule, NgModel } from '@angular/forms';
   styleUrl: './search.component.css'
 })
 export class SearchComponent {
-  books: Book[]
-  showAdvancedSearch: boolean
-  sortBy: SortType
-  titleSearch: string
-  authorSearch: string
-  availSearch: string
+  bookDbService: BookDbService;
+  books: Book[];
+  showAdvancedSearch: boolean;
+  sortBy: SortType;
+  titleSearch: string;
+  authorSearch: string;
+  availSearch: string;
 
   sortTypes = Object.values(SortType);
   availTypes = Object.values(AvailType);
 
   constructor(){
-    this.initBooks();
+    this.bookDbService = inject(BookDbService);
+    this.bookDbService.initBooks();
     this.books = this.allBooks();
     this.showAdvancedSearch = false;
     this.sortBy = SortType.Title;
@@ -34,45 +37,8 @@ export class SearchComponent {
     this.sort()
   }
 
-  // TEMP: will be replaced by the db
-  initBooks(){
-    var books = [
-      new Book(
-        "Esther",
-        "Mordecai",
-        "Zondervan",
-        "1924",
-        0,
-        "generic.png",
-        "Xerxes"
-      ),
-      new Book(
-        "Daniel",
-        "Daniel",
-        "Penguin",
-        "1833",
-        1,
-        "generic.png"
-      ),
-      new Book(
-        "Ecclesiastes",
-        "Solomon",
-        "Simon & Schuster",
-        "1234",
-        2,
-        "generic.png"
-      )
-    ]
-    localStorage.setItem('books', JSON.stringify(books))
-  }
-
   allBooks(): Book[]{
-    var retrievedBooks = localStorage.getItem('books');
-    if (retrievedBooks){
-      return JSON.parse(retrievedBooks).map((x: Object) => x as Book);
-    } else {
-      return [];
-    }
+    return this.bookDbService.getAllBooks();
   }
 
   filter(){

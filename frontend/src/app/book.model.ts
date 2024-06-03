@@ -1,4 +1,23 @@
-export class Book implements Book{
+export interface BookInfo {
+  title: string;
+  author: string;
+  // description: string;
+  // cover_image: string;
+  // average_user_rating: string;
+  // -- for details view --
+  publisher: string;
+  publication_date: string;
+  // category: string;
+  // isbn: string;
+  // page_count: string;
+  // customer_reviews: string;
+  // -- my additions --
+  id: number;
+  image: string;
+  currentBorrower: string | null;
+}
+
+export class Book {
     // -- always showing --
     title: string;
     author: string;
@@ -17,22 +36,14 @@ export class Book implements Book{
     image: string;
     currentBorrower: string | null;
 
-	constructor(
-    title: string,
-    author: string,
-    publisher: string,
-    publication_date: string,
-    id: number,
-    image: string,
-    currentBorrower: string | null = null
-  ) {
-    this.title = title;
-    this.author = author;
-    this.publisher = publisher;
-    this.publication_date = publication_date;
-    this.id = id;
-    this.image = image;
-    this.currentBorrower = currentBorrower;
+	constructor(bookInfo: BookInfo) {
+    this.title = bookInfo.title;
+    this.author = bookInfo.author;
+    this.publisher = bookInfo.publisher;
+    this.publication_date = bookInfo.publication_date;
+    this.id = bookInfo.id;
+    this.image = bookInfo.image;
+    this.currentBorrower = bookInfo.currentBorrower;
   }
 
   imgLoc(): string {

@@ -1,0 +1,58 @@
+import { Injectable } from '@angular/core';
+import { Book, BookInfo } from './book.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class BookDbService {
+
+  constructor() {
+    this.initBooks();
+  }
+
+  // TEMP: will be replaced by the db
+  initBooks(){
+    var books = [
+      new Book({
+        title: "Esther",
+        author: "Mordecai",
+        publisher: "Zondervan",
+        publication_date: "1924",
+        id: 0,
+        image: "generic.png",
+        currentBorrower: "Xerxes"}
+      ),
+      new Book({
+        title: "Daniel",
+        author: "Daniel",
+        publisher: "Penguin",
+        publication_date: "1833",
+        id: 1,
+        image: "generic.png",
+        currentBorrower: null
+      }),
+      new Book({
+        title: "Ecclesiastes",
+        author: "Solomon",
+        publisher: "Simon & Schuster",
+        publication_date: "1234",
+        id: 2,
+        image: "generic.png",
+        currentBorrower: null
+      })
+    ]
+    localStorage.setItem('books', JSON.stringify(books))
+  }
+
+  getAllBooks(): Book[] {
+    var retrievedBooks = localStorage.getItem('books');
+    if (retrievedBooks){
+      return JSON.parse(retrievedBooks).map((x: Object) =>
+        new Book(x as BookInfo)
+        // have to call `new` for Book to init with its methods
+      );
+    } else {
+      return [];
+    }
+  }
+}

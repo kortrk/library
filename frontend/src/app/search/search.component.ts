@@ -11,7 +11,6 @@ import { FormsModule, NgModel } from '@angular/forms';
   styleUrl: './search.component.css'
 })
 export class SearchComponent {
-  allBooks: Book[]
   books: Book[]
   showAdvancedSearch: boolean
   sortBy: SortType
@@ -23,7 +22,21 @@ export class SearchComponent {
   availTypes = Object.values(AvailType);
 
   constructor(){
-    this.allBooks = [
+    this.initBooks();
+    this.books = this.allBooks();
+    this.showAdvancedSearch = false;
+    this.sortBy = SortType.Title;
+    this.titleSearch = "";
+    this.authorSearch = "";
+    this.availSearch = AvailType.All;
+
+    // establish default order
+    this.sort()
+  }
+
+  // TEMP: will be replaced by the db
+  initBooks(){
+    var books = [
       new Book(
         "Esther",
         "Mordecai",
@@ -50,15 +63,16 @@ export class SearchComponent {
         "generic.png"
       )
     ]
-    this.books = this.allBooks;
-    this.showAdvancedSearch = false;
-    this.sortBy = SortType.Title;
-    this.titleSearch = "";
-    this.authorSearch = "";
-    this.availSearch = AvailType.All;
+    localStorage.setItem('books', JSON.stringify(books))
+  }
 
-    // establish default order
-    this.sort()
+  allBooks(): Book[]{
+    var retrievedBooks = localStorage.getItem('books');
+    if (retrievedBooks){
+      return JSON.parse(retrievedBooks).map((x: Object) => x as Book);
+    } else {
+      return [];
+    }
   }
 
   filter(){
@@ -66,7 +80,7 @@ export class SearchComponent {
       this.filterByTitle(
         this.filterByAuthor(
           this.filterByAvailability(
-            this.allBooks
+            this.allBooks()
           )
         )
       )

@@ -24,6 +24,7 @@ export class DetailsBookComponent {
       publication_date: 'string',
       id: 0,
       image: 'string',
+      duedate: 'string',
       currentBorrower: null
     });
     this.book = this.defaultBook;

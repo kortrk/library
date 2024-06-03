@@ -20,7 +20,8 @@ export class DisplayBookComponent {
       publication_date: "1924",
       id: 0,
       image: "generic.png",
-      currentBorrower: null
+      currentBorrower: null,
+      duedate: null
     });
   }
 

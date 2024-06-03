@@ -20,8 +20,9 @@ export class BookDbService {
         publication_date: "1924",
         id: 0,
         image: "generic.png",
-        currentBorrower: "Xerxes"}
-      ),
+        currentBorrower: "Xerxes",
+        duedate: "5/5/5"
+      }),
       new Book({
         title: "Daniel",
         author: "Daniel",
@@ -29,7 +30,8 @@ export class BookDbService {
         publication_date: "1833",
         id: 1,
         image: "generic.png",
-        currentBorrower: null
+        currentBorrower: null,
+        duedate: null
       }),
       new Book({
         title: "Ecclesiastes",
@@ -38,7 +40,8 @@ export class BookDbService {
         publication_date: "1234",
         id: 2,
         image: "generic.png",
-        currentBorrower: null
+        currentBorrower: null,
+        duedate: null
       })
     ]
     localStorage.setItem('books', JSON.stringify(books))

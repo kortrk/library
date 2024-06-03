@@ -3,5 +3,9 @@
 <em>Author:</em> {{book.author}}<br>
 <em>Publisher:</em> {{book.publisher}}<br>
 <em>Publication Date:</em> {{book.publisher}}<br>
-<button>Check Out</button><br>
+@if(!book.currentBorrower){
+  <button>Check Out</button><br>
+} @else {
+  <span style="color: red"><em>Out - due on {{book.duedate}}</em></span><br>
+}
 <button routerLink='/search'>Back to Search</button>

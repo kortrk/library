@@ -15,6 +15,7 @@ export interface BookInfo {
   id: number;
   image: string;
   currentBorrower: string | null;
+  duedate: string | null;
 }
 
 export class Book {
@@ -35,6 +36,7 @@ export class Book {
     id: number;
     image: string;
     currentBorrower: string | null;
+    duedate: string | null;
 
 	constructor(bookInfo: BookInfo) {
     this.title = bookInfo.title;
@@ -44,6 +46,8 @@ export class Book {
     this.id = bookInfo.id;
     this.image = bookInfo.image;
     this.currentBorrower = bookInfo.currentBorrower;
+    this.duedate = bookInfo.duedate;
+
   }
 
   imgLoc(): string {

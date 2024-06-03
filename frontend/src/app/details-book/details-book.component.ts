@@ -1,11 +1,12 @@
 import { Component, Input, inject } from '@angular/core';
 import { Book } from '../book.model';
 import { BookDbService } from '../book-db.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'details-book',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './details-book.component.html',
   styleUrl: './details-book.component.css'
 })

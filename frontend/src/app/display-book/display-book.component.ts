@@ -11,7 +11,6 @@ import { RouterLink } from '@angular/router';
 })
 export class DisplayBookComponent {
   @Input() book: Book;
-  detailsView: boolean = false;
 
   constructor(){
     this.book = new Book({
@@ -23,10 +22,6 @@ export class DisplayBookComponent {
       image: "generic.png",
       currentBorrower: null
     });
-  }
-
-  toggleDetailsView(){
-    this.detailsView = !this.detailsView;
   }
 
   assumeLoggedIn(): boolean {

@@ -6,11 +6,6 @@
     <h3>{{book.title}}</h3>
     <p>By {{book.author}}</p>
   </span>
-  @if(detailsView){
-    <div><em>Publisher:</em> {{book.publisher}}</div>
-    <div><em>Publication Date:</em> {{book.publication_date}}</div>
-  }
-  <br>
   <button [routerLink]="['/details', {id: book.id}]">Details</button>
   <button [hidden]="!assumeLoggedIn()">Checkout</button>
 </div>

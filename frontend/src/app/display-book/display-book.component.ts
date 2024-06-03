@@ -18,6 +18,7 @@ export class DisplayBookComponent {
       "Mordecai",
       "Thomas Nelson",
       "1924",
+      0,
       "generic.png"
     );
   }

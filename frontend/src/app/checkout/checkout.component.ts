@@ -38,6 +38,7 @@ export class CheckoutComponent {
 
   borrow(){
     if (this.bookDbService.borrowBook(this.bookId, this.xDaysFromNow())){
+      alert("All set!");
       this.router.navigate(['/search']);
     } else {
       alert("An error occurred.");

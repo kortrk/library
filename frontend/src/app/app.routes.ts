@@ -4,6 +4,7 @@ import { ContactComponent } from './contact/contact.component';
 import { SearchComponent } from './search/search.component';
 import { DetailsBookComponent } from './details-book/details-book.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { loggedInGuard } from './logged-in.guard';
 
 export const routes: Routes = [
   {path: '', component: SearchComponent},
@@ -11,7 +12,7 @@ export const routes: Routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'search', component: SearchComponent},
   {path: 'details', component: DetailsBookComponent},
-  {path: 'checkout', component: CheckoutComponent},
+  {path: 'checkout', component: CheckoutComponent, canActivate: [loggedInGuard]},
   {path: '**', component: SearchComponent}
   // {path: '**', redirectTo: ''} // keep last
 ];

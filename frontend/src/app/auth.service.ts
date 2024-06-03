@@ -72,6 +72,11 @@ export class AuthService {
     console.log("users:"); console.log(this.db.users) // temp
     return true
   }
+
+  // TEMP - replace to use the Http-Only token
+  loggedIn(): boolean {
+    return localStorage.getItem('username') !== null;
+  }
 }
 
 export const AUTH_PROVIDERS: Array<any> = [

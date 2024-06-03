@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService, UserRole } from '../auth.service';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'login',
@@ -14,7 +15,7 @@ export class LoginComponent {
 
   userRoles = Object.values(UserRole); // for the <select> dropdown to use
 
-  constructor(public authService: AuthService){
+  constructor(public authService: AuthService, private router: Router){
     this.paneSelection = "login"
   }
 
@@ -26,7 +27,8 @@ export class LoginComponent {
   }
 
   logout(){
-    this.authService.logout()
+    this.authService.logout();
+    this.router.navigate(['/search']);
   }
 
   signUp(username: HTMLInputElement, password: HTMLInputElement, signuprole: HTMLSelectElement){

@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { Review, Rating } from '../review.model';
+import { RouterLink, Router } from '@angular/router';
 
 @Component({
   selector: 'review',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './review.component.html',
   styleUrl: './review.component.css'
 })
@@ -20,9 +21,12 @@ export class ReviewComponent {
     new Rating(5, "5 ☆☆☆☆☆")
   ]; // for the select element to use
 
+  constructor(private router: Router){}
+
   submitReview(userRating: HTMLSelectElement, userText: HTMLTextAreaElement){
     var review = new Review(Number(userRating.value), userText.value, this.bookId);
-    console.log(review);
+    alert("Thanks for your review!")
+    this.router.navigate(['/search']);
   }
 
   @Input()

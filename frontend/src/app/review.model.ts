@@ -11,9 +11,11 @@ export class Rating{
 export class Review {
   rating: number;
   text: string;
+  bookId: number;
 
-  constructor(rating: number, text: string){
+  constructor(rating: number, text: string, bookId: number){
     this.rating = rating;
     this.text = text;
+    this.bookId = bookId;
   }
 }

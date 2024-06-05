@@ -8,6 +8,6 @@
   </span>
   <button [routerLink]="['/details', {id: book.id}]">Details</button>
   @if(assumeLoggedIn()){
-    <button [routerLink]="['/review', {id: book.id}]">Add a Review</button>
+    <button [routerLink]="['/review', {id: book.id, title: book.title}]">Add a Review</button>
   }
 </div>

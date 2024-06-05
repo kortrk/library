@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Review, Rating } from '../review.model';
 
 @Component({
@@ -9,8 +9,8 @@ import { Review, Rating } from '../review.model';
   styleUrl: './review.component.css'
 })
 export class ReviewComponent {
-  bookTitle = "Example";
-  bookId = 0;
+  bookTitle: string = "Example";
+  bookId: number = 0;
 
   ratingValues = [
     new Rating(1, "1 ☆"),
@@ -21,7 +21,17 @@ export class ReviewComponent {
   ]; // for the select element to use
 
   submitReview(userRating: HTMLSelectElement, userText: HTMLTextAreaElement){
-    var review = new Review(Number(userRating.value), userText.value);
+    var review = new Review(Number(userRating.value), userText.value, this.bookId);
     console.log(review);
+  }
+
+  @Input()
+  set id(providedId: number) {
+    this.bookId = Number(providedId);
+  }
+
+  @Input()
+  set title(providedTitle: string) {
+    this.bookTitle = providedTitle;
   }
 }

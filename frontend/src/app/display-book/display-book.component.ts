@@ -24,4 +24,8 @@ export class DisplayBookComponent {
       duedate: null
     });
   }
+
+  assumeLoggedIn(): boolean {
+    return localStorage.getItem("username") !== null
+  }
 }

@@ -1,0 +1,18 @@
+<h1>Reviewing {{bookTitle}}</h1>
+
+<label for="rating">Rating: </label>
+<select id="rating" name="rating" #userRating>
+  <!--[(ngModel)]="sortBy" (change)="sort()">-->
+  @for(r of ratingValues; track r){
+    <option value={{r.value}} [selected]="r.value === ratingValues[ratingValues.length - 1].value">
+      {{r.displayStr}}
+    </option>
+  }
+</select>
+<br><br>
+
+<label for="reviewText">Your review: </label><br>
+<textarea name="reviewText" id="reviewText" rows="10" cols="60" #userText></textarea>
+<br>
+
+<button (click)="submitReview(userRating, userText)">Submit</button>

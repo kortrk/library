@@ -40,6 +40,12 @@ export class ReviewDbService {
     }
   }
 
+  getReviewsFor(bookId: number): Review[]{
+    return this.getAllReviews().filter((r) =>
+      r.bookId == bookId
+    );
+  }
+
   submitReview(newReview: Review): boolean{
     var reviews = this.getAllReviews();
     reviews.push(newReview);

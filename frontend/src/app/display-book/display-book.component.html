@@ -5,6 +5,7 @@
   <span class="book-basic-info">
     <h3>{{book.title}}</h3>
     <p>By {{book.author}}</p>
+    <p>Avg. Rating: {{averageUserRating(book.id)}}</p>
   </span>
   <button [routerLink]="['/details', {id: book.id}]">Details</button>
   @if(assumeLoggedIn()){

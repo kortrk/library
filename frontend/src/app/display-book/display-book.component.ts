@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Book } from '../book.model';
 import { RouterLink } from '@angular/router';
+import { ReviewDbService } from '../review-db.service';
 
 @Component({
   selector: 'display-book',
@@ -11,6 +12,8 @@ import { RouterLink } from '@angular/router';
 })
 export class DisplayBookComponent {
   @Input() book: Book;
+
+  reviewDbService: ReviewDbService;
 
   constructor(){
     this.book = new Book({
@@ -23,9 +26,21 @@ export class DisplayBookComponent {
       currentBorrower: null,
       duedate: null
     });
+
+    this.reviewDbService = inject(ReviewDbService);
   }
 
   assumeLoggedIn(): boolean {
     return localStorage.getItem("username") !== null
+  }
+
+  averageUserRating(bookId: number): string {
+    var reviews = this.reviewDbService.getReviewsFor(bookId);
+    if (reviews.length === 0) return "--";
+    var sum = reviews.reduce((accumulator, currentValue) =>
+      accumulator + currentValue.rating, 0
+    );
+    var avg = sum/reviews.length;
+    return String(avg.toFixed(1));
   }
 }

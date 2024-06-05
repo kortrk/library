@@ -47,7 +47,6 @@ export class Book {
     this.image = bookInfo.image;
     this.currentBorrower = bookInfo.currentBorrower;
     this.duedate = bookInfo.duedate;
-
   }
 
   imgLoc(): string {

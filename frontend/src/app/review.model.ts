@@ -8,14 +8,20 @@ export class Rating{
   }
 }
 
+export interface ReviewFields {
+  rating: number;
+  text: string;
+  bookId: number;
+}
+
 export class Review {
   rating: number;
   text: string;
   bookId: number;
 
-  constructor(rating: number, text: string, bookId: number){
-    this.rating = rating;
-    this.text = text;
-    this.bookId = bookId;
+	constructor(reviewFields: ReviewFields) {
+    this.rating = reviewFields.rating;
+    this.text = reviewFields.text;
+    this.bookId = reviewFields.bookId;
   }
 }

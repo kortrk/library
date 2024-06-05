@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
-import { Review, Rating } from '../review.model';
+import { Component, Input, inject } from '@angular/core';
+import { Rating, ReviewFields, Review } from '../review.model';
 import { RouterLink, Router } from '@angular/router';
+import { ReviewDbService } from '../review-db.service';
 
 @Component({
   selector: 'review',
@@ -13,6 +14,8 @@ export class ReviewComponent {
   bookTitle: string = "Example";
   bookId: number = 0;
 
+  reviewDbService: ReviewDbService;
+
   ratingValues = [
     new Rating(1, "1 ☆"),
     new Rating(2, "2 ☆☆"),
@@ -21,11 +24,18 @@ export class ReviewComponent {
     new Rating(5, "5 ☆☆☆☆☆")
   ]; // for the select element to use
 
-  constructor(private router: Router){}
+  constructor(private router: Router){
+    this.reviewDbService = inject(ReviewDbService);
+  }
 
   submitReview(userRating: HTMLSelectElement, userText: HTMLTextAreaElement){
-    var review = new Review(Number(userRating.value), userText.value, this.bookId);
-    alert("Thanks for your review!")
+    var review = new Review({
+      rating: Number(userRating.value),
+      text: userText.value,
+      bookId: this.bookId
+    });
+    this.reviewDbService.submitReview(review);
+    alert("Thanks for your review!");
     this.router.navigate(['/search']);
   }
 

@@ -3,11 +3,16 @@
 <em>Author:</em> {{book.author}}<br>
 <em>Publisher:</em> {{book.publisher}}<br>
 <em>Publication Date:</em> {{book.publisher}}<br>
-<h2>Reviews</h2>
-@for(review of reviews; track review){
-  <h3>{{review.username}}</h3>
-  <h4>Rating: {{review.rating}}</h4>
-  <p>{{review.text}}</p>
+@if(reviews.length > 0){
+  <h2>Reviews</h2>
+  <div style="overflow-y: auto; height: 120px; width: 600px; background-color: aquamarine;">
+    @for(review of reviews; track review){
+      <h3>{{review.username}}</h3>
+      <h4>Rating: {{review.rating}}</h4>
+      <p>{{review.text}}</p>
+    }
+  </div>
+  <br>
 }
 @if(!book.currentlyBorrowed()){
   <button [hidden]="!assumeLoggedIn()" [routerLink]="['/checkout', {id: book.id, title: book.title}]">

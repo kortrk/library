@@ -3,7 +3,7 @@
 <em>Author:</em> {{book.author}}<br>
 <em>Publisher:</em> {{book.publisher}}<br>
 <em>Publication Date:</em> {{book.publisher}}<br>
-@if(!book.currentBorrower){
+@if(!book.currentlyBorrowed()){
   <button [hidden]="!assumeLoggedIn()" [routerLink]="['/checkout', {id: book.id, title: book.title}]">
     Check Out
   </button><br>

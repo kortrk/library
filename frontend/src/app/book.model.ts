@@ -52,6 +52,10 @@ export class Book {
   imgLoc(): string {
     return `assets/images/${this.image}`
   }
+
+  currentlyBorrowed(): boolean {
+    return this.currentBorrower !== null;
+  }
 }
 
 // ["title", "author", "description", "cover_image", "average_user_rating", "publisher", "publication_date", "category", "isbn", "page_count", "customer_reviews"]

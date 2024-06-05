@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Book, BookInfo } from './book.model';
+import { Book, BookFields } from './book.model';
 
 @Injectable({
   providedIn: 'root'
@@ -51,7 +51,7 @@ export class BookDbService {
     var retrievedBooks = localStorage.getItem('books');
     if (retrievedBooks){
       return JSON.parse(retrievedBooks).map((x: Object) =>
-        new Book(x as BookInfo)
+        new Book(x as BookFields)
         // have to call `new` for Book to init with its methods
       );
     } else {

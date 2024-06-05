@@ -1,4 +1,4 @@
-export interface BookInfo {
+export interface BookFields {
   title: string;
   author: string;
   // description: string;
@@ -38,15 +38,15 @@ export class Book {
     currentBorrower: string | null;
     duedate: string | null;
 
-	constructor(bookInfo: BookInfo) {
-    this.title = bookInfo.title;
-    this.author = bookInfo.author;
-    this.publisher = bookInfo.publisher;
-    this.publication_date = bookInfo.publication_date;
-    this.id = bookInfo.id;
-    this.image = bookInfo.image;
-    this.currentBorrower = bookInfo.currentBorrower;
-    this.duedate = bookInfo.duedate;
+	constructor(bookFields: BookFields) {
+    this.title = bookFields.title;
+    this.author = bookFields.author;
+    this.publisher = bookFields.publisher;
+    this.publication_date = bookFields.publication_date;
+    this.id = bookFields.id;
+    this.image = bookFields.image;
+    this.currentBorrower = bookFields.currentBorrower;
+    this.duedate = bookFields.duedate;
   }
 
   imgLoc(): string {

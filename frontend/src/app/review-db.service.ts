@@ -17,12 +17,14 @@ export class ReviewDbService {
       new Review({
         rating: 4,
         text: "Good!",
-        bookId: 0
+        bookId: 0,
+        username: "username"
       }),
       new Review({
         rating: 5,
         text: "Thought-provoking",
-        bookId: 2
+        bookId: 2,
+        username: "Rehoboam"
       })
     ]
     localStorage.setItem('reviews', JSON.stringify(reviews))

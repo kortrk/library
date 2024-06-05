@@ -3,6 +3,12 @@
 <em>Author:</em> {{book.author}}<br>
 <em>Publisher:</em> {{book.publisher}}<br>
 <em>Publication Date:</em> {{book.publisher}}<br>
+<h2>Reviews</h2>
+@for(review of reviews; track review){
+  <h3>{{review.username}}</h3>
+  <h4>Rating: {{review.rating}}</h4>
+  <p>{{review.text}}</p>
+}
 @if(!book.currentlyBorrowed()){
   <button [hidden]="!assumeLoggedIn()" [routerLink]="['/checkout', {id: book.id, title: book.title}]">
     Check Out

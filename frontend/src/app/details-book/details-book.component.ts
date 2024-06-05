@@ -2,6 +2,8 @@ import { Component, Input, inject } from '@angular/core';
 import { Book } from '../book.model';
 import { BookDbService } from '../book-db.service';
 import { RouterLink } from '@angular/router';
+import { ReviewDbService } from '../review-db.service';
+import { Review } from '../review.model';
 
 @Component({
   selector: 'details-book',
@@ -12,11 +14,14 @@ import { RouterLink } from '@angular/router';
 })
 export class DetailsBookComponent {
   bookDbService: BookDbService;
+  reviewDbService: ReviewDbService;
   book: Book;
   defaultBook: Book;
+  reviews: Review[];
 
   constructor(){
     this.bookDbService = inject(BookDbService);
+    this.reviewDbService = inject(ReviewDbService);
     this.defaultBook = new Book({
       title: 'string',
       author: 'string',
@@ -28,6 +33,7 @@ export class DetailsBookComponent {
       currentBorrower: null
     });
     this.book = this.defaultBook;
+    this.reviews = this.reviewDbService.getReviewsFor(0);
   }
 
   @Input()
@@ -35,6 +41,7 @@ export class DetailsBookComponent {
     var showBook = this.bookDbService.getBook(providedId);
     if (showBook){
       this.book = showBook;
+      this.reviews = this.reviewDbService.getReviewsFor(providedId);
     } else {
       this.book = this.defaultBook;
     }

@@ -2,6 +2,7 @@ import { Component, Input, inject } from '@angular/core';
 import { Rating, ReviewFields, Review } from '../review.model';
 import { RouterLink, Router } from '@angular/router';
 import { ReviewDbService } from '../review-db.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'review',
@@ -24,15 +25,18 @@ export class ReviewComponent {
     new Rating(5, "5 ☆☆☆☆☆")
   ]; // for the select element to use
 
-  constructor(private router: Router){
+  constructor(private router: Router, private authService: AuthService){
     this.reviewDbService = inject(ReviewDbService);
   }
 
   submitReview(userRating: HTMLSelectElement, userText: HTMLTextAreaElement){
+    var username = this.authService.getCurrentUser();
+    if (username === null) return;
     var review = new Review({
       rating: Number(userRating.value),
       text: userText.value,
-      bookId: this.bookId
+      bookId: this.bookId,
+      username: username
     });
     this.reviewDbService.submitReview(review);
     alert("Thanks for your review!");

@@ -37,6 +37,11 @@ class DB{
     )[0]
   }
 
+  getCurrentUser(): string | null {
+    // uses the Http-Only token to find the user in the db
+    return localStorage.getItem('username');
+  }
+
   validCreds(username: string, password: string): boolean {
     return this.getUserByCreds(username, password) !== null
   }
@@ -76,6 +81,10 @@ export class AuthService {
   // TEMP - replace to use the Http-Only token
   loggedIn(): boolean {
     return localStorage.getItem('username') !== null;
+  }
+
+  getCurrentUser(): string | null {
+    return this.db.getCurrentUser();
   }
 }
 

@@ -36,9 +36,8 @@ export class SearchComponent {
     this.availSearch = AvailType.All;
     this.authHelperService = inject(AuthHelperService);
 
-    // establish default order
+    // establish default display
     this.filter();
-    this.sort();
   }
 
   allBooks(): Book[]{

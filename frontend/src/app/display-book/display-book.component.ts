@@ -2,6 +2,7 @@ import { Component, Input, inject } from '@angular/core';
 import { Book } from '../book.model';
 import { RouterLink } from '@angular/router';
 import { ReviewHelperService } from '../review-helper.service';
+import { UserRole } from '../auth.service';
 
 @Component({
   selector: 'display-book',
@@ -32,6 +33,10 @@ export class DisplayBookComponent {
 
   assumeLoggedIn(): boolean {
     return localStorage.getItem("username") !== null
+  }
+
+  assumeLibrarian(): boolean {
+    return localStorage.getItem("userRole") === UserRole.Librarian;
   }
 
   averageUserRating(bookId: number): string {

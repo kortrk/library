@@ -83,6 +83,11 @@ export class AuthService {
     return localStorage.getItem('username') !== null;
   }
 
+  // TEMP - replace to use the Http-Only token
+  isLibrarian(): boolean {
+    return localStorage.getItem('userRole') === UserRole.Librarian;
+  }
+
   getCurrentUser(): string | null {
     return this.db.getCurrentUser();
   }

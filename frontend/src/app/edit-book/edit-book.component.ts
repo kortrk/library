@@ -13,8 +13,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class EditBookComponent {
   book: Book;
-  bookFields: string[];
-  str = "";
 
   bookDbService: BookDbService;
 
@@ -30,9 +28,6 @@ export class EditBookComponent {
       currentBorrower: null,
       visible: true
     });
-
-    this.bookFields = Object.getOwnPropertyNames(this.book);
-    console.log(this.bookFields);
 
     this.bookDbService = inject(BookDbService);
   }

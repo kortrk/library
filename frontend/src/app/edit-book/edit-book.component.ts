@@ -57,6 +57,11 @@ export class EditBookComponent {
       alert('There was a problem making this update');
     }
   }
+
+  deleteBook(){
+    this.bookDbService.removeBook(this.book.id, this.book.title);
+    this.router.navigate(['/search']);
+  }
 }
 
 class FieldInfo{

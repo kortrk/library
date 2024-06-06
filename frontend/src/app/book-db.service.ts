@@ -146,4 +146,15 @@ export class BookDbService {
     localStorage.setItem('books', JSON.stringify(books));
     return id;
   }
+
+  removeBook(id: number, title: string): boolean {
+    if (confirm(`Are you sure you want to delete ${title}?`)){
+      var books = this.getAllBooks();
+      var finalBooks = books.filter((x) => x.id != id)
+      localStorage.setItem('books', JSON.stringify(finalBooks));
+    } else {
+      return false;
+    }
+    return true;
+  }
 }

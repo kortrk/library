@@ -54,8 +54,9 @@ export class EditBookComponent {
   }
 
   saveBook(){
-    if (this.bookDbService.updateBook(this.book)){
-      alert('Updated successfully');
+    var successMessage = this.bookDbService.updateBook(this.book);
+    if (successMessage !== null){
+      alert(successMessage);
       this.router.navigate(['/search']);
     } else {
       alert('There was a problem making this update');

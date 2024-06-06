@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Book, BookFields } from './book.model';
+import { isEqual } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -99,17 +100,23 @@ export class BookDbService {
     return true;
   }
 
-  updateBook(book: Book){
+  /**
+   * @returns
+   ** type `string` if successful
+   ** type `null` if unsuccessful
+   */
+  updateBook(book: Book): string | null {
     var books = this.getAllBooks();
     var existingBook = books.filter((b) => b.id == book.id)[0];
     if (existingBook === null){
       console.log("No book!")
-      return false;
+      return null;
     }
+    if (isEqual(book, existingBook)) return 'No change!';
     var restOfBooks = books.filter((b) => b.id != book.id);
     restOfBooks.push(book);
     var newBookList = restOfBooks;
     localStorage.setItem('books', JSON.stringify(newBookList));
-    return true;
+    return 'Updated successfully';
   }
 }

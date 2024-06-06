@@ -27,5 +27,7 @@
 
     <button style="margin-top: 6px;" (click)="clearBorrowerAndDuedate()">Returned</button>
   </div>
+  <label for="visible">Visible in catalog? </label>
+  <input type="checkbox" name="visible" [(ngModel)]="book.visible">
 </form>
 <button (click)="saveBook()">Submit</button>

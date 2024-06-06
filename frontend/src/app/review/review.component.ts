@@ -37,6 +37,10 @@ export class ReviewComponent {
     this.router.navigate(['/search']);
   }
 
+  cancelReview(){
+    this.router.navigate(['/search']);
+  }
+
   @Input()
   set id(providedId: number) {
     this.bookId = Number(providedId);

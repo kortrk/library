@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Book, BookFields } from './book.model';
-import { isEqual } from 'lodash';
+import { isEqual, max } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -118,5 +118,32 @@ export class BookDbService {
     var newBookList = restOfBooks;
     localStorage.setItem('books', JSON.stringify(newBookList));
     return 'Updated successfully';
+  }
+
+  generateBook(): number | null {
+    var books = this.getAllBooks();
+    var id;
+    if (books.length == 0){
+      id = 0;
+    } else {
+      var highestId = max(books.map((b) => b.id));
+      if (highestId === undefined) return null; // shouldn't actually happen
+      id = highestId + 1;
+    }
+    books.push(
+      new Book({
+        title: "",
+        author: "",
+        publisher: "",
+        publicationDate: "",
+        id: id,
+        image: "generic.png",
+        currentBorrower: null,
+        duedate: null,
+        visible: false // important
+      })
+    )
+    localStorage.setItem('books', JSON.stringify(books));
+    return id;
   }
 }

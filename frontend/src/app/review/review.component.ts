@@ -17,13 +17,7 @@ export class ReviewComponent {
 
   reviewDbService: ReviewDbService;
 
-  ratingValues = [
-    new Rating(1, "1 ☆"),
-    new Rating(2, "2 ☆☆"),
-    new Rating(3, "3 ☆☆☆"),
-    new Rating(4, "4 ☆☆☆☆"),
-    new Rating(5, "5 ☆☆☆☆☆")
-  ]; // for the select element to use
+  ratingValues = Review.validRatings; // for the select element to use
 
   constructor(private router: Router, private authService: AuthService){
     this.reviewDbService = inject(ReviewDbService);

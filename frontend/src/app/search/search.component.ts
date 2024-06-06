@@ -82,12 +82,6 @@ export class SearchComponent {
     }
   }
 
-  shouldHide(book: Book): boolean {
-    if (book.visible) return false;
-    if (this.authHelperService.assumeLibrarian()) return false;
-    return true;
-  }
-
   sort(){
     console.log(`sorting by ${this.sortBy}`)
     this.books = this.books.sort((a, b) =>{
@@ -102,6 +96,12 @@ export class SearchComponent {
       }
       return 0;
     })
+  }
+
+  shouldHide(book: Book): boolean {
+    if (book.visible) return false;
+    if (this.authHelperService.assumeLibrarian()) return false;
+    return true;
   }
 
   toggleAdvancedSearch(){

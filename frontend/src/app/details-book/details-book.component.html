@@ -4,11 +4,11 @@
 <em>Publisher:</em> {{book.publisher}}<br>
 <em>Publication Date:</em> {{book.publisher}}<br>
 @if(reviews.length > 0){
-  <h2>Reviews</h2>
-  <div style="overflow-y: auto; height: 120px; width: 600px; background-color: aquamarine;">
+  <h3 style="display: inline-block; padding-right: 4px;">Reviews -</h3>
+  <h4 style="display: inline-block;">Average Rating: {{averageRating()}}</h4>
+  <div style="overflow-y: auto; height: 120px; width: 600px; background-color:aliceblue;">
     @for(review of reviews; track review){
-      <h3>{{review.username}}</h3>
-      <h4>Rating: {{review.prettyRating()}}</h4>
+      <h4>{{review.username}} - {{review.prettyRating()}}</h4>
       <p>{{review.text}}</p>
     }
   </div>

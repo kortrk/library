@@ -1,4 +1,4 @@
-<button (click)="createBook()" [hidden]="!assumeLibrarian()">Create Book</button>
+<librarian-toolbar></librarian-toolbar>
 
 <label for="searchbar">Search: </label>
 <input type="text" id="searchbar" (keyup.enter)="filter()" [(ngModel)]="titleSearch">

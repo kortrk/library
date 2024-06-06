@@ -2,7 +2,7 @@ export interface BookFields {
   title: string;
   author: string;
   // description: string;
-  // cover_image: string;
+  coverImage: string;
   // average_user_rating: string;
   // -- for details view --
   publisher: string;
@@ -13,7 +13,6 @@ export interface BookFields {
   // customer_reviews: string;
   // -- my additions --
   id: number;
-  image: string;
   currentBorrower: string | null;
   duedate: string | null;
   visible: boolean;
@@ -24,7 +23,7 @@ export class Book {
     title: string;
     author: string;
     // description: string;
-    // cover_image: string;
+    coverImage: string;
     // average_user_rating: string;
     // -- for details view --
     publisher: string;
@@ -35,7 +34,6 @@ export class Book {
     // customer_reviews: string;
     // -- my additions --
     id: number;
-    image: string;
     currentBorrower: string | null;
     duedate: string | null;
     visible: boolean; // controls whether book appears to customers
@@ -46,14 +44,14 @@ export class Book {
     this.publisher = bookFields.publisher;
     this.publicationDate = bookFields.publicationDate;
     this.id = bookFields.id;
-    this.image = bookFields.image;
+    this.coverImage = bookFields.coverImage;
     this.currentBorrower = bookFields.currentBorrower;
     this.duedate = bookFields.duedate;
     this.visible = bookFields.visible;
   }
 
   imgLoc(): string {
-    return `assets/images/${this.image}`
+    return `assets/images/${this.coverImage}`
   }
 
   currentlyBorrowed(): boolean {

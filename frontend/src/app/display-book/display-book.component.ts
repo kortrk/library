@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { ReviewHelperService } from '../review-helper.service';
 import { UserRole } from '../auth.service';
 import { AuthHelperService } from '../auth-helper.service';
+import { BookHelperService } from '../book-helper.service';
 
 @Component({
   selector: 'display-book',
@@ -17,22 +18,14 @@ export class DisplayBookComponent {
 
   reviewHelperService: ReviewHelperService;
   authHelperService: AuthHelperService;
+  bookHelperService: BookHelperService;
 
   constructor(){
-    this.book = new Book({
-      title: "Esther",
-      author: "Mordecai",
-      publisher: "Thomas Nelson",
-      publicationDate: "1924",
-      id: 0,
-      image: "generic.png",
-      currentBorrower: null,
-      duedate: null,
-      visible: true
-    });
-
     this.reviewHelperService = inject(ReviewHelperService);
     this.authHelperService = inject(AuthHelperService);
+    this.bookHelperService = inject(BookHelperService);
+
+    this.book = this.bookHelperService.genericBook();
   }
 
   assumeLoggedIn(): boolean {

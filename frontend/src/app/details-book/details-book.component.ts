@@ -6,6 +6,7 @@ import { ReviewDbService } from '../review-db.service';
 import { Review } from '../review.model';
 import { ReviewHelperService } from '../review-helper.service';
 import { AuthHelperService } from '../auth-helper.service';
+import { BookHelperService } from '../book-helper.service';
 
 @Component({
   selector: 'details-book',
@@ -23,24 +24,16 @@ export class DetailsBookComponent {
   reviewDbService: ReviewDbService;
   reviewHelperService: ReviewHelperService;
   authHelperService: AuthHelperService;
+  bookHelperService: BookHelperService;
 
   constructor(){
     this.bookDbService = inject(BookDbService);
     this.reviewDbService = inject(ReviewDbService);
     this.reviewHelperService = inject(ReviewHelperService);
     this.authHelperService = inject(AuthHelperService);
+    this.bookHelperService = inject(BookHelperService);
 
-    this.defaultBook = new Book({
-      title: 'string',
-      author: 'string',
-      publisher: 'string',
-      publicationDate: 'string',
-      id: 0,
-      image: 'string',
-      duedate: 'string',
-      currentBorrower: null,
-      visible: true
-    });
+    this.defaultBook = this.bookHelperService.genericBook();
 
     this.book = this.defaultBook;
     this.reviews = this.reviewDbService.getReviewsFor(0);

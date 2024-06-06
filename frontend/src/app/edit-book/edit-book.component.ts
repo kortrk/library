@@ -3,6 +3,7 @@ import { Book } from '../book.model';
 import { BookDbService } from '../book-db.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { BookHelperService } from '../book-helper.service';
 
 @Component({
   selector: 'edit-book',
@@ -15,21 +16,13 @@ export class EditBookComponent {
   book: Book;
 
   bookDbService: BookDbService;
+  bookHelperService: BookHelperService;
 
   constructor(private router: Router){
-    this.book = new Book({
-      title: 'string',
-      author: 'string',
-      publisher: 'string',
-      publicationDate: 'string',
-      id: 0,
-      image: 'string',
-      duedate: null,
-      currentBorrower: null,
-      visible: true
-    });
-
     this.bookDbService = inject(BookDbService);
+    this.bookHelperService = inject(BookHelperService);
+
+    this.book = this.bookHelperService.genericBook();
   }
 
   @Input()
@@ -59,7 +52,13 @@ export class EditBookComponent {
   }
 
   deleteBook(){
-    this.bookDbService.removeBook(this.book.id, this.book.title);
+    if (confirm(`Are you sure you want to delete ${this.book.title}?`)){
+      this.bookDbService.removeBook(this.book.id);
+      this.router.navigate(['/search']);
+    }
+  }
+
+  cancel(){
     this.router.navigate(['/search']);
   }
 }

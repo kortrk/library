@@ -1,13 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Book, BookFields } from './book.model';
+import { BookHelperService } from './book-helper.service';
 import { isEqual, max } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookDbService {
+  bookHelperService: BookHelperService;
 
   constructor() {
+    this.bookHelperService = inject(BookHelperService);
+
     this.initBooks();
   }
 
@@ -20,7 +24,7 @@ export class BookDbService {
         publisher: "Zondervan",
         publicationDate: "1924",
         id: 0,
-        image: "generic.png",
+        coverImage: "generic.png",
         currentBorrower: "Xerxes",
         duedate: "5/5/5",
         visible: true
@@ -31,7 +35,7 @@ export class BookDbService {
         publisher: "Penguin",
         publicationDate: "1833",
         id: 1,
-        image: "generic.png",
+        coverImage: "generic.png",
         currentBorrower: null,
         duedate: null,
         visible: true
@@ -42,7 +46,7 @@ export class BookDbService {
         publisher: "Simon & Schuster",
         publicationDate: "1234",
         id: 2,
-        image: "generic.png",
+        coverImage: "generic.png",
         currentBorrower: null,
         duedate: null,
         visible: true
@@ -53,7 +57,7 @@ export class BookDbService {
         publisher: "Wallton Group",
         publicationDate: "700 BC",
         id: 3,
-        image: "generic.png",
+        coverImage: "generic.png",
         currentBorrower: null,
         duedate: null,
         visible: false
@@ -130,31 +134,17 @@ export class BookDbService {
       if (highestId === undefined) return null; // shouldn't actually happen
       id = highestId + 1;
     }
-    books.push(
-      new Book({
-        title: "",
-        author: "",
-        publisher: "",
-        publicationDate: "",
-        id: id,
-        image: "generic.png",
-        currentBorrower: null,
-        duedate: null,
-        visible: false // important
-      })
-    )
+    var newBook = this.bookHelperService.genericBook();
+    newBook.id = id;
+    books.push(newBook);
     localStorage.setItem('books', JSON.stringify(books));
     return id;
   }
 
-  removeBook(id: number, title: string): boolean {
-    if (confirm(`Are you sure you want to delete ${title}?`)){
-      var books = this.getAllBooks();
-      var finalBooks = books.filter((x) => x.id != id)
-      localStorage.setItem('books', JSON.stringify(finalBooks));
-    } else {
-      return false;
-    }
+  removeBook(id: number): boolean {
+    var books = this.getAllBooks();
+    var finalBooks = books.filter((x) => x.id != id)
+    localStorage.setItem('books', JSON.stringify(finalBooks));
     return true;
   }
 }

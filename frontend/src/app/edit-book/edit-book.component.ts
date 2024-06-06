@@ -27,7 +27,8 @@ export class EditBookComponent {
       id: 0,
       image: 'string',
       duedate: null,
-      currentBorrower: null
+      currentBorrower: null,
+      visible: true
     });
 
     this.bookFields = Object.getOwnPropertyNames(this.book);

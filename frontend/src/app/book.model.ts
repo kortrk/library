@@ -16,6 +16,7 @@ export interface BookFields {
   image: string;
   currentBorrower: string | null;
   duedate: string | null;
+  visible: boolean;
 }
 
 export class Book {
@@ -37,6 +38,7 @@ export class Book {
     image: string;
     currentBorrower: string | null;
     duedate: string | null;
+    visible: boolean; // controls whether book appears to customers
 
 	constructor(bookFields: BookFields) {
     this.title = bookFields.title;
@@ -47,6 +49,7 @@ export class Book {
     this.image = bookFields.image;
     this.currentBorrower = bookFields.currentBorrower;
     this.duedate = bookFields.duedate;
+    this.visible = bookFields.visible;
   }
 
   imgLoc(): string {

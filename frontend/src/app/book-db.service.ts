@@ -21,7 +21,8 @@ export class BookDbService {
         id: 0,
         image: "generic.png",
         currentBorrower: "Xerxes",
-        duedate: "5/5/5"
+        duedate: "5/5/5",
+        visible: true
       }),
       new Book({
         title: "Daniel",
@@ -31,7 +32,8 @@ export class BookDbService {
         id: 1,
         image: "generic.png",
         currentBorrower: null,
-        duedate: null
+        duedate: null,
+        visible: true
       }),
       new Book({
         title: "Ecclesiastes",
@@ -41,7 +43,19 @@ export class BookDbService {
         id: 2,
         image: "generic.png",
         currentBorrower: null,
-        duedate: null
+        duedate: null,
+        visible: true
+      }),
+      new Book({
+        title: "Nehemiah",
+        author: "Nehemiah",
+        publisher: "Wallton Group",
+        publicationDate: "700 BC",
+        id: 3,
+        image: "generic.png",
+        currentBorrower: null,
+        duedate: null,
+        visible: false
       })
     ]
     localStorage.setItem('books', JSON.stringify(books))

@@ -29,5 +29,5 @@
 <br>
 
 @for(book of books; track book){
-  <display-book [book]="book"></display-book>
+  <display-book [book]="book" [hidden]="shouldHide(book)"></display-book>
 }

@@ -3,6 +3,7 @@ import { Book } from '../book.model';
 import { RouterLink } from '@angular/router';
 import { ReviewHelperService } from '../review-helper.service';
 import { UserRole } from '../auth.service';
+import { AuthHelperService } from '../auth-helper.service';
 
 @Component({
   selector: 'display-book',
@@ -15,6 +16,7 @@ export class DisplayBookComponent {
   @Input() book: Book;
 
   reviewHelperService: ReviewHelperService;
+  authHelperService: AuthHelperService;
 
   constructor(){
     this.book = new Book({
@@ -25,18 +27,20 @@ export class DisplayBookComponent {
       id: 0,
       image: "generic.png",
       currentBorrower: null,
-      duedate: null
+      duedate: null,
+      visible: true
     });
 
     this.reviewHelperService = inject(ReviewHelperService);
+    this.authHelperService = inject(AuthHelperService);
   }
 
   assumeLoggedIn(): boolean {
-    return localStorage.getItem("username") !== null
+    return this.authHelperService.assumeLoggedIn();
   }
 
   assumeLibrarian(): boolean {
-    return localStorage.getItem("userRole") === UserRole.Librarian;
+    return this.authHelperService.assumeLibrarian();
   }
 
   averageUserRating(bookId: number): string {

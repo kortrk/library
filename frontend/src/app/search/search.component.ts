@@ -3,6 +3,7 @@ import { Book } from '../book.model';
 import { DisplayBookComponent } from '../display-book/display-book.component'
 import { FormsModule, NgModel } from '@angular/forms';
 import { BookDbService } from '../book-db.service'
+import { AuthHelperService } from '../auth-helper.service';
 
 @Component({
   selector: 'search',
@@ -23,6 +24,8 @@ export class SearchComponent {
   sortTypes = Object.values(SortType);
   availTypes = Object.values(AvailType);
 
+  authHelperService: AuthHelperService;
+
   constructor(){
     this.bookDbService = inject(BookDbService);
     this.books = this.allBooks();
@@ -31,9 +34,11 @@ export class SearchComponent {
     this.titleSearch = "";
     this.authorSearch = "";
     this.availSearch = AvailType.All;
+    this.authHelperService = inject(AuthHelperService);
 
     // establish default order
-    this.sort()
+    this.filter();
+    this.sort();
   }
 
   allBooks(): Book[]{
@@ -73,9 +78,15 @@ export class SearchComponent {
         return books.filter((b) => b.currentBorrower !== null)
       }
       default: {
-        return books
+        return books;
       }
     }
+  }
+
+  shouldHide(book: Book): boolean {
+    if (book.visible) return false;
+    if (this.authHelperService.assumeLibrarian()) return false;
+    return true;
   }
 
   sort(){

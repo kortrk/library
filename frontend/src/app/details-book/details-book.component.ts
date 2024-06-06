@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { ReviewDbService } from '../review-db.service';
 import { Review } from '../review.model';
 import { ReviewHelperService } from '../review-helper.service';
+import { AuthHelperService } from '../auth-helper.service';
 
 @Component({
   selector: 'details-book',
@@ -21,11 +22,13 @@ export class DetailsBookComponent {
   bookDbService: BookDbService;
   reviewDbService: ReviewDbService;
   reviewHelperService: ReviewHelperService;
+  authHelperService: AuthHelperService;
 
   constructor(){
     this.bookDbService = inject(BookDbService);
     this.reviewDbService = inject(ReviewDbService);
     this.reviewHelperService = inject(ReviewHelperService);
+    this.authHelperService = inject(AuthHelperService);
 
     this.defaultBook = new Book({
       title: 'string',
@@ -35,7 +38,8 @@ export class DetailsBookComponent {
       id: 0,
       image: 'string',
       duedate: 'string',
-      currentBorrower: null
+      currentBorrower: null,
+      visible: true
     });
 
     this.book = this.defaultBook;
@@ -54,7 +58,7 @@ export class DetailsBookComponent {
   }
 
   assumeLoggedIn(): boolean {
-    return localStorage.getItem("username") !== null
+    return this.authHelperService.assumeLoggedIn();
   }
 
   averageRating(): string {

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthService, UserRole } from '../auth.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthHelperService } from '../auth-helper.service';
 
 @Component({
   selector: 'login',
@@ -13,10 +14,13 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   paneSelection: string
 
+  authHelperService: AuthHelperService;
+
   userRoles = Object.values(UserRole); // for the <select> dropdown to use
 
   constructor(public authService: AuthService, private router: Router){
-    this.paneSelection = "login"
+    this.paneSelection = "login";
+    this.authHelperService = inject(AuthHelperService);
   }
 
   login(username: HTMLInputElement, password: HTMLInputElement): boolean{
@@ -39,16 +43,16 @@ export class LoginComponent {
 
   // this could be manipulated - it's only an assumption
   assumeLoggedIn(): boolean {
-    return this.assumedUsername() !== null
+    return this.authHelperService.assumeLoggedIn();
   }
 
   // this could be manipulated - it's only an assumption
   assumedUsername(): string | null {
-    return localStorage.getItem("username")
+    return this.authHelperService.assumedUsername();
   }
 
   // this could be manipulated - it's only an assumption
   assumedRole(): string | null {
-    return localStorage.getItem("role")
+    return this.authHelperService.assumedRole();
   }
 }

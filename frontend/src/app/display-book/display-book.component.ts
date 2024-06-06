@@ -21,7 +21,7 @@ export class DisplayBookComponent {
       title: "Esther",
       author: "Mordecai",
       publisher: "Thomas Nelson",
-      publication_date: "1924",
+      publicationDate: "1924",
       id: 0,
       image: "generic.png",
       currentBorrower: null,

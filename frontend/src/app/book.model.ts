@@ -6,7 +6,7 @@ export interface BookFields {
   // average_user_rating: string;
   // -- for details view --
   publisher: string;
-  publication_date: string;
+  publicationDate: string;
   // category: string;
   // isbn: string;
   // page_count: string;
@@ -27,7 +27,7 @@ export class Book {
     // average_user_rating: string;
     // -- for details view --
     publisher: string;
-    publication_date: string;
+    publicationDate: string;
     // category: string;
     // isbn: string;
     // page_count: string;
@@ -42,7 +42,7 @@ export class Book {
     this.title = bookFields.title;
     this.author = bookFields.author;
     this.publisher = bookFields.publisher;
-    this.publication_date = bookFields.publication_date;
+    this.publicationDate = bookFields.publicationDate;
     this.id = bookFields.id;
     this.image = bookFields.image;
     this.currentBorrower = bookFields.currentBorrower;

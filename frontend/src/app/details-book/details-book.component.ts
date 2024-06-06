@@ -31,7 +31,7 @@ export class DetailsBookComponent {
       title: 'string',
       author: 'string',
       publisher: 'string',
-      publication_date: 'string',
+      publicationDate: 'string',
       id: 0,
       image: 'string',
       duedate: 'string',

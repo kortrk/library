@@ -1,1 +1,12 @@
-<p>edit-book works!</p>
+<form style="overflow: hidden; width:min-content;">
+  @for(field of fieldNamesAndValues(book); track field.name){
+    <label for={{field.name}}>{{field.name}}</label>
+    <input
+      type="text"
+      name={{field.name}}
+      style="float: right; clear: both;"
+      value="{{field.value}}"
+    >
+    <br>
+  }
+</form>

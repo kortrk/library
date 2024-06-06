@@ -1,12 +1,31 @@
+<h1>Editing {{book.title}}</h1>
 <form style="overflow: hidden; width:min-content;">
-  @for(field of fieldNamesAndValues(book); track field.name){
-    <label for={{field.name}}>{{field.name}}</label>
-    <input
-      type="text"
-      name={{field.name}}
-      style="float: right; clear: both;"
-      value="{{field.value}}"
-    >
+  <label for="title">Title</label>
+  <input type="text" name="title" [(ngModel)]="book.title">
+  <br>
+
+  <label for="author">Author</label>
+  <input type="text" name="author" [(ngModel)]="book.author">
+  <br>
+
+  <label for="publisher">Publisher</label>
+  <input type="text" name="publisher" [(ngModel)]="book.publisher">
+  <br>
+
+  <label for="publicationDate">Publication Date</label>
+  <input type="text" name="publicationDate" [(ngModel)]="book.publicationDate">
+  <br>
+
+  <div style="background-color:burlywood; padding: 3px; border: 1px solid black; padding-top: 5px; padding-bottom: 10px; margin-top: 10px; margin-bottom: 10px;">
+    <label for="currentBorrower">Current Borrower</label>
+    <input type="text" name="currentBorrower" [(ngModel)]="book.currentBorrower">
     <br>
-  }
+
+    <label for="duedate">Due Date</label>
+    <input type="string" name="duedate" [(ngModel)]="book.duedate">
+    <br>
+
+    <button style="margin-top: 6px;" (click)="clearBorrowerAndDuedate()">Returned</button>
+  </div>
 </form>
+<button (click)="saveBook()">Submit</button>

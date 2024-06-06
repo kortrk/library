@@ -2,17 +2,19 @@ import { Component, Input, inject } from '@angular/core';
 import { Book } from '../book.model';
 import { BookDbService } from '../book-db.service';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'edit-book',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './edit-book.component.html',
   styleUrl: './edit-book.component.css'
 })
 export class EditBookComponent {
   book: Book;
   bookFields: string[];
+  str = "";
 
   bookDbService: BookDbService;
 
@@ -44,25 +46,19 @@ export class EditBookComponent {
     }
   }
 
-  humanizeStr(input: string): string{
-    return input
-    // insert a space before all caps
-    .replace(/([A-Z])/g, ' $1')
-    // uppercase the first character
-    .replace(/^./, function(str){ return str.toUpperCase(); })
+
+  clearBorrowerAndDuedate(){
+    this.book.currentBorrower = null;
+    this.book.duedate = null;
   }
 
-  displayFields(): string[]{
-    return this.bookFields.map((x) => this.humanizeStr(x))
-  }
-
-  fieldNamesAndValues(x: Object): FieldInfo[]{
-    return Object.entries(x).map((info) =>
-      new FieldInfo(
-        this.humanizeStr(info[0]),
-        String(info[1])
-      )
-    )
+  saveBook(){
+    if (this.bookDbService.updateBook(this.book)){
+      alert('Updated successfully');
+      this.router.navigate(['/search']);
+    } else {
+      alert('There was a problem making this update');
+    }
   }
 }
 

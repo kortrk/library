@@ -84,4 +84,18 @@ export class BookDbService {
     localStorage.setItem('books', JSON.stringify(books));
     return true;
   }
+
+  updateBook(book: Book){
+    var books = this.getAllBooks();
+    var existingBook = books.filter((b) => b.id == book.id)[0];
+    if (existingBook === null){
+      console.log("No book!")
+      return false;
+    }
+    var restOfBooks = books.filter((b) => b.id != book.id);
+    restOfBooks.push(book);
+    var newBookList = restOfBooks;
+    localStorage.setItem('books', JSON.stringify(newBookList));
+    return true;
+  }
 }

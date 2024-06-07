@@ -31,7 +31,8 @@ export class EditBookComponent {
     if (foundBook !== null){
       this.book = foundBook;
     } else {
-      this.router.navigate(['/search']);
+      this.book = this.bookHelperService.genericBook();
+      this.book.id = this.bookDbService.getNextId(); // tmp
     }
   }
 
@@ -42,7 +43,7 @@ export class EditBookComponent {
   }
 
   saveBook(){
-    var successMessage = this.bookDbService.updateBook(this.book);
+    var successMessage = this.bookDbService.saveBook(this.book);
     if (successMessage !== null){
       alert(successMessage);
       this.router.navigate(['/search']);

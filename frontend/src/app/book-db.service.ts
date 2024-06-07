@@ -26,7 +26,7 @@ export class BookDbService {
         id: 0,
         coverImage: "generic.png",
         currentBorrower: "Xerxes",
-        duedate: "5/5/5",
+        duedate: "Fri Jun 12 2026",
         visible: true
       }),
       new Book({
@@ -109,35 +109,34 @@ export class BookDbService {
    ** type `string` if successful
    ** type `null` if unsuccessful
    */
-  updateBook(book: Book): string | null {
+  saveBook(book: Book): string | null {
+    var info = "Updated";
     var books = this.getAllBooks();
     var existingBook = books.filter((b) => b.id == book.id)[0];
-    if (existingBook === null){
-      console.log("No book!")
-      return null;
+    if (existingBook === undefined){
+      info = "Created";
     }
     if (isEqual(book, existingBook)) return 'No change!';
     var restOfBooks = books.filter((b) => b.id != book.id);
     restOfBooks.push(book);
     var newBookList = restOfBooks;
     localStorage.setItem('books', JSON.stringify(newBookList));
-    return 'Updated successfully';
+    return `${info} successfully`;
   }
 
-  generateBook(): number | null {
+  /**
+   * temporary - backend will handle this
+   */
+  getNextId(): number {
     var books = this.getAllBooks();
     var id;
     if (books.length == 0){
       id = 0;
     } else {
       var highestId = max(books.map((b) => b.id));
-      if (highestId === undefined) return null; // shouldn't actually happen
+      if (highestId === undefined) return 0; // shouldn't actually happen
       id = highestId + 1;
     }
-    var newBook = this.bookHelperService.genericBook();
-    newBook.id = id;
-    books.push(newBook);
-    localStorage.setItem('books', JSON.stringify(books));
     return id;
   }
 

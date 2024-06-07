@@ -20,12 +20,7 @@ export class LibrarianToolbarComponent {
   }
 
   createBook(){
-    var newBookId = this.bookDbService.generateBook();
-    if (newBookId === null){
-      alert("failed to create book");
-      return;
-    }
-    this.router.navigate(['edit-book/', {id: newBookId}]);
+    this.router.navigate(['edit-book/']);
   }
 
   assumeLibrarian(): boolean {

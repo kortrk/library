@@ -1,11 +1,11 @@
-<form class="ui form">
-  @if(assumeLoggedIn()){
-    <div style="padding: 12px">
-      Logged in as <b>{{assumedUsername()}}</b>.
-      <button (click)="logout()">Log out</button>
-    </div>
-  } @else {
-    <div class="ui green message">
+<div class="ui green message">
+  <form class="ui form">
+    @if(assumeLoggedIn()){
+      <div style="padding-left: 12px">
+        Logged in as <b>{{assumedUsername()}}</b>. &nbsp;
+        <button class="ui tiny button" (click)="logout()">Log out</button>
+      </div>
+    } @else {
       <div class="title" (click)="toggleExpandLogin()">
         <i class="{{expandLogin ? 'triangle down' : 'triangle right'}} icon"></i>
         Login or Sign Up
@@ -22,19 +22,21 @@
         @if(paneSelection === "login"){
           <label for="username">Username:</label>
           <input id="username" type="text" (keyup.enter)="login(username, password)" #username>
-          <br>
+          <br><br>
 
           <label for="password">Password:</label>
           <input id="password" type="text" (keyup.enter)="login(username, password)" #password>
-          <br>
+          <br><br>
 
-          <button (click)="login(username, password)" style="margin-top: 5px">Login</button>
+          <button (click)="login(username, password)" style="margin-top: 5px" class="ui green button">Login</button>
         } @else {
           <label for="username">Username:</label>
-          <input id="username" type="text" (keyup.enter)="signUp(username, password, signuprole)" style="display: flex; flex-direction: column; align-items: flex-end;" #username>
+          <input id="username" type="text" (keyup.enter)="signUp(username, password, signuprole)" #username>
+          <br><br>
 
           <label for="password">Password:</label>
-          <input id="password" type="text" (keyup.enter)="signUp(username, password, signuprole)" style="display: flex; flex-direction: column; align-items: flex-end;" #password>
+          <input id="password" type="text" (keyup.enter)="signUp(username, password, signuprole)" #password>
+          <br><br>
 
           <label for="roles">I am a:  </label>
           <select id="roles" name="roles" #signuprole>
@@ -43,10 +45,9 @@
             }
           </select>
           <br>
-          <button (click)="signUp(username, password, signuprole)" style="margin-top: 5px">Sign Up</button>
+          <button (click)="signUp(username, password, signuprole)" style="margin-top: 5px" class="ui green button">Sign Up</button>
         }
       </div>
-    </div>
-  }
-</form>
-<br>
+    }
+  </form>
+</div>

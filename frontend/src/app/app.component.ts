@@ -3,6 +3,7 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
 import { DisplayBookComponent } from './display-book/display-book.component';
 import { LoginComponent } from './login/login.component';
 import { SearchComponent } from './search/search.component'
+import { AuthHelperService } from './auth-helper.service';
 
 @Component({
   selector: 'app-root',
@@ -20,4 +21,18 @@ import { SearchComponent } from './search/search.component'
 })
 export class AppComponent {
   title = 'frontend';
+
+  authHelperService: AuthHelperService;
+
+  constructor(){
+    this.authHelperService = inject(AuthHelperService);
+  }
+
+  assumeLoggedIn(): boolean {
+    return this.authHelperService.assumeLoggedIn();
+  }
+
+  assumedUsername(): string | null {
+    return this.authHelperService.assumedUsername();
+  }
 }

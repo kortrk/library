@@ -18,6 +18,8 @@ export class LoginComponent {
 
   userRoles = Object.values(UserRole); // for the <select> dropdown to use
 
+  expandLogin = false
+
   constructor(public authService: AuthService, private router: Router){
     this.paneSelection = "login";
     this.authHelperService = inject(AuthHelperService);
@@ -54,5 +56,9 @@ export class LoginComponent {
   // this could be manipulated - it's only an assumption
   assumedRole(): string | null {
     return this.authHelperService.assumedRole();
+  }
+
+  toggleExpandLogin(){
+    this.expandLogin = !this.expandLogin;
   }
 }

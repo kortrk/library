@@ -12,7 +12,7 @@
     <form class="ui form">
       <label for="authorfilter">Filter by Author: </label>
       <input type="text" name="authorfilter" id="authorfilter" (keyup.enter)="filter()" [(ngModel)]="authorSearch">
-      <br>
+      <br><br>
 
       <label for="availfilter">Filter by Availability: </label>
       <select name="availfilter" id="availfilter" [(ngModel)]="availSearch">
@@ -29,7 +29,7 @@
 <!-- <br>
 <br> -->
 
-<div class="ui blue message">
+<div class="ui grey message"> <!-- also liked teal -->
   <form class="ui form">
     <label for="sort-by" class="ui blue label">Sort by: </label> &nbsp;
     @for(item of sortTypes; track item){

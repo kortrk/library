@@ -1,41 +1,52 @@
-@if(assumeLoggedIn()){
-  <div style="background-color: palegreen; float: right; padding: 12px">
-    Logged in as <b>{{assumedUsername()}}</b>.
-    <button (click)="logout()">Log out</button>
-  </div>
-} @else {
-  <div class="login-or-signup-choice">
-    <select name="login-or-signup" id="login-or-signup" [(ngModel)]="paneSelection">
-      <option value="login">Log In</option>
-      <option value="signup">Sign Up</option>
-    </select>
-  </div>
+<form class="ui form">
+  @if(assumeLoggedIn()){
+    <div style="padding: 12px">
+      Logged in as <b>{{assumedUsername()}}</b>.
+      <button (click)="logout()">Log out</button>
+    </div>
+  } @else {
+    <div class="ui green message">
+      <div class="title" (click)="toggleExpandLogin()">
+        <i class="{{expandLogin ? 'triangle down' : 'triangle right'}} icon"></i>
+        Login or Sign Up
+      </div>
 
-  <div style="background-color: palegreen; float:right; padding: 12px">
-    @if(paneSelection === "login"){
-      <label for="username">Username:</label>
-      <input id="username" type="text" (keyup.enter)="login(username, password)" style="display: flex; flex-direction: column; align-items: flex-end;" #username>
+      <div class="content" [hidden]="!expandLogin">
+        <br>
+        <select name="login-or-signup" id="login-or-signup" [(ngModel)]="paneSelection">
+          <option value="login">Log In</option>
+          <option value="signup">Sign Up</option>
+        </select>
+        <br>
 
-      <label for="password">Password:</label>
-      <input id="password" type="text" (keyup.enter)="login(username, password)" style="display: flex; flex-direction: column; align-items: flex-end;" #password>
+        @if(paneSelection === "login"){
+          <label for="username">Username:</label>
+          <input id="username" type="text" (keyup.enter)="login(username, password)" #username>
+          <br>
 
-      <button (click)="login(username, password)" style="margin-top: 5px">Login</button>
-    } @else {
-      <label for="username">Username:</label>
-      <input id="username" type="text" (keyup.enter)="signUp(username, password, signuprole)" style="display: flex; flex-direction: column; align-items: flex-end;" #username>
+          <label for="password">Password:</label>
+          <input id="password" type="text" (keyup.enter)="login(username, password)" #password>
+          <br>
 
-      <label for="password">Password:</label>
-      <input id="password" type="text" (keyup.enter)="signUp(username, password, signuprole)" style="display: flex; flex-direction: column; align-items: flex-end;" #password>
+          <button (click)="login(username, password)" style="margin-top: 5px">Login</button>
+        } @else {
+          <label for="username">Username:</label>
+          <input id="username" type="text" (keyup.enter)="signUp(username, password, signuprole)" style="display: flex; flex-direction: column; align-items: flex-end;" #username>
 
-      <label for="roles">I am a:  </label>
-      <select id="roles" name="roles" #signuprole>
-        @for(role of userRoles; track role){
-          <option value={{role}}>{{role}}</option>
+          <label for="password">Password:</label>
+          <input id="password" type="text" (keyup.enter)="signUp(username, password, signuprole)" style="display: flex; flex-direction: column; align-items: flex-end;" #password>
+
+          <label for="roles">I am a:  </label>
+          <select id="roles" name="roles" #signuprole>
+            @for(role of userRoles; track role){
+              <option value={{role}}>{{role}}</option>
+            }
+          </select>
+          <br>
+          <button (click)="signUp(username, password, signuprole)" style="margin-top: 5px">Sign Up</button>
         }
-      </select>
-      <br>
-      <button (click)="signUp(username, password, signuprole)" style="margin-top: 5px">Sign Up</button>
-    }
-
-  </div>
-}
+      </div>
+    </div>
+  }
+</form>
+<br>

@@ -4,7 +4,6 @@
   <input type="text" style="width:25em;" placeholder="Search..." id="searchbar" (keyup.enter)="filter()" [(ngModel)]="titleSearch">
   <button class="ui green button" (click)="filter()">Go</button>
   <button class="ui small button" (click)="toggleAdvancedSearch()">{{showAdvancedSearch ? "Hide ": "Show "}} Advanced Search</button>
-
 </div>
 
 @if(showAdvancedSearch){
@@ -40,6 +39,8 @@
   </form>
 </div>
 
-@for(book of books; track book.id){
-  <display-book [book]="book" [hidden]="shouldHide(book)"></display-book>
-}
+<div class="ui items">
+  @for(book of books; track book.id){
+    <display-book [book]="book" [hidden]="shouldHide(book)"></display-book>
+  }
+</div>

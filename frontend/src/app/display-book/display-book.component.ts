@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, HostBinding, Input, inject } from '@angular/core';
 import { Book } from '../book.model';
 import { RouterLink } from '@angular/router';
 import { ReviewHelperService } from '../review-helper.service';
@@ -19,6 +19,8 @@ export class DisplayBookComponent {
   reviewHelperService: ReviewHelperService;
   authHelperService: AuthHelperService;
   bookHelperService: BookHelperService;
+
+  @HostBinding('attr.class') cssClass = 'item'; // from Semantic UI
 
   constructor(){
     this.reviewHelperService = inject(ReviewHelperService);

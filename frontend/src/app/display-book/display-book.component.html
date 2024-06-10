@@ -1,17 +1,23 @@
-<div style="padding: 30px; display:inline-block">
-  <span class="book-img">
-    <img height=200 src="{{book.imgLoc()}}" style="padding-bottom: 5px">
-  </span>
-  <span class="book-basic-info">
-    <h3>{{book.title}}</h3>
+<div class="image">
+  <img height=200 src="{{book.imgLoc()}}" style="padding-bottom: 5px">
+</div>
+
+<div class="content">
+  <div class="header">{{book.title}}</div>
+  <div class="meta">
     <p>By {{book.author}}</p>
     <p>Avg. Rating: {{averageUserRating(book.id)}}</p>
-  </span>
-  <button [routerLink]="['/details', {id: book.id}]">Details</button>
-  @if(assumeLoggedIn()){
-    <button [routerLink]="['/review', {id: book.id, title: book.title}]">Add a Review</button>
-    @if(assumeLibrarian()){
-      <button [routerLink]="['/edit-book', {id: book.id}]">Edit</button>
+  </div>
+  <div class="description">
+    Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.
+  </div>
+  <div class="extra">
+    <button [routerLink]="['/details', {id: book.id}]" class="ui tiny button">Details</button>
+    @if(assumeLoggedIn()){
+      <button [routerLink]="['/review', {id: book.id, title: book.title}]" class="ui tiny button">Add a Review</button>
+      @if(assumeLibrarian()){
+        <button [routerLink]="['/edit-book', {id: book.id}]" class="ui tiny button">Edit</button>
+      }
     }
-  }
+  </div>
 </div>

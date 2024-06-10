@@ -24,7 +24,7 @@ export class BookDbService {
         publisher: "Zondervan",
         publicationDate: "1924",
         id: 0,
-        coverImage: "generic.png",
+        coverImage: "Esther.jpg",
         currentBorrower: "Xerxes",
         duedate: "Fri Jun 12 2026",
         visible: true
@@ -35,7 +35,7 @@ export class BookDbService {
         publisher: "Penguin",
         publicationDate: "1833",
         id: 1,
-        coverImage: "generic.png",
+        coverImage: "Daniel.jpg",
         currentBorrower: null,
         duedate: null,
         visible: true
@@ -46,7 +46,7 @@ export class BookDbService {
         publisher: "Simon & Schuster",
         publicationDate: "1234",
         id: 2,
-        coverImage: "generic.png",
+        coverImage: "Ecclesiastes.jpg",
         currentBorrower: null,
         duedate: null,
         visible: true
@@ -57,7 +57,7 @@ export class BookDbService {
         publisher: "Wallton Group",
         publicationDate: "700 BC",
         id: 3,
-        coverImage: "generic.png",
+        coverImage: "Nehemiah.jpg",
         currentBorrower: null,
         duedate: null,
         visible: false

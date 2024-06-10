@@ -16,7 +16,7 @@ export class BookHelperService {
       publisher: placeholderStr,
       publicationDate: placeholderStr,
       id: 0,
-      coverImage: "generic.png",
+      coverImage: "generic.jpg",
       currentBorrower: null,
       duedate: null,
       visible: false

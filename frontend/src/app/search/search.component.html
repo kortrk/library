@@ -26,17 +26,20 @@
 }
 
 <button class="ui button" (click)="clearSearch()">Clear Search</button>
-<br><br>
+<!-- <br>
+<br> -->
 
+<div class="ui blue message">
+  <form class="ui form">
+    <label for="sort-by" class="ui blue label">Sort by: </label> &nbsp;
+    @for(item of sortTypes; track item){
+      <input type="radio" name="options" (click)="sortBy = item; sort()" [checked]="item === sortBy" class="ui radio checkbox">
+      {{item}}
+    }
+    <br>
+  </form>
+</div>
 
-<label for="sort-by">Sort by: </label>
-<select id="sort-by" [(ngModel)]="sortBy" (change)="sort()">
-  @for(sortType of sortTypes; track sortType){
-    <option value={{sortType}}>{{sortType}}</option>
-  }
-</select>
-<br>
-
-@for(book of books; track book){
+@for(book of books; track book.id){
   <display-book [book]="book" [hidden]="shouldHide(book)"></display-book>
 }

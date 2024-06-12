@@ -3,17 +3,21 @@ import { Rating, ReviewFields, Review } from '../review.model';
 import { RouterLink, Router } from '@angular/router';
 import { ReviewDbService } from '../review-db.service';
 import { AuthService } from '../auth.service';
+import { FormsModule, NgModel } from '@angular/forms';
 
 @Component({
   selector: 'review',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, FormsModule],
   templateUrl: './review.component.html',
   styleUrl: './review.component.css'
 })
 export class ReviewComponent {
   bookTitle: string = "Example";
   bookId: number = 0;
+
+  userRating: number = 5;
+  userText: string = "";
 
   reviewDbService: ReviewDbService;
 
@@ -23,12 +27,16 @@ export class ReviewComponent {
     this.reviewDbService = inject(ReviewDbService);
   }
 
-  submitReview(userRating: HTMLSelectElement, userText: HTMLTextAreaElement){
+  updateRating(value: number){
+    this.userRating = value;
+  }
+
+  submitReview(){
     var username = this.authService.getCurrentUser();
     if (username === null) return;
     var review = new Review({
-      rating: Number(userRating.value),
-      text: userText.value,
+      rating: Number(this.userRating),
+      text: this.userText,
       bookId: this.bookId,
       username: username
     });

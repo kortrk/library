@@ -1,18 +1,16 @@
-<div style="padding: 20px">
-  <h1>Reviewing {{bookTitle}}</h1>
+<h1>Reviewing {{bookTitle}}</h1>
 
-  <form class="ui form">
-    <label for="rating" class="ui label">{{userRating}}</label>
-    @for(r of ratingValues; track r){
-      <i class="ui icon large {{userRating >= $index + 1 ? '' : 'empty'}} yellow star" (click)="updateRating($index + 1)"></i>
-    }
-    <br><br>
+<form class="ui form">
+  <label for="rating" class="ui label">{{userRating}}</label>
+  @for(r of ratingValues; track r){
+    <i class="ui icon large {{userRating >= $index + 1 ? '' : 'empty'}} yellow star" (click)="updateRating($index + 1)"></i>
+  }
+  <br><br>
 
-    <label for="reviewText" class="ui large label">Your review: </label><br>
-    <textarea name="reviewText" id="reviewText" rows="10" cols="60" [(ngModel)]="userText"></textarea>
-    <br>
+  <label for="reviewText" class="ui large label">Your review: </label><br>
+  <textarea name="reviewText" id="reviewText" rows="10" cols="60" [(ngModel)]="userText"></textarea>
+  <br>
 
-    <button class="ui green button" (click)="submitReview()">Submit</button>
-    <button class="ui button" (click)="cancelReview()">Cancel</button>
-  </form>
-</div>
+  <button class="ui green button" (click)="submitReview()">Submit</button>
+  <button class="ui button" (click)="cancelReview()">Cancel</button>
+</form>

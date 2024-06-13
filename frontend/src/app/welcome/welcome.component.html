@@ -1,13 +1,11 @@
-<div style="padding: 20px;">
-  <img class="center" src="assets/images/library_interior.jpg">
+<img class="center" src="assets/images/library_interior.jpg">
 
-  <h2 class="center">
-    <div class="prata-regular" style="text-align: center;">-- Welcome --</div>
-  </h2>
+<h2 class="center">
+  <div class="prata-regular" style="text-align: center;">-- Welcome --</div>
+</h2>
 
-  <div style="display: inline-block; padding-top: 25px;">
-    @for(book of books; track book.id){
-      <simple-book [book]="book"></simple-book>
-    }
-  </div>
+<div style="display: inline-block; padding-top: 25px;">
+  @for(book of books; track book.id){
+    <simple-book [book]="book"></simple-book>
+  }
 </div>

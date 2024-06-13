@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { DisplayBookComponent } from './display-book/display-book.component';
 import { LoginComponent } from './login/login.component';
 import { SearchComponent } from './search/search.component'
@@ -24,7 +24,7 @@ export class AppComponent {
 
   authHelperService: AuthHelperService;
 
-  constructor(){
+  constructor(private router: Router){
     this.authHelperService = inject(AuthHelperService);
   }
 
@@ -34,5 +34,14 @@ export class AppComponent {
 
   assumedUsername(): string | null {
     return this.authHelperService.assumedUsername();
+  }
+
+  ngOnInit() {
+      this.router.events.subscribe((evt) => {
+          if (!(evt instanceof NavigationEnd)) {
+              return;
+          }
+          window.scrollTo(0, 0)
+      });
   }
 }

@@ -12,6 +12,7 @@ import { librarianGuard } from './librarian.guard';
 
 export const routes: Routes = [
   {path: '', component: WelcomeComponent},
+  {path: 'welcome', component: WelcomeComponent},
   {path: 'about', component: AboutComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'search', component: SearchComponent},

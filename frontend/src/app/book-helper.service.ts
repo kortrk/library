@@ -10,16 +10,19 @@ export class BookHelperService {
 
   genericBook(): Book {
     var placeholderStr = "--Placeholder--"
-    return new Book({
+    var book = new Book({
       title: placeholderStr,
       author: placeholderStr,
+      description: placeholderStr,
       publisher: placeholderStr,
       publicationDate: placeholderStr,
-      id: 0,
-      coverImage: "generic.jpg",
-      currentBorrower: null,
-      duedate: null,
-      visible: false
+      category: placeholderStr,
+      isbn: placeholderStr,
+      pageCount: 111,
+      id: 0
     })
+    book.coverImage = "generic.jpg";
+    book.visible = false;
+    return book;
   }
 }

@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Book, BookFields } from './book.model';
 import { BookHelperService } from './book-helper.service';
+import { BookInitHelperService } from './book-init-helper.service';
 import { isEqual, max, sampleSize } from 'lodash';
 
 @Injectable({
@@ -8,62 +9,19 @@ import { isEqual, max, sampleSize } from 'lodash';
 })
 export class BookDbService {
   bookHelperService: BookHelperService;
+  bookInitHelperService: BookInitHelperService;
 
   constructor() {
     this.bookHelperService = inject(BookHelperService);
+    this.bookInitHelperService = inject(BookInitHelperService);
 
     this.initBooks();
   }
 
   // TEMP: will be replaced by the db
   initBooks(){
-    var books = [
-      new Book({
-        title: "Esther",
-        author: "Mordecai",
-        publisher: "Zondervan",
-        publicationDate: "1924",
-        id: 0,
-        coverImage: "Esther.jpg",
-        currentBorrower: "Xerxes",
-        duedate: "Fri Jun 12 2026",
-        visible: true
-      }),
-      new Book({
-        title: "Daniel",
-        author: "Daniel",
-        publisher: "Penguin",
-        publicationDate: "1833",
-        id: 1,
-        coverImage: "Daniel.jpg",
-        currentBorrower: null,
-        duedate: null,
-        visible: true
-      }),
-      new Book({
-        title: "Ecclesiastes",
-        author: "Solomon",
-        publisher: "Simon & Schuster",
-        publicationDate: "1234",
-        id: 2,
-        coverImage: "Ecclesiastes.jpg",
-        currentBorrower: null,
-        duedate: null,
-        visible: true
-      }),
-      new Book({
-        title: "Nehemiah",
-        author: "Nehemiah",
-        publisher: "Wallton Group",
-        publicationDate: "700 BC",
-        id: 3,
-        coverImage: "Nehemiah.jpg",
-        currentBorrower: null,
-        duedate: null,
-        visible: false
-      })
-    ]
-    localStorage.setItem('books', JSON.stringify(books))
+    var books = this.bookInitHelperService.generateBooks();
+    localStorage.setItem('books', JSON.stringify(books));
   }
 
   getAllBooks(): Book[] {

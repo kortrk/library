@@ -9,7 +9,7 @@
     <p>Avg. Rating: {{averageUserRating(book.id)}}</p>
   </div>
   <div class="description">
-    Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.
+    {{book.description}}
   </div>
   <div class="extra">
     <button [routerLink]="['/details', {id: book.id}]" class="ui tiny button">Details</button>

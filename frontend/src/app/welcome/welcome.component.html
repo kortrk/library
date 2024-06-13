@@ -5,9 +5,9 @@
     <div class="prata-regular" style="text-align: center;">-- Welcome --</div>
   </h2>
 
-  <span style="display: inline-block;">
+  <div style="display: inline-block; padding-top: 25px;">
     @for(book of books; track book.id){
       <simple-book [book]="book"></simple-book>
     }
-  </span>
+  </div>
 </div>

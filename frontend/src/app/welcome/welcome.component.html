@@ -1,0 +1,13 @@
+<div style="padding: 20px;">
+  <img class="center" src="https://texashighways.com/wp-content/uploads/2022/04/lockhart-library-wide-stained-glass-wvo-1.jpg">
+
+  <h2 class="center">
+    <div class="prata-regular" style="text-align: center;">-- Welcome --</div>
+  </h2>
+
+  <span style="display: inline-block;">
+    @for(book of books; track book.id){
+      <simple-book [book]="book"></simple-book>
+    }
+  </span>
+</div>

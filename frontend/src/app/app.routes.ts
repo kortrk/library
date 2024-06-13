@@ -6,11 +6,12 @@ import { DetailsBookComponent } from './details-book/details-book.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ReviewComponent } from './review/review.component';
 import { EditBookComponent } from './edit-book/edit-book.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 import { loggedInGuard } from './logged-in.guard';
 import { librarianGuard } from './librarian.guard';
 
 export const routes: Routes = [
-  {path: '', component: SearchComponent},
+  {path: '', component: WelcomeComponent},
   {path: 'about', component: AboutComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'search', component: SearchComponent},

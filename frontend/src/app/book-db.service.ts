@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Book, BookFields } from './book.model';
 import { BookHelperService } from './book-helper.service';
-import { isEqual, max } from 'lodash';
+import { isEqual, max, sampleSize } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -145,5 +145,16 @@ export class BookDbService {
     var finalBooks = books.filter((x) => x.id != id)
     localStorage.setItem('books', JSON.stringify(finalBooks));
     return true;
+  }
+
+  /**
+   * @param count how many random books you want
+   */
+  getRandomBooks(count: number, incl_unavailable: boolean = false){
+    var allBooks = this.getAllBooks();
+    if (!incl_unavailable){
+      allBooks = allBooks.filter((b) => b.visible)
+    }
+    return sampleSize(allBooks, count);
   }
 }

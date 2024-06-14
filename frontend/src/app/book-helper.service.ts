@@ -20,11 +20,11 @@ export class BookHelperService {
       isbn: placeholderStr,
       pageCount: 111,
       id: 0,
+      coverImage: "generic.jpg",
       currentBorrower: null,
       duedate: null,
       visible: false
-    })
-    book.coverImage = "generic.jpg";
+    });
     return book;
   }
 }

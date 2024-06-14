@@ -10,6 +10,7 @@ export interface BookFields {
   pageCount: number;
   // -- my additions --
   id: number;
+  coverImage: string;
   currentBorrower: string | null;
   duedate: string | null;
   visible: boolean;
@@ -29,7 +30,6 @@ export class Book {
     pageCount: number;
     // -- my additions --
     id: number;
-
     currentBorrower: string | null;
     duedate: string | null;
     visible: boolean; // controls whether book appears to customers
@@ -44,7 +44,7 @@ export class Book {
     this.isbn = bookFields.isbn;
     this.pageCount = bookFields.pageCount;
     this.id = bookFields.id;
-    this.coverImage = bookFields.title + ".jpg";
+    this.coverImage = bookFields.coverImage;
     this.currentBorrower = bookFields.currentBorrower;
     this.duedate = bookFields.duedate;
     this.visible = bookFields.visible;

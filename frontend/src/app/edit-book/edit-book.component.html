@@ -26,8 +26,31 @@
       </div>
       <br>
 
+      <label for="isbn">ISBN</label><br>
+      <div class="ui field">
+        <input type="text" name="isbn" [(ngModel)]="book.isbn">
+      </div>
+      <br>
+
+      <label for="category">Category</label><br>
+      <div class="ui field">
+        <input type="text" name="category" [(ngModel)]="book.category">
+      </div>
+      <br>
+
+      <label for="pageCount">Page Count</label><br>
+      <div class="ui field">
+        <input type="text" name="pageCount" [(ngModel)]="book.pageCount">
+      </div>
+      <br>
+
+      <label for="description">Description</label><br>
+      <div class="ui field">
+        <textarea name="description" [(ngModel)]="book.description"></textarea>
+      </div>
+      <br>
+
       <div class="ui segment" style="width: fit-content; background-color:burlywood;">
-      <!-- <div style="background-color:burlywood; padding: 3px; border: 1px solid black; padding-top: 5px; padding-bottom: 10px; margin-top: 10px; margin-bottom: 10px;"> -->
         <label for="currentBorrower">Current Borrower</label><br>
         <div class="ui field">
           <input type="text" name="currentBorrower" [(ngModel)]="book.currentBorrower">
@@ -46,7 +69,7 @@
       <input class="ui checkbox" type="checkbox" name="visible" [(ngModel)]="book.visible">
     </div>
   </form>
-  <button class="ui basic small green button" (click)="saveBook()">Submit</button>
-  <button class="ui basic small black button" (click)="cancel()">Cancel</button>
-  <button class="ui basic small red button" (click)="deleteBook()">Delete Book</button>
+  <button class="ui small green button" (click)="saveBook()">Submit</button>
+  <button class="ui small button" (click)="cancel()">Cancel</button>
+  <button class="ui small red button" (click)="deleteBook()">Delete Book</button>
 </div>

@@ -10,6 +10,9 @@ export interface BookFields {
   pageCount: number;
   // -- my additions --
   id: number;
+  currentBorrower: string | null;
+  duedate: string | null;
+  visible: boolean;
 }
 
 export class Book {
@@ -42,9 +45,9 @@ export class Book {
     this.pageCount = bookFields.pageCount;
     this.id = bookFields.id;
     this.coverImage = bookFields.title + ".jpg";
-    this.currentBorrower = null;
-    this.duedate = null;
-    this.visible = true;
+    this.currentBorrower = bookFields.currentBorrower;
+    this.duedate = bookFields.duedate;
+    this.visible = bookFields.visible;
   }
 
   imgLoc(): string {

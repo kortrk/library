@@ -19,10 +19,12 @@ export class BookHelperService {
       category: placeholderStr,
       isbn: placeholderStr,
       pageCount: 111,
-      id: 0
+      id: 0,
+      currentBorrower: null,
+      duedate: null,
+      visible: false
     })
     book.coverImage = "generic.jpg";
-    book.visible = false;
     return book;
   }
 }

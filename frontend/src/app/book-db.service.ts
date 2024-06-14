@@ -20,6 +20,7 @@ export class BookDbService {
 
   // TEMP: will be replaced by the db
   initBooks(){
+    console.log("initializing books")
     var books = this.bookInitHelperService.generateBooks();
     localStorage.setItem('books', JSON.stringify(books));
   }

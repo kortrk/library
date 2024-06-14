@@ -4,3 +4,5 @@
 
 # Library
 A full-stack app that uses Angular and Ruby on Rails.
+
+[Check out a static live demo of the frontend here!](https://kortrk.github.io/library-gh-pages)

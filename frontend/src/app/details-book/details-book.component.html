@@ -64,9 +64,13 @@
     </div>
   }
   @if(!book.currentlyBorrowed()){
-    <button class="ui green button" [hidden]="!assumeLoggedIn()" [routerLink]="['/checkout', {id: book.id, title: book.title}]">
-      Check Out
-    </button>
+    @if(assumeLoggedIn()){
+      <button class="ui green button" [hidden]="!assumeLoggedIn()" [routerLink]="['/checkout', {id: book.id, title: book.title}]">
+        Check Out
+      </button>
+    } @else {
+      Please log in to borrow this book. <br> <br>
+    }
   } @else {
     <div class="ui red message"><em>Out - due on {{book.duedate}}</em></div><br>
   }

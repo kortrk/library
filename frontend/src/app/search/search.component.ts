@@ -31,7 +31,7 @@ export class SearchComponent {
     this.bookDbService = inject(BookDbService);
     this.books = this.allBooks();
     this.showAdvancedSearch = false;
-    this.sortBy = SortType.Title;
+    this.sortBy = SortType.ISBN;
     this.titleSearch = "";
     this.authorSearch = "";
     this.availSearch = AvailType.All;
@@ -94,6 +94,8 @@ export class SearchComponent {
         var aOut = a.currentBorrower ? 1 : 0
         var bOut = b.currentBorrower ? 1 : 0
         return aOut < bOut ? -1 : 1
+      } else if (this.sortBy === SortType.ISBN){
+        return a.isbn < b.isbn ? -1 : 1
       }
       return 0;
     })
@@ -130,6 +132,7 @@ export class SearchComponent {
 }
 
 export enum SortType{
+  ISBN = "ISBN",
   Title = "Title",
   Author = "Author",
   Availability = "Availability"

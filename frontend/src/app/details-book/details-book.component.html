@@ -38,29 +38,31 @@
     </tbody>
   </table>
   @if(reviews.length > 0){
-    <h3 style="display: inline-block; padding-right: 4px;">Reviews -</h3>
-    <h4 style="display: inline-block;">Average Rating: {{averageRating()}}</h4>
-    <div class="ui comments segment" style="overflow-y: auto; height: 120px; width: 600px; background-color:aliceblue;">
-      @for(review of reviews; track review){
-
-        <div class="comment">
-          <div class="content">
-            <a class="author">{{review.username}}</a>
-            &nbsp;
-            <div class="metadata">
-              <div class="rating">
-                {{review.rating}}
-                @for(_ of [].constructor(review.rating); track _){
-                  <i class="star icon"></i>
-                }
+    <div class="ui comments segment">
+      <h3 class="ui dividing header" >
+        Reviews -<span style="font-size: small; padding-left: 4px;">Average Rating: {{averageRating()}}</span>
+      </h3>
+      <div style="overflow-y: auto; height: 100px; width:inherit;">
+        @for(review of reviews; track review.username + review.text){
+          <div class="comment">
+            <div class="content">
+              <a class="author">{{review.username}}</a>
+              &nbsp;
+              <div class="metadata">
+                <div class="rating">
+                  {{review.rating}}
+                  @for(_ of [].constructor(review.rating); track _){
+                    <i class="star icon"></i>
+                  }
+                </div>
+              </div>
+              <div class="text">
+                {{review.text}}
               </div>
             </div>
-            <div class="text">
-              {{review.text}}
-            </div>
           </div>
-        </div>
-      }
+        }
+      </div>
     </div>
   }
   @if(!book.currentlyBorrowed()){

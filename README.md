@@ -3,6 +3,6 @@
 <img src="https://github.com/kortrk/library/assets/7088687/34d6c7cf-a112-429d-b3d7-b7f4af73d294" width=1000 height=100>
 
 # Library
-A full-stack app that uses Angular and Ruby on Rails.
+A single-page app using Angular.
 
 [Check out a static live demo of the frontend here!](https://kortrk.github.io/library-gh-pages)

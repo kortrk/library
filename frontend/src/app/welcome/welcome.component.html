@@ -4,8 +4,11 @@
   <div class="prata-regular" style="text-align: center;">-- Welcome --</div>
 </h2>
 
-<div style="display: inline-block; padding-top: 25px;">
+<div class="slider">
   @for(book of books; track book.id){
-    <simple-book [book]="book"></simple-book>
+    <div class="slide">
+      <simple-book [book]="book"></simple-book>
+    </div>
   }
 </div>
+<!--https://css-tricks.com/can-get-pretty-far-making-slider-just-html-css/-->

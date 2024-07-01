@@ -4,3 +4,16 @@
   margin-right: auto;
   width: 50%;
 }
+
+.slider {
+  width: auto;
+  height: 300px;
+  display: flex;
+  overflow-x: auto;
+  margin-top: 25px;
+}
+.slide {
+  width: 300px;
+  flex-shrink: 0;
+  height: 100%;
+}

@@ -1,6 +1,13 @@
-# README
+# Library Backend
 
-This README would normally document whatever steps are necessary to get the
+A backend, with Ruby and Postgres.
+
+To access the postgresql db directly:
+```bash
+psql -U postgres -t library_dev
+```
+
+<!-- This README would normally document whatever steps are necessary to get the
 application up and running.
 
 Things you may want to cover:
@@ -21,4 +28,4 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
+* ... -->

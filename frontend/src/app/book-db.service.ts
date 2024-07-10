@@ -112,7 +112,7 @@ export class BookDbService {
   /**
    * @param count how many random books you want
    */
-  getRandomBooks(count: number, incl_unavailable: boolean = false): Observable<Book[]> {
+  getRandomBooks(count: number): Observable<Book[]> {
     return this.http.get<Book[]>(`${Config.dbHost}books/random/${count}`)
   }
 }

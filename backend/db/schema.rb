@@ -25,7 +25,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_10_162245) do
     t.integer "pageCount"
     t.string "coverImage"
     t.integer "currentBorrower"
-    t.string "duedate"
+    t.date "duedate"
     t.boolean "visible"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

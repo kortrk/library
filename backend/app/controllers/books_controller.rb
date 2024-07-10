@@ -4,7 +4,6 @@ class BooksController < ApplicationController
   end
 
   def random
-    book_ids = Book.where(visible: true).pluck(:id).sample(params[:count].to_i)
-    render :json => Book.where(id: book_ids)
+    render :json => Book.limit(params[:count]).order("RANDOM()")
   end
 end

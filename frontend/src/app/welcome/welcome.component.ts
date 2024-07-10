@@ -20,16 +20,14 @@ export class WelcomeComponent {
 
   constructor(private http: HttpClient){
     this.bookDbService = inject(BookDbService);
-
     this.getRandomBooks(5);
   }
 
   getRandomBooks(count: number, incl_unavailable: boolean = false){
     this.loading = true;
-    this.http
-    .get<Book[]>(`http://127.0.0.1:3000/books/random/${count}`)
+    this.bookDbService.getRandomBooks(count)
     .subscribe(books => {
-      this.books = books.map((info) => new Book(info));
+      this.books = books.map((b) => new Book(b));
       this.loading = false;
     });
   }

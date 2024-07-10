@@ -3,6 +3,8 @@ import { Book, BookFields } from './book.model';
 import { BookHelperService } from './book-helper.service';
 import { BookInitHelperService } from './book-init-helper.service';
 import { isEqual, max, sampleSize } from 'lodash';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ export class BookDbService {
   bookHelperService: BookHelperService;
   bookInitHelperService: BookInitHelperService;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.bookHelperService = inject(BookHelperService);
     this.bookInitHelperService = inject(BookInitHelperService);
 
@@ -109,11 +111,7 @@ export class BookDbService {
   /**
    * @param count how many random books you want
    */
-  getRandomBooks(count: number, incl_unavailable: boolean = false){
-    var allBooks = this.getAllBooks();
-    if (!incl_unavailable){
-      allBooks = allBooks.filter((b) => b.visible)
-    }
-    return sampleSize(allBooks, count);
+  getRandomBooks(count: number, incl_unavailable: boolean = false): Observable<Book[]> {
+    return this.http.get<Book[]>(`http://127.0.0.1:3000/books/random/${count}`)
   }
 }

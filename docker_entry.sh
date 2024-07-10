@@ -2,8 +2,11 @@
 service postgresql start
 
 cd backend
-rake db:setup
+echo "rake db:create"
+rake db:create
+echo "rake db:migrate"
 rake db:migrate
+echo "rake db:seed"
 rake db:seed
 
 bash

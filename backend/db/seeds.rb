@@ -1,3 +1,5 @@
+puts "seeding the db"
+
 book_seeds = JSON.load_file("db/seeds/books.json")
 book_seeds.each do |seed|
   Book.find_or_create_by!(seed)
@@ -13,3 +15,10 @@ book_seeds.count.times do |x|
   book_id = Book.all.sample.id
   Review.find_or_create_by!({rating: rating, text: review_text, book_id: book_id, username: reviewer})
 end
+
+u = User.new(name: "username", password: "password", role: "patron")
+u.save!
+b = Book.all.sample
+b.currentBorrower = u.id
+b.duedate = DateTime.now + 10.days
+b.save!

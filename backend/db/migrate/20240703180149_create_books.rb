@@ -10,7 +10,7 @@ class CreateBooks < ActiveRecord::Migration[7.1]
       t.string :isbn
       t.integer :pageCount
       t.string :coverImage
-      t.string :currentBorrower
+      t.integer :currentBorrower
       t.string :duedate
       t.boolean :visible
 

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   defaults format: :json do
     get '/books', to: 'books#index'
+    get '/books/:id', to: 'books#get_book'
     get '/books/random/:count', to: 'books#random'
   end
 

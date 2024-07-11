@@ -19,6 +19,8 @@ export class DetailsBookComponent {
   book: Book;
   defaultBook: Book;
   reviews: Review[];
+  loading: boolean = true;
+  notFound: boolean = false;
 
   bookDbService: BookDbService;
   reviewDbService: ReviewDbService;
@@ -41,13 +43,24 @@ export class DetailsBookComponent {
 
   @Input()
   set id(providedId: number) {
-    var showBook = this.bookDbService.getBook(providedId);
-    if (showBook){
-      this.book = showBook;
-      this.reviews = this.reviewDbService.getReviewsFor(providedId);
-    } else {
-      this.book = this.defaultBook;
-    }
+    this.bookDbService.getBook(providedId)
+    .subscribe(books => {
+      var books = books.map((b) => new Book(b));
+      if (books.length > 0){
+        this.book = books[0];
+        this.reviews = this.reviewDbService.getReviewsFor(providedId);
+      } else {
+        this.notFound = true;
+      }
+      this.loading = false;
+    });
+
+    // if (showBook){
+    //   this.book = showBook;
+    //   this.reviews = this.reviewDbService.getReviewsFor(providedId);
+    // } else {
+    //   this.book = this.defaultBook;
+    // }
   }
 
   assumeLoggedIn(): boolean {

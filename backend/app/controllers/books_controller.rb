@@ -6,4 +6,8 @@ class BooksController < ApplicationController
   def random
     render :json => Book.limit(params[:count]).order("RANDOM()")
   end
+
+  def get_book
+    render :json => Book.where(id: params[:id])
+  end
 end

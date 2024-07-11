@@ -40,12 +40,10 @@ export class BookDbService {
     }
   }
 
-  getBook(id: number): Book | null {
-    var foundBook = this.getAllBooks().filter((b) =>
-      b.id == id // == is needed here, rather than ===
-    )[0]
-    if (foundBook) return foundBook;
-    return null;
+  getBook(id: number): Observable<Book[]> {
+    return this.http.get<Book[]>(`${Config.dbHost}books/${id}`)
+    // could expand this to be getBooks in the future; it would
+    // accept multiple ids
   }
 
   borrowBook(id: number, duedate: string): boolean {

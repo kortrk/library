@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Config, HttpPostResponse } from '../constants/general-consts';
 
 export enum UserRole {Patron = "patron", Librarian = "librarian"};
 
@@ -73,7 +74,7 @@ export class AuthService {
   }
 
   signUp(username: string, password: string, signuprole: UserRole): Observable<HttpPostResponse> {
-    return this.http.post<HttpPostResponse>('http://localhost:3000/auth/signup', {name: username, password: password, role: signuprole})
+    return this.http.post<HttpPostResponse>(`${Config.backendUrl}auth/signup`, {name: username, password: password, role: signuprole})
   }
 
   // TEMP - replace to use the Http-Only token
@@ -94,8 +95,3 @@ export class AuthService {
 export const AUTH_PROVIDERS: Array<any> = [
   { provide: AuthService, useClass: AuthService }
 ];
-
-class HttpPostResponse{
-  success: boolean = true;
-  msg: string | null = null;
-}

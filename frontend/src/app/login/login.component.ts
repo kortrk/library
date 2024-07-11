@@ -67,8 +67,3 @@ export class LoginComponent {
     this.expandLogin = !this.expandLogin;
   }
 }
-
-class HttpPostResponse{
-  success: boolean = true;
-  msg: string | null = null;
-}

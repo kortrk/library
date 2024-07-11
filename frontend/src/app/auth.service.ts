@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 export enum UserRole {Patron = "patron", Librarian = "librarian"};
 
@@ -50,6 +52,8 @@ class DB{
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
+  constructor(private http: HttpClient){}
+
   // TEMP
   db = new DB([new User("username", "password", UserRole.Patron)])
 
@@ -68,14 +72,8 @@ export class AuthService {
     localStorage.removeItem("userRole");
   }
 
-  signUp(username: string, password: string, signuprole: UserRole){
-    if (this.db.hasUser(username)){
-      alert("Account already exists.");
-      return false
-    };
-    this.db.addUser(new User(username, password, signuprole))
-    console.log("users:"); console.log(this.db.users) // temp
-    return true
+  signUp(username: string, password: string, signuprole: UserRole): Observable<HttpPostResponse> {
+    return this.http.post<HttpPostResponse>('http://localhost:3000/auth/signup', {name: username, password: password, role: signuprole})
   }
 
   // TEMP - replace to use the Http-Only token
@@ -96,3 +94,8 @@ export class AuthService {
 export const AUTH_PROVIDERS: Array<any> = [
   { provide: AuthService, useClass: AuthService }
 ];
+
+class HttpPostResponse{
+  success: boolean = true;
+  msg: string | null = null;
+}

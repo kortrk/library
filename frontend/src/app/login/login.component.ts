@@ -38,9 +38,14 @@ export class LoginComponent {
   }
 
   signUp(username: HTMLInputElement, password: HTMLInputElement, signuprole: HTMLSelectElement){
-    if (this.authService.signUp(username.value, password.value, signuprole.value as UserRole)){
-      this.login(username, password)
-    }
+    this.authService.signUp(username.value, password.value, signuprole.value as UserRole)
+    .subscribe(info =>{
+      if (info.success == false){
+        alert("Please fix the following issues:\n" + JSON.stringify(info.msg, null, " "))
+      } else {
+        // this.login(username, password)
+      }
+    })
   }
 
   // this could be manipulated - it's only an assumption
@@ -61,4 +66,9 @@ export class LoginComponent {
   toggleExpandLogin(){
     this.expandLogin = !this.expandLogin;
   }
+}
+
+class HttpPostResponse{
+  success: boolean = true;
+  msg: string | null = null;
 }

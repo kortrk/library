@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { Book } from '../book.model';
 import { BookDbService } from '../book-db.service';
 import { SimpleBookComponent } from '../simple-book/simple-book.component';
-import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -18,7 +17,7 @@ export class WelcomeComponent {
 
   bookDbService: BookDbService;
 
-  constructor(private http: HttpClient){
+  constructor(){
     this.bookDbService = inject(BookDbService);
     this.getRandomBooks(5);
   }

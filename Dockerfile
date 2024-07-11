@@ -24,9 +24,9 @@ RUN rm /etc/postgresql/15/main/pg_hba.conf
 COPY backend/pg_hba.conf ./
 RUN cp pg_hba.conf /etc/postgresql/15/main/
 
-# Temporary/Dev
+# Dev Utilities
 RUN apt-get update
-RUN apt-get install -y vim
+RUN apt-get install -y vim lsof
 RUN echo 'alias ll="ls -alF"' >> ~/.bashrc
 
 EXPOSE 4200

@@ -9,4 +9,6 @@ rake db:migrate
 echo "rake db:seed"
 rake db:seed
 
+cd /app
+
 bash

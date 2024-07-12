@@ -25,11 +25,22 @@ export class LoginComponent {
     this.authHelperService = inject(AuthHelperService);
   }
 
-  login(username: HTMLInputElement, password: HTMLInputElement): boolean{
-    if (!this.authService.login(username.value, password.value)) {
-      alert('Incorrect credentials.');
-    }
-    return false;
+  login(username: HTMLInputElement, password: HTMLInputElement){
+    this.authService.login(username.value, password.value)
+    .subscribe(res => {
+      if (res.success == false){
+        alert("Incorrect credentials")
+      } else {
+        // we'll store these to help us guess which buttons
+        // should be displayed, but we'll check everything
+        // against the db before taking backend action
+        localStorage.setItem("username", username.value)
+        localStorage.setItem("userRole", res.role)
+
+        // a cookie is returned with the auth token, so
+        // future requests will automatically validate
+      }
+    })
   }
 
   logout(){

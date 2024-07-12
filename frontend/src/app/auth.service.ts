@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Config, HttpPostResponse } from '../constants/general-consts';
+import { Config, HttpLoginPostResponse, HttpPostResponse } from '../constants/general-consts';
 
 export enum UserRole {Patron = "patron", Librarian = "librarian"};
 
@@ -58,14 +58,19 @@ export class AuthService {
   // TEMP
   db = new DB([new User("username", "password", UserRole.Patron)])
 
-  login(username: string, password: string): boolean {
-    var validUser = this.db.getUserByCreds(username, password)
-    if (validUser){
-      localStorage.setItem("username", username)
-      localStorage.setItem("userRole", validUser.role)
-      return true;
-    }
-    return false;
+  login(username: string, password: string): Observable<HttpLoginPostResponse> {
+    return this.http.post<HttpLoginPostResponse>(
+      `${Config.backendUrl}auth/login`,
+      {name: username, password: password}//,
+      // {withCredentials: true}
+    )
+    // var validUser = this.db.getUserByCreds(username, password)
+    // if (validUser){
+    //   localStorage.setItem("username", username)
+    //   localStorage.setItem("userRole", validUser.role)
+    //   return true;
+    // }
+    // return false;
   }
 
   logout(){

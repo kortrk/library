@@ -21,9 +21,10 @@ class AuthenticationController < ApplicationController
     if command.success?
       puts "LOGIN SUCCEEDED"
 
-      cookies["auth"] = {value: command.result, same_site: "None", secure: false, httponly: true}
+      auth_token, role = command.result
+      cookies["auth"] = {value: auth_token, same_site: "None", secure: false, httponly: true}
 
-      render json: { success: true }
+      render json: { success: true, role: role }
     else
       puts "LOGIN FAILED"
       render json: { success: false, msg: command.errors }, status: :unauthorized

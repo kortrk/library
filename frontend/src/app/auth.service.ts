@@ -86,14 +86,6 @@ export class AuthService {
     })
 
     return false
-
-    // var validUser = this.db.getUserByCreds(username, password)
-    // if (validUser){
-    //   localStorage.setItem("username", username)
-    //   localStorage.setItem("userRole", validUser.role)
-    //   return true;
-    // }
-    // return false;
   }
 
   logout(){

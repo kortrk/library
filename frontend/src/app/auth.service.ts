@@ -59,7 +59,7 @@ export class AuthService {
   // TEMP
   db = new DB([new User("username", "password", UserRole.Patron)])
 
-  login(username: string, password: string): boolean {
+  login(username: string, password: string) {
     this.http.get<HttpLoginResponse>(
       `${Config.backendUrl}auth/login`,
       {
@@ -71,7 +71,6 @@ export class AuthService {
     ).subscribe(res => {
       if (res.success == false){
         alert("Incorrect credentials")
-        return false
       } else {
         // we'll store these to help us guess which buttons
         // should be displayed, but we'll check everything
@@ -81,12 +80,8 @@ export class AuthService {
 
         // a cookie is returned with the auth token, so
         // future requests will automatically validate
-
-        return true
       }
     })
-
-    return false
   }
 
   logout(){
@@ -103,7 +98,10 @@ export class AuthService {
   }
 
   signUp(username: string, password: string, signuprole: UserRole): Observable<HttpResponse> {
-    return this.http.post<HttpResponse>(`${Config.backendUrl}auth/signup`, {name: username, password: password, role: signuprole})
+    return this.http.post<HttpResponse>(
+      `${Config.backendUrl}auth/signup`,
+      {name: username, password: password, role: signuprole}
+    )
   }
 
   // TEMP - replace to use the Http-Only token

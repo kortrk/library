@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   defaults format: :json do
     get  '/auth/login', to: 'authentication#login'
+    get  '/auth/logout', to: 'authentication#logout'
     post '/auth/signup', to: 'authentication#signup'
     get  '/books', to: 'books#index'
     get  '/books/:id', to: 'books#get_book'

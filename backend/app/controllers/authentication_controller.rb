@@ -1,6 +1,6 @@
 class AuthenticationController < ApplicationController
   protect_from_forgery with: :null_session # https://stackoverflow.com/a/35184796
-  # won't need this if I restart with the api generator
+  # won't need this if I start rails app with the --api generator
 
   skip_before_action :authenticate_request
 
@@ -30,6 +30,12 @@ class AuthenticationController < ApplicationController
       render json: { success: false, msg: command.errors }, status: :unauthorized
     end
   end
+
+  def logout
+    cookies.delete("auth")
+    render json: { success: true }
+  end
+
  end
 
 # source: https://www.pluralsight.com/resources/blog/guides/token-based-authentication-with-ruby-on-rails-5-api

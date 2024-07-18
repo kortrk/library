@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Config, HttpLoginResponse, HttpResponse } from '../constants/general-consts';
+import { Router } from '@angular/router';
 
 export enum UserRole {Patron = "patron", Librarian = "librarian"};
 
@@ -53,7 +54,7 @@ class DB{
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient, private router: Router){}
 
   // TEMP
   db = new DB([new User("username", "password", UserRole.Patron)])
@@ -65,7 +66,7 @@ export class AuthService {
         headers: {
           'Authorization': `Simple ${username}:${password}`,
         },
-        withCredentials: true
+        withCredentials: true // need this to receive the cookie
       }
     ).subscribe(res => {
       if (res.success == false){
@@ -89,8 +90,16 @@ export class AuthService {
   }
 
   logout(){
+    this.http.get<string>(
+      `${Config.backendUrl}auth/logout`,
+      {withCredentials: true} // need this whenever we need to use cookies
+    ).subscribe()
+    // won't trigger without subscribe()
+
     localStorage.removeItem("username");
     localStorage.removeItem("userRole");
+
+    this.router.navigate(['/welcome']);
   }
 
   signUp(username: string, password: string, signuprole: UserRole): Observable<HttpResponse> {

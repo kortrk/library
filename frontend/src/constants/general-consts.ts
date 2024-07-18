@@ -1,5 +1,5 @@
 export const Config = {
-  backendUrl: 'http://127.0.0.1:3000/'
+  backendUrl: 'http://localhost:3000/'
 };
 
 export class HttpPostResponse{

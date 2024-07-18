@@ -1,7 +1,4 @@
 class AuthenticationController < ApplicationController
-  protect_from_forgery with: :null_session # https://stackoverflow.com/a/35184796
-  # won't need this if I start rails app with the --api generator
-
   skip_before_action :authenticate_request
 
   def signup

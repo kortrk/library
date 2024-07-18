@@ -25,22 +25,23 @@ export class LoginComponent {
     this.authHelperService = inject(AuthHelperService);
   }
 
-  login(username: HTMLInputElement, password: HTMLInputElement): boolean{
-    if (!this.authService.login(username.value, password.value)) {
-      alert('Incorrect credentials.');
-    }
-    return false;
+  login(username: HTMLInputElement, password: HTMLInputElement){
+    this.authService.login(username.value, password.value)
   }
 
   logout(){
     this.authService.logout();
-    this.router.navigate(['/search']);
   }
 
   signUp(username: HTMLInputElement, password: HTMLInputElement, signuprole: HTMLSelectElement){
-    if (this.authService.signUp(username.value, password.value, signuprole.value as UserRole)){
-      this.login(username, password)
-    }
+    this.authService.signUp(username.value, password.value, signuprole.value as UserRole)
+    .subscribe(info =>{
+      if (info.success == false){
+        alert("Please fix the following issues:\n" + JSON.stringify(info.msg, null, " "))
+      } else {
+        this.login(username, password)
+      }
+    })
   }
 
   // this could be manipulated - it's only an assumption

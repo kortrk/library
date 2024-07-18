@@ -24,10 +24,10 @@ module Backend
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    config.middleware.insert_before ActionDispatch::Static, Rack::Cors do
+    config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins '*'
-        resource '*', :headers => :any, :methods => :any
+        origins 'http://localhost:4200'
+        resource '*', headers: :any, methods: [:get, :post, :patch, :put], credentials: true
       end
     end
   end

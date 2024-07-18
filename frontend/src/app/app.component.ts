@@ -37,11 +37,12 @@ export class AppComponent {
   }
 
   ngOnInit() {
-      this.router.events.subscribe((evt) => {
-          if (!(evt instanceof NavigationEnd)) {
-              return;
-          }
-          window.scrollTo(0, 0)
-      });
+    // cosmetic: scroll to top of page when navigating
+    this.router.events.subscribe((evt) => {
+        if (!(evt instanceof NavigationEnd)) {
+            return;
+        }
+        window.scrollTo(0, 0)
+    });
   }
 }

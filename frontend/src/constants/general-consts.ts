@@ -1,3 +1,12 @@
 export const Config = {
-  dbHost: 'http://127.0.0.1:3000/'
+  backendUrl: 'http://localhost:3000/'
 };
+
+export class HttpResponse{
+  success: boolean = true;
+  msg: string | null = null;
+}
+
+export class HttpLoginResponse extends HttpResponse{
+  role: string = "";
+}

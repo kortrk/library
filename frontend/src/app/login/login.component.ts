@@ -27,28 +27,11 @@ export class LoginComponent {
 
   login(username: HTMLInputElement, password: HTMLInputElement){
     this.authService.login(username.value, password.value)
-    .subscribe(res => {
-      console.log(res)
-    })
-    // .subscribe(res => {
-    //   if (res.success == false){
-    //     alert("Incorrect credentials")
-    //   } else {
-    //     // we'll store these to help us guess which buttons
-    //     // should be displayed, but we'll check everything
-    //     // against the db before taking backend action
-    //     localStorage.setItem("username", username.value)
-    //     localStorage.setItem("userRole", res.role)
-
-    //     // a cookie is returned with the auth token, so
-    //     // future requests will automatically validate
-    //   }
-    // })
   }
 
   logout(){
     this.authService.logout();
-    this.router.navigate(['/search']);
+    this.router.navigate(['/welcome']);
   }
 
   signUp(username: HTMLInputElement, password: HTMLInputElement, signuprole: HTMLSelectElement){
@@ -57,7 +40,7 @@ export class LoginComponent {
       if (info.success == false){
         alert("Please fix the following issues:\n" + JSON.stringify(info.msg, null, " "))
       } else {
-        // this.login(username, password)
+        this.login(username, password)
       }
     })
   }

@@ -2,11 +2,11 @@ export const Config = {
   backendUrl: 'http://localhost:3000/'
 };
 
-export class HttpPostResponse{
+export class HttpResponse{
   success: boolean = true;
   msg: string | null = null;
 }
 
-export class HttpLoginPostResponse extends HttpPostResponse{
+export class HttpLoginResponse extends HttpResponse{
   role: string = "";
 }

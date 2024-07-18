@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Config, HttpLoginPostResponse, HttpPostResponse } from '../constants/general-consts';
+import { Config, HttpLoginResponse, HttpResponse } from '../constants/general-consts';
 
 export enum UserRole {Patron = "patron", Librarian = "librarian"};
 
@@ -58,8 +58,8 @@ export class AuthService {
   // TEMP
   db = new DB([new User("username", "password", UserRole.Patron)])
 
-  login(username: string, password: string): Observable<string> {
-    return this.http.get<string>(
+  login(username: string, password: string): boolean {
+    this.http.get<HttpLoginResponse>(
       `${Config.backendUrl}auth/login`,
       {
         headers: {
@@ -67,7 +67,26 @@ export class AuthService {
         },
         withCredentials: true
       }
-    )
+    ).subscribe(res => {
+      if (res.success == false){
+        alert("Incorrect credentials")
+        return false
+      } else {
+        // we'll store these to help us guess which buttons
+        // should be displayed, but we'll check everything
+        // against the db before taking backend action
+        localStorage.setItem("username", username)
+        localStorage.setItem("userRole", res.role)
+
+        // a cookie is returned with the auth token, so
+        // future requests will automatically validate
+
+        return true
+      }
+    })
+
+    return false
+
     // var validUser = this.db.getUserByCreds(username, password)
     // if (validUser){
     //   localStorage.setItem("username", username)
@@ -82,8 +101,8 @@ export class AuthService {
     localStorage.removeItem("userRole");
   }
 
-  signUp(username: string, password: string, signuprole: UserRole): Observable<HttpPostResponse> {
-    return this.http.post<HttpPostResponse>(`${Config.backendUrl}auth/signup`, {name: username, password: password, role: signuprole})
+  signUp(username: string, password: string, signuprole: UserRole): Observable<HttpResponse> {
+    return this.http.post<HttpResponse>(`${Config.backendUrl}auth/signup`, {name: username, password: password, role: signuprole})
   }
 
   // TEMP - replace to use the Http-Only token

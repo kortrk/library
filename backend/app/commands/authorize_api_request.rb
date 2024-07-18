@@ -22,15 +22,6 @@ class AuthorizeApiRequest
     @decoded_auth_token ||= JsonWebToken.decode(cookie_auth_token)
   end
 
-  # def http_auth_header
-  #   if headers['Authorization'].present?
-  #     return headers['Authorization'].split(' ').last
-  #   else
-  #     errors.add(:token, 'Missing token')
-  #   end
-  #   nil
-  # end
-
   def cookie_auth_token
     if @cookies['auth'].present?
       return @cookies['auth']

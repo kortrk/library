@@ -31,7 +31,6 @@ export class LoginComponent {
 
   logout(){
     this.authService.logout();
-    this.router.navigate(['/welcome']);
   }
 
   signUp(username: HTMLInputElement, password: HTMLInputElement, signuprole: HTMLSelectElement){

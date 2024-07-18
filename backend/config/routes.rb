@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   defaults format: :json do
-    post '/auth/login', to: 'authentication#login'
+    get  '/auth/login', to: 'authentication#login'
     post '/auth/signup', to: 'authentication#signup'
-    get '/books', to: 'books#index'
-    get '/books/:id', to: 'books#get_book'
-    get '/books/random/:count', to: 'books#random'
+    get  '/books', to: 'books#index'
+    get  '/books/:id', to: 'books#get_book'
+    get  '/books/random/:count', to: 'books#random'
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

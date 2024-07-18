@@ -58,11 +58,15 @@ export class AuthService {
   // TEMP
   db = new DB([new User("username", "password", UserRole.Patron)])
 
-  login(username: string, password: string): Observable<HttpLoginPostResponse> {
-    return this.http.post<HttpLoginPostResponse>(
+  login(username: string, password: string): Observable<string> {
+    return this.http.get<string>(
       `${Config.backendUrl}auth/login`,
-      {name: username, password: password}//,
-      // {withCredentials: true}
+      {
+        headers: {
+          'Authorization': `Simple ${username}:${password}`,
+        },
+        withCredentials: true
+      }
     )
     // var validUser = this.db.getUserByCreds(username, password)
     // if (validUser){

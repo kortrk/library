@@ -7,4 +7,5 @@ A single-page app using Angular.
 
 [Check out a static live demo of the frontend here!](https://kortrk.github.io/library-gh-pages)
 
-![Library Image](https://github.com/user-attachments/assets/e497d296-5610-4b73-8798-c784dc40c725)
+![Cornerstone Library Cover Image](https://github.com/user-attachments/assets/b3d21a6c-5d34-40c3-abf8-b166d988a6eb)
+

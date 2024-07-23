@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     get  '/books', to: 'books#index'
     get  '/books/:id', to: 'books#get_book'
     get  '/books/random/:count', to: 'books#random'
+    post '/books/check_out/:id', to: 'books#check_out'
+    post '/books/check_in/:id', to: 'books#check_in'
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

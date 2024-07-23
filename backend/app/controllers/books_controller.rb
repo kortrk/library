@@ -16,8 +16,8 @@ class BooksController < ApplicationController
 
   def check_out
     user = AuthorizeApiRequest.call(request.cookies).result
-    render :json => {success: false} if !user
     book = Book.find_by_id(params[:id])
+    render :json => {success: false} if !user or !book
     duedate = book.checkout!(user)
     render :json => {success: true, msg: "#{book.title} will be due on #{duedate}"}
   end

@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   skip_before_action :authenticate_request
+  before_action :authenticate_librarian_request, only: [:random]
 
   def index
     render :json => Book.all
@@ -11,5 +12,9 @@ class BooksController < ApplicationController
 
   def get_book
     render :json => Book.where(id: params[:id])
+  end
+
+  def borrow
+    render :json => {success: true}
   end
 end

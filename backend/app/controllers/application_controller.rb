@@ -9,4 +9,9 @@ class ApplicationController < ActionController::Base
     @current_user = AuthorizeApiRequest.call(request.cookies).result
     render json: { error: 'Not Authorized' }, status: 401 unless @current_user
   end
+
+  def authenticate_librarian_request
+    @current_user = AuthorizeApiRequest.call(request.cookies).result
+    render json: { error: 'Not Authorized' }, status: 401 unless @current_user && @current_user.isLibrarian?
+  end
 end

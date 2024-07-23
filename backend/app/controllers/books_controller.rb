@@ -24,6 +24,7 @@ class BooksController < ApplicationController
 
   def check_in
     book = Book.find_by_id(params[:id])
+    render :json => {success: false} if !book
     book.checkin!
     render :json => {success: true, msg: "#{book.title} returned successfully"}
   end

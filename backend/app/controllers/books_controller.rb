@@ -1,6 +1,5 @@
 class BooksController < ApplicationController
   skip_before_action :authenticate_request
-  before_action :authenticate_librarian_request, only: [:check_in]
 
   def index
     render :json => Book.all

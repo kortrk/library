@@ -10,10 +10,4 @@ class Book < ApplicationRecord
     self.save!
     return duedate
   end
-
-  def check_in!
-    self.currentBorrower = nil
-    self.duedate = nil
-    self.save!
-  end
 end

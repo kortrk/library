@@ -54,13 +54,6 @@ export class DetailsBookComponent {
       }
       this.loading = false;
     });
-
-    // if (showBook){
-    //   this.book = showBook;
-    //   this.reviews = this.reviewDbService.getReviewsFor(providedId);
-    // } else {
-    //   this.book = this.defaultBook;
-    // }
   }
 
   assumeLoggedIn(): boolean {

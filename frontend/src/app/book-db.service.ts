@@ -5,7 +5,7 @@ import { BookInitHelperService } from './book-init-helper.service';
 import { isEqual, max, sampleSize } from 'lodash';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Config } from '../constants/general-consts';
+import { Config, HttpResponse } from '../constants/general-consts';
 
 @Injectable({
   providedIn: 'root'
@@ -46,22 +46,8 @@ export class BookDbService {
     // accept multiple ids
   }
 
-  borrowBook(id: number, duedate: string): boolean {
-    var books = this.getAllBooks();
-    var book = books.filter((b) => b.id == id)[0];
-    if (book === null){
-      console.log("No book!")
-      return false;
-    }
-    var username = localStorage.getItem('username');
-    if (username === null) {
-      console.log("No user!")
-      return false;
-    }
-    book.currentBorrower = localStorage.getItem('username');
-    book.duedate = duedate;
-    localStorage.setItem('books', JSON.stringify(books));
-    return true;
+  checkOutBook(id: number): Observable<HttpResponse> {
+    return this.http.post<HttpResponse>(`${Config.backendUrl}books/check_out/${id}`, null, {withCredentials: true})
   }
 
   /**

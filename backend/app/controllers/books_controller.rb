@@ -19,7 +19,10 @@ class BooksController < ApplicationController
     book = Book.find_by_id(params[:id])
     render :json => {success: false} if !user or !book
     duedate = book.check_out!(user)
-    render :json => {success: true, msg: "#{book.title} will be due on #{duedate}"}
+    render :json => {
+      success: true,
+      msg: "All set! #{book.title} will be due on #{duedate}."
+    }
   end
 
   def check_in

@@ -1,6 +1,5 @@
 <div class="ui form" style="margin: 20px">
   <p>Checking out {{bookTitle}}.</p>
-  <p>This will be due on {{xDaysFromNow()}}.</p>
   <button class="ui green button" (click)="borrow()">Confirm</button>
   <button class="ui red button" [routerLink]="['/details', {id: bookId}]">Cancel</button>
 </div>

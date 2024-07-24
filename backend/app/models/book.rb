@@ -1,5 +1,5 @@
 class Book < ApplicationRecord
-  has_many :reviews
+  has_many :reviews, foreign_key: :bookId
 
   BORROWING_PERIOD = 10.days
 

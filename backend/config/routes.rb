@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     get '/books/search/:query', to: 'books#search'
     post '/books/check_out/:id', to: 'books#check_out'
     get '/reviews/book/:bookId', to: 'reviews#for_book_id'
+    put '/reviews/create', to: 'reviews#create'
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

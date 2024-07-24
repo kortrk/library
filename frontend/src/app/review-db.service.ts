@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Review, ReviewFields } from './review.model';
 import { HttpClient } from '@angular/common/http';
-import { Config } from '../constants/general-consts';
+import { Config, HttpResponse } from '../constants/general-consts';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -49,10 +49,7 @@ export class ReviewDbService {
     return this.http.get<Review[]>(Config.backendUrl + `reviews/book/${bookId}`)
   }
 
-  submitReview(newReview: Review): boolean{
-    var reviews = this.getAllReviews();
-    reviews.push(newReview);
-    localStorage.setItem('reviews', JSON.stringify(reviews));
-    return true;
+  submitReview(newReview: Review): Observable<HttpResponse>{
+    return this.http.put<HttpResponse>(Config.backendUrl + "reviews/create", newReview, {withCredentials: true})
   }
 }

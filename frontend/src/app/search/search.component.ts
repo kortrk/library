@@ -15,6 +15,7 @@ import { AuthHelperService } from '../auth-helper.service';
 })
 export class SearchComponent {
   bookDbService: BookDbService;
+  searchResults: Book[];
   books: Book[];
   showAdvancedSearch: boolean;
   sortBy: SortType;
@@ -29,6 +30,7 @@ export class SearchComponent {
 
   constructor(){
     this.bookDbService = inject(BookDbService);
+    this.searchResults = [];
     this.books = [];
     this.showAdvancedSearch = false;
     this.sortBy = SortType.ISBN;
@@ -56,7 +58,8 @@ export class SearchComponent {
 
     s.subscribe(books => {
       var books = books.map((b) => new Book(b));
-      this.filter(books);
+      this.searchResults = books;
+      this.filter(this.searchResults);
     });
   }
 

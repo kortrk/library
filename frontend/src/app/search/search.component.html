@@ -1,8 +1,8 @@
 <librarian-toolbar></librarian-toolbar>
 
 <div class="ui action input" style="display:table;">
-  <input type="text" style="width:25em;" placeholder="Search..." id="searchbar" (keyup.enter)="filter()" [(ngModel)]="titleSearch">
-  <button class="ui green button" (click)="filter()">Go</button>
+  <input type="text" style="width:25em;" placeholder="Search..." id="searchbar" (keyup.enter)="search()" [(ngModel)]="titleSearch">
+  <button class="ui green button" (click)="search()">Go</button>
   <button class="ui small button" (click)="toggleAdvancedSearch()">{{showAdvancedSearch ? "Hide ": "Show "}} Advanced Search</button>
 </div>
 
@@ -10,16 +10,17 @@
   <div class="ui blue message">
     <form class="ui form">
       <label for="authorfilter">Filter by Author: </label>
-      <input type="text" name="authorfilter" id="authorfilter" (keyup.enter)="filter()" [(ngModel)]="authorSearch">
+      <input type="text" name="authorfilter" id="authorfilter" (keyup.enter)="filter(this.searchResults)" [(ngModel)]="authorSearch">
       <br><br>
 
       <label for="availfilter">Filter by Availability: </label>
-      <select name="availfilter" id="availfilter" [(ngModel)]="availSearch">
+      <select name="availfilter" id="availfilter" (change)="filter(this.searchResults)" [(ngModel)]="availSearch">
         @for(availType of availTypes; track availType){
           <option value={{availType}}>{{availType}}</option>
         }
       </select>
       <br>
+      <button class="ui blue button" (click)="filter(this.searchResults)">Filter</button>
     </form>
   </div>
 }
@@ -32,7 +33,7 @@
   <form class="ui form">
     <label for="sort-by" class="ui blue label">Sort by: </label> &nbsp;
     @for(item of sortTypes; track item){
-      <input type="radio" name="options" (click)="sortBy = item; sort()" [checked]="item === sortBy" class="ui radio checkbox">
+      <input type="radio" name="options" (click)="sortBy = item; sort(this.books)" [checked]="item === sortBy" class="ui radio checkbox">
       {{item}}
     }
     <br>
@@ -41,6 +42,6 @@
 
 <div class="ui items">
   @for(book of books; track book.id){
-    <display-book [book]="book" [hidden]="shouldHide(book)"></display-book>
+    <display-book [book]="book" [hidden]="shouldHideBook(book)"></display-book>
   }
 </div>

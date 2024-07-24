@@ -35,17 +35,10 @@ export class EditBookComponent {
         this.book = books[0];
       } else {
         this.bookHelperService.genericBook();
-        this.book.id = this.bookDbService.getNextId(); // tmp
+        this.book.id = 0; // tmp
       }
       this.loading = false;
     });
-    // var foundBook = this.bookDbService.getBook(providedId);
-    // if (foundBook !== null){
-    //   this.book = foundBook;
-    // } else {
-    //   this.book = this.bookHelperService.genericBook();
-    //   this.book.id = this.bookDbService.getNextId(); // tmp
-    // }
   }
 
 

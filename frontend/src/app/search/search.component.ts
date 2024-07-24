@@ -15,6 +15,7 @@ import { AuthHelperService } from '../auth-helper.service';
 })
 export class SearchComponent {
   bookDbService: BookDbService;
+  searchResults: Book[];
   books: Book[];
   showAdvancedSearch: boolean;
   sortBy: SortType;
@@ -29,43 +30,55 @@ export class SearchComponent {
 
   constructor(){
     this.bookDbService = inject(BookDbService);
-    this.books = this.allBooks();
+    this.searchResults = [];
+    this.books = [];
     this.showAdvancedSearch = false;
     this.sortBy = SortType.ISBN;
     this.titleSearch = "";
     this.authorSearch = "";
     this.availSearch = AvailType.All;
     this.authHelperService = inject(AuthHelperService);
-
-    // establish default display
-    this.filter();
   }
 
-  allBooks(): Book[]{
-    return this.bookDbService.getAllBooks();
+  /**
+   * This function exists for demo purposes and
+   * would not be present on a real library website.
+   */
+  allBooks(){
+    this.bookDbService.getAllBooks()
+    .subscribe(books =>{
+      var books = books.map((b) => new Book(b));
+      this.books = books;
+    })
   }
 
-  filter(){
-    this.books =
-      this.filterByTitle(
-        this.filterByAuthor(
-          this.filterByAvailability(
-            this.allBooks()
-          )
-        )
+  search(){
+    var s = null;
+    if (this.titleSearch == ""){
+      s = this.bookDbService.getAllBooks()
+    } else {
+      s = this.bookDbService.search(this.titleSearch)
+    }
+
+    s.subscribe(books => {
+      var books = books.map((b) => new Book(b));
+      this.searchResults = books;
+      this.filter(this.searchResults);
+    });
+  }
+
+  filter(books: Book[]){
+    var filtered = this.filterByAuthor(
+      this.filterByAvailability(
+        books
       )
-    this.sort()
+    )
+    this.books = this.sort(filtered)
   }
 
   filterByAuthor(books: Book[]): Book[] {
     return books.filter(
-      (b) => b.author.includes(this.authorSearch)
-    )
-  }
-
-  filterByTitle(books: Book[]): Book[] {
-    return books.filter(
-      (b) => b.title.includes(this.titleSearch)
+      (b) => b.author.toLowerCase().includes(this.authorSearch.toLowerCase())
     )
   }
 
@@ -83,9 +96,8 @@ export class SearchComponent {
     }
   }
 
-  sort(){
-    console.log(`sorting by ${this.sortBy}`)
-    this.books = this.books.sort((a, b) =>{
+  sort(books: Book[]): Book[] {
+    return books.sort((a, b) =>{
       if (this.sortBy === SortType.Title){
         return a.title < b.title ? -1 : 1
       } else if (this.sortBy === SortType.Author){
@@ -101,7 +113,7 @@ export class SearchComponent {
     })
   }
 
-  shouldHide(book: Book): boolean {
+  shouldHideBook(book: Book): boolean {
     if (book.visible) return false;
     if (this.authHelperService.assumeLibrarian()) return false;
     return true;
@@ -115,19 +127,7 @@ export class SearchComponent {
     this.titleSearch = "";
     this.authorSearch = "";
     this.availSearch = AvailType.All;
-    this.filter()
-  }
-
-  titleSearchInUse(): boolean{
-    return this.titleSearch.length > 0
-  }
-
-  authorSearchInUse(): boolean{
-    return this.authorSearch.length > 0
-  }
-
-  availSearchInUse(): boolean{
-    return (this.availSearch as AvailType) !== AvailType.All
+    this.books = [];
   }
 }
 

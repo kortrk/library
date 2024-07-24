@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     get  '/books', to: 'books#index'
     get  '/books/:id', to: 'books#get_book'
     get  '/books/random/:count', to: 'books#random'
+    get '/books/search/:query', to: 'books#search'
     post '/books/check_out/:id', to: 'books#check_out'
   end
 

@@ -42,6 +42,6 @@
 
 <div class="ui items">
   @for(book of books; track book.id){
-    <display-book [book]="book" [hidden]="shouldHide(book)"></display-book>
+    <display-book [book]="book" [hidden]="shouldHideBook(book)"></display-book>
   }
 </div>

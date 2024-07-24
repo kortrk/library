@@ -40,6 +40,10 @@ export class SearchComponent {
     this.authHelperService = inject(AuthHelperService);
   }
 
+  /**
+   * This function exists for demo purposes and
+   * would not be present on a real library website.
+   */
   allBooks(){
     this.bookDbService.getAllBooks()
     .subscribe(books =>{
@@ -74,13 +78,7 @@ export class SearchComponent {
 
   filterByAuthor(books: Book[]): Book[] {
     return books.filter(
-      (b) => b.author.includes(this.authorSearch)
-    )
-  }
-
-  filterByTitle(books: Book[]): Book[] {
-    return books.filter(
-      (b) => b.title.includes(this.titleSearch)
+      (b) => b.author.toLowerCase().includes(this.authorSearch.toLowerCase())
     )
   }
 
@@ -115,7 +113,7 @@ export class SearchComponent {
     })
   }
 
-  shouldHide(book: Book): boolean {
+  shouldHideBook(book: Book): boolean {
     if (book.visible) return false;
     if (this.authHelperService.assumeLibrarian()) return false;
     return true;
@@ -130,18 +128,6 @@ export class SearchComponent {
     this.authorSearch = "";
     this.availSearch = AvailType.All;
     this.books = [];
-  }
-
-  titleSearchInUse(): boolean{
-    return this.titleSearch.length > 0
-  }
-
-  authorSearchInUse(): boolean{
-    return this.authorSearch.length > 0
-  }
-
-  availSearchInUse(): boolean{
-    return (this.availSearch as AvailType) !== AvailType.All
   }
 }
 

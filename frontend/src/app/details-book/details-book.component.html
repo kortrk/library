@@ -45,7 +45,7 @@
     @if(reviews.length > 0){
       <div class="ui comments segment">
         <h3 class="ui dividing header" >
-          Reviews -<span style="font-size: small; padding-left: 4px;">Average Rating: {{averageRating()}}</span>
+          Reviews -<span style="font-size: small; padding-left: 4px;">Average Rating: {{averageRating}}</span>
         </h3>
         <div style="overflow-y: auto; height: 100px; width:inherit;">
           @for(review of reviews; track review.username + review.text){

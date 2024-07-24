@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Review, ReviewFields } from './review.model';
+import { HttpClient } from '@angular/common/http';
+import { Config } from '../constants/general-consts';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReviewDbService {
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.initReviews();
   }
 
@@ -42,10 +45,8 @@ export class ReviewDbService {
     }
   }
 
-  getReviewsFor(bookId: number): Review[]{
-    return this.getAllReviews().filter((r) =>
-      r.bookId == bookId
-    );
+  getReviewsFor(bookId: number): Observable<Review[]> {
+    return this.http.get<Review[]>(Config.backendUrl + `reviews/book/${bookId}`)
   }
 
   submitReview(newReview: Review): boolean{

@@ -13,6 +13,12 @@ class BooksController < ApplicationController
     render :json => Book.where(id: params[:id])
   end
 
+  def search
+    # could add pagination, but it's not needed yet
+    search_str = "%" + ActiveRecord::Base.sanitize_sql(params[:query]) + "%"
+    render :json => Book.where("title ILIKE ?", search_str)
+  end
+
   def check_out
     user = AuthorizeApiRequest.call(request.cookies).result
     book = Book.find_by_id(params[:id])

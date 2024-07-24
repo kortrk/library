@@ -1,8 +1,8 @@
 <librarian-toolbar></librarian-toolbar>
 
 <div class="ui action input" style="display:table;">
-  <input type="text" style="width:25em;" placeholder="Search..." id="searchbar" (keyup.enter)="filter()" [(ngModel)]="titleSearch">
-  <button class="ui green button" (click)="filter()">Go</button>
+  <input type="text" style="width:25em;" placeholder="Search..." id="searchbar" (keyup.enter)="search()" [(ngModel)]="titleSearch">
+  <button class="ui green button" (click)="search()">Go</button>
   <button class="ui small button" (click)="toggleAdvancedSearch()">{{showAdvancedSearch ? "Hide ": "Show "}} Advanced Search</button>
 </div>
 

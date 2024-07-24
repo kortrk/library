@@ -46,6 +46,10 @@ export class BookDbService {
     // accept multiple ids
   }
 
+  search(query: string): Observable<Book[]> {
+    return this.http.get<Book[]>(`${Config.backendUrl}books/search/${query}`)
+  }
+
   checkOutBook(id: number): Observable<HttpResponse> {
     return this.http.post<HttpResponse>(`${Config.backendUrl}books/check_out/${id}`, null, {withCredentials: true})
   }

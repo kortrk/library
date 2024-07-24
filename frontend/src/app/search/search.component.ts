@@ -29,20 +29,26 @@ export class SearchComponent {
 
   constructor(){
     this.bookDbService = inject(BookDbService);
-    this.books = this.allBooks();
+    this.books = [];
     this.showAdvancedSearch = false;
     this.sortBy = SortType.ISBN;
     this.titleSearch = "";
     this.authorSearch = "";
     this.availSearch = AvailType.All;
     this.authHelperService = inject(AuthHelperService);
-
-    // establish default display
-    this.filter();
   }
 
   allBooks(): Book[]{
     return this.bookDbService.getAllBooks();
+  }
+
+  search(){
+    if (this.titleSearch == "") alert("Please enter a search term.")
+    this.bookDbService.search(this.titleSearch)
+    .subscribe(books => {
+      var books = books.map((b) => new Book(b));
+      this.books = books;
+    });
   }
 
   filter(){

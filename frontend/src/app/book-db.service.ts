@@ -66,22 +66,6 @@ export class BookDbService {
     return `${info} successfully`;
   }
 
-  /**
-   * temporary - backend will handle this
-   */
-  // getNextId(): number {
-  //   var books = this.getAllBooks();
-  //   var id;
-  //   if (books.length == 0){
-  //     id = 0;
-  //   } else {
-  //     var highestId = max(books.map((b) => b.id));
-  //     if (highestId === undefined) return 0; // shouldn't actually happen
-  //     id = highestId + 1;
-  //   }
-  //   return id;
-  // }
-
   removeBook(id: number): boolean {
     var books: Book[] = [];
     var finalBooks = books.filter((x) => x.id != id)

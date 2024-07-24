@@ -39,13 +39,6 @@ export class EditBookComponent {
       }
       this.loading = false;
     });
-    // var foundBook = this.bookDbService.getBook(providedId);
-    // if (foundBook !== null){
-    //   this.book = foundBook;
-    // } else {
-    //   this.book = this.bookHelperService.genericBook();
-    //   this.book.id = this.bookDbService.getNextId(); // tmp
-    // }
   }
 
 

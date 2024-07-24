@@ -35,7 +35,7 @@ export class EditBookComponent {
         this.book = books[0];
       } else {
         this.bookHelperService.genericBook();
-        this.book.id = this.bookDbService.getNextId(); // tmp
+        this.book.id = 0; // tmp
       }
       this.loading = false;
     });

@@ -28,16 +28,8 @@ export class BookDbService {
     localStorage.setItem('books', JSON.stringify(books));
   }
 
-  getAllBooks(): Book[] {
-    var retrievedBooks = localStorage.getItem('books');
-    if (retrievedBooks){
-      return JSON.parse(retrievedBooks).map((x: Object) =>
-        new Book(x as BookFields)
-        // have to call `new` for Book to init with its methods
-      );
-    } else {
-      return [];
-    }
+  getAllBooks(): Observable<Book[]> {
+    return this.http.get<Book[]>(`${Config.backendUrl}books/`)
   }
 
   getBook(id: number): Observable<Book[]> {
@@ -61,7 +53,7 @@ export class BookDbService {
    */
   saveBook(book: Book): string | null {
     var info = "Updated";
-    var books = this.getAllBooks();
+    var books: Book[] = [];
     var existingBook = books.filter((b) => b.id == book.id)[0];
     if (existingBook === undefined){
       info = "Created";
@@ -77,21 +69,21 @@ export class BookDbService {
   /**
    * temporary - backend will handle this
    */
-  getNextId(): number {
-    var books = this.getAllBooks();
-    var id;
-    if (books.length == 0){
-      id = 0;
-    } else {
-      var highestId = max(books.map((b) => b.id));
-      if (highestId === undefined) return 0; // shouldn't actually happen
-      id = highestId + 1;
-    }
-    return id;
-  }
+  // getNextId(): number {
+  //   var books = this.getAllBooks();
+  //   var id;
+  //   if (books.length == 0){
+  //     id = 0;
+  //   } else {
+  //     var highestId = max(books.map((b) => b.id));
+  //     if (highestId === undefined) return 0; // shouldn't actually happen
+  //     id = highestId + 1;
+  //   }
+  //   return id;
+  // }
 
   removeBook(id: number): boolean {
-    var books = this.getAllBooks();
+    var books: Book[] = [];
     var finalBooks = books.filter((x) => x.id != id)
     localStorage.setItem('books', JSON.stringify(finalBooks));
     return true;

@@ -10,16 +10,17 @@
   <div class="ui blue message">
     <form class="ui form">
       <label for="authorfilter">Filter by Author: </label>
-      <input type="text" name="authorfilter" id="authorfilter" (keyup.enter)="filter()" [(ngModel)]="authorSearch">
+      <input type="text" name="authorfilter" id="authorfilter" (keyup.enter)="filter(this.books)" [(ngModel)]="authorSearch">
       <br><br>
 
       <label for="availfilter">Filter by Availability: </label>
-      <select name="availfilter" id="availfilter" [(ngModel)]="availSearch">
+      <select name="availfilter" id="availfilter" (change)="filter(this.books)" [(ngModel)]="availSearch">
         @for(availType of availTypes; track availType){
           <option value={{availType}}>{{availType}}</option>
         }
       </select>
       <br>
+      <button class="ui blue button" (click)="filter(this.books)">Filter</button>
     </form>
   </div>
 }
@@ -32,7 +33,7 @@
   <form class="ui form">
     <label for="sort-by" class="ui blue label">Sort by: </label> &nbsp;
     @for(item of sortTypes; track item){
-      <input type="radio" name="options" (click)="sortBy = item; sort()" [checked]="item === sortBy" class="ui radio checkbox">
+      <input type="radio" name="options" (click)="sortBy = item; sort(this.books)" [checked]="item === sortBy" class="ui radio checkbox">
       {{item}}
     }
     <br>

@@ -38,29 +38,35 @@ export class SearchComponent {
     this.authHelperService = inject(AuthHelperService);
   }
 
-  allBooks(): Book[]{
-    return this.bookDbService.getAllBooks();
+  allBooks(){
+    this.bookDbService.getAllBooks()
+    .subscribe(books =>{
+      var books = books.map((b) => new Book(b));
+      this.books = books;
+    })
   }
 
   search(){
-    if (this.titleSearch == "") alert("Please enter a search term.")
-    this.bookDbService.search(this.titleSearch)
-    .subscribe(books => {
+    var s = null;
+    if (this.titleSearch == ""){
+      s = this.bookDbService.getAllBooks()
+    } else {
+      s = this.bookDbService.search(this.titleSearch)
+    }
+
+    s.subscribe(books => {
       var books = books.map((b) => new Book(b));
-      this.books = books;
+      this.filter(books);
     });
   }
 
-  filter(){
-    this.books =
-      this.filterByTitle(
-        this.filterByAuthor(
-          this.filterByAvailability(
-            this.allBooks()
-          )
-        )
+  filter(books: Book[]){
+    var filtered = this.filterByAuthor(
+      this.filterByAvailability(
+        books
       )
-    this.sort()
+    )
+    this.books = this.sort(filtered)
   }
 
   filterByAuthor(books: Book[]): Book[] {
@@ -89,9 +95,8 @@ export class SearchComponent {
     }
   }
 
-  sort(){
-    console.log(`sorting by ${this.sortBy}`)
-    this.books = this.books.sort((a, b) =>{
+  sort(books: Book[]): Book[] {
+    return books.sort((a, b) =>{
       if (this.sortBy === SortType.Title){
         return a.title < b.title ? -1 : 1
       } else if (this.sortBy === SortType.Author){
@@ -121,7 +126,7 @@ export class SearchComponent {
     this.titleSearch = "";
     this.authorSearch = "";
     this.availSearch = AvailType.All;
-    this.filter()
+    this.books = [];
   }
 
   titleSearchInUse(): boolean{

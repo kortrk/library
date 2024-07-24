@@ -1,6 +1,5 @@
 class BooksController < ApplicationController
   skip_before_action :authenticate_request
-  before_action :authenticate_librarian_request, only: [:random]
 
   def index
     render :json => Book.all
@@ -14,7 +13,14 @@ class BooksController < ApplicationController
     render :json => Book.where(id: params[:id])
   end
 
-  def borrow
-    render :json => {success: true}
+  def check_out
+    user = AuthorizeApiRequest.call(request.cookies).result
+    book = Book.find_by_id(params[:id])
+    render :json => {success: false} if !user or !book
+    duedate = book.check_out!(user)
+    render :json => {
+      success: true,
+      msg: "All set! #{book.title} will be due on #{duedate}."
+    }
   end
 end

@@ -14,8 +14,6 @@ export class CheckoutComponent {
   bookId: number  = -1;
   bookTitle: string = "";
 
-  readonly loanPeriod = 5; // days
-
   constructor(private router: Router){
     this.bookDbService = inject(BookDbService);
   }
@@ -30,18 +28,15 @@ export class CheckoutComponent {
     this.bookTitle = providedTitle;
   }
 
-  xDaysFromNow(): string{
-    var date = new Date();
-    var futureDate = new Date(date.setDate(date.getDate() + this.loanPeriod));
-    return futureDate.toDateString();
-  }
-
   borrow(){
-    if (this.bookDbService.borrowBook(this.bookId, this.xDaysFromNow())){
-      alert("All set!");
-      this.router.navigate(['/search']);
-    } else {
-      alert("An error occurred.");
-    }
+    this.bookDbService.checkOutBook(this.bookId)
+    .subscribe(res => {
+      if (res.success){
+        alert(res.msg);
+        this.router.navigate(['/search']);
+      } else {
+        alert("An error occurred.");
+      }
+    });
   }
 }

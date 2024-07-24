@@ -12,7 +12,7 @@ class ReviewsController < ApplicationController
       render :json => {
         success: false,
         msg: "Unauthorized"
-      }, status: 400
+      }
       return
     end
 

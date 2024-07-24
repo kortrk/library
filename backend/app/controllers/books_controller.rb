@@ -24,7 +24,7 @@ class BooksController < ApplicationController
     user = AuthorizeApiRequest.call(request.cookies).result
 
     if !user
-      render :json => {success: false, msg: "Unauthorized"}, status: 400
+      render :json => {success: false, msg: "Unauthorized"}
       return
     end
 

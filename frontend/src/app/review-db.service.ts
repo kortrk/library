@@ -50,6 +50,10 @@ export class ReviewDbService {
   }
 
   submitReview(newReview: Review): Observable<HttpResponse>{
-    return this.http.put<HttpResponse>(Config.backendUrl + "reviews/create", newReview, {withCredentials: true})
+    return this.http.put<HttpResponse>(
+      Config.backendUrl + "reviews/create",
+      newReview,
+      {withCredentials: true}
+    )
   }
 }

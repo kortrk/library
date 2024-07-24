@@ -2,7 +2,7 @@ class BooksController < ApplicationController
   skip_before_action :authenticate_request
 
   def index
-    render :json => Book.all
+    render :json => package_books_with_rating(Book.includes(:reviews).all)
   end
 
   def random
@@ -16,7 +16,8 @@ class BooksController < ApplicationController
   def search
     # could add pagination, but it's not needed yet
     search_str = "%" + ActiveRecord::Base.sanitize_sql(params[:query]) + "%"
-    render :json => Book.where("title ILIKE ?", search_str)
+    books = Book.includes(:reviews).where("title ILIKE ?", search_str)
+    render :json => package_books_with_rating(books)
   end
 
   def check_out
@@ -28,5 +29,16 @@ class BooksController < ApplicationController
       success: true,
       msg: "All set! #{book.title} will be due on #{duedate}."
     }
+  end
+
+  private
+
+  def package_books_with_rating(books)
+    books.map do |book|
+      b = book.as_json
+      ratings = book.reviews.pluck(:rating)
+      b["avgRating"] = ratings.sum / ratings.size.to_f
+      b
+    end
   end
 end

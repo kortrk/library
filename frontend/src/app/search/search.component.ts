@@ -5,6 +5,7 @@ import { LibrarianToolbarComponent } from '../librarian-toolbar/librarian-toolba
 import { FormsModule, NgModel } from '@angular/forms';
 import { BookDbService } from '../book-db.service'
 import { AuthHelperService } from '../auth-helper.service';
+import { BookWithRating } from '../book-with-rating.model';
 
 @Component({
   selector: 'search',
@@ -15,8 +16,8 @@ import { AuthHelperService } from '../auth-helper.service';
 })
 export class SearchComponent {
   bookDbService: BookDbService;
-  searchResults: Book[];
-  books: Book[];
+  searchResults: BookWithRating[];
+  books: BookWithRating[];
   showAdvancedSearch: boolean;
   sortBy: SortType;
   titleSearch: string;
@@ -47,7 +48,7 @@ export class SearchComponent {
   allBooks(){
     this.bookDbService.getAllBooks()
     .subscribe(books =>{
-      var books = books.map((b) => new Book(b));
+      var books = books.map((b) => new BookWithRating(b));
       this.books = books;
     })
   }
@@ -61,13 +62,13 @@ export class SearchComponent {
     }
 
     s.subscribe(books => {
-      var books = books.map((b) => new Book(b));
+      var books = books.map((b) => new BookWithRating(b));
       this.searchResults = books;
       this.filter(this.searchResults);
     });
   }
 
-  filter(books: Book[]){
+  filter(books: BookWithRating[]){
     var filtered = this.filterByAuthor(
       this.filterByAvailability(
         books
@@ -76,13 +77,13 @@ export class SearchComponent {
     this.books = this.sort(filtered)
   }
 
-  filterByAuthor(books: Book[]): Book[] {
+  filterByAuthor(books: BookWithRating[]): BookWithRating[] {
     return books.filter(
       (b) => b.author.toLowerCase().includes(this.authorSearch.toLowerCase())
     )
   }
 
-  filterByAvailability(books: Book[]): Book[] {
+  filterByAvailability(books: BookWithRating[]): BookWithRating[] {
     switch(this.availSearch as AvailType){
       case AvailType.In: {
         return books.filter((b) => b.currentBorrower === null)
@@ -96,7 +97,7 @@ export class SearchComponent {
     }
   }
 
-  sort(books: Book[]): Book[] {
+  sort(books: BookWithRating[]): BookWithRating[] {
     return books.sort((a, b) =>{
       if (this.sortBy === SortType.Title){
         return a.title < b.title ? -1 : 1

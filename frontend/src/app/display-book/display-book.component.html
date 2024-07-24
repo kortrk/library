@@ -6,7 +6,7 @@
   <div class="header">{{book.title}}</div>
   <div class="meta">
     <p>By {{book.author}}</p>
-    <p>Avg. Rating: {{averageUserRating(book.id)}}</p>
+    <p>Avg. Rating: {{book.avgRating}}</p>
     <p style="color: red" [hidden]="!book.currentlyBorrowed()">Currently out</p>
     <p style="color: purple" [hidden]="book.visible || !assumeLibrarian()"><b>Not yet visible to patrons</b></p>
   </div>

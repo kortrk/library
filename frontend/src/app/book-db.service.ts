@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { Book, BookFields } from './book.model';
+import { Book } from './book.model';
+import { BookWithRating } from './book-with-rating.model';
 import { BookHelperService } from './book-helper.service';
 import { BookInitHelperService } from './book-init-helper.service';
 import { isEqual, max, sampleSize } from 'lodash';
@@ -28,8 +29,8 @@ export class BookDbService {
     localStorage.setItem('books', JSON.stringify(books));
   }
 
-  getAllBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>(`${Config.backendUrl}books/`)
+  getAllBooks(): Observable<BookWithRating[]> {
+    return this.http.get<BookWithRating[]>(`${Config.backendUrl}books/`)
   }
 
   getBook(id: number): Observable<Book[]> {
@@ -38,8 +39,8 @@ export class BookDbService {
     // accept multiple ids
   }
 
-  search(query: string): Observable<Book[]> {
-    return this.http.get<Book[]>(`${Config.backendUrl}books/search/${query}`)
+  search(query: string): Observable<BookWithRating[]> {
+    return this.http.get<BookWithRating[]>(`${Config.backendUrl}books/search/${query}`)
   }
 
   checkOutBook(id: number): Observable<HttpResponse> {

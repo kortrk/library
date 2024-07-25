@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
   skip_before_action :authenticate_request
-  before_action :authenticate_librarian_request, only: [:remove]
+  before_action :authenticate_librarian_request, only: [:remove, :upsert]
 
   def index
     render :json => package_books_with_rating(Book.includes(:reviews).all)
@@ -19,6 +19,18 @@ class BooksController < ApplicationController
     search_str = "%" + ActiveRecord::Base.sanitize_sql(params[:query]) + "%"
     books = Book.includes(:reviews).where("title ILIKE ?", search_str)
     render :json => package_books_with_rating(books)
+  end
+
+  def upsert
+    data = JSON.parse(request.raw_post)
+    begin
+      # Book.find_by_id(data[:id])
+      Book.upsert(data, unique_by: :id)
+      render :json => {success: true, msg: "Updated successfully"}
+    rescue => e
+      render :json => {success: false, msg: "Could not update"}
+      raise e
+    end
   end
 
   def remove

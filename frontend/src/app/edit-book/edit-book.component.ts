@@ -48,13 +48,13 @@ export class EditBookComponent {
   }
 
   saveBook(){
-    var successMessage = this.bookDbService.saveBook(this.book);
-    if (successMessage !== null){
-      alert(successMessage);
-      this.router.navigate(['/search']);
-    } else {
-      alert('There was a problem making this update');
-    }
+    this.bookDbService.saveBook(this.book)
+    .subscribe(res => {
+      alert(res.msg)
+      if (res.success){
+        this.router.navigate(['/search']);
+      }
+    })
   }
 
   deleteBook(){

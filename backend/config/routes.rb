@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     get '/books/search/:query', to: 'books#search'
     post '/books/check_out/:id', to: 'books#check_out'
     post '/books/remove/:id', to: 'books#remove'
+    put  '/books/upsert', to: 'books#upsert'
     get '/reviews/book/:bookId', to: 'reviews#for_book_id'
     put '/reviews/create', to: 'reviews#create'
   end

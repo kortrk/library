@@ -52,19 +52,12 @@ export class BookDbService {
    ** type `string` if successful
    ** type `null` if unsuccessful
    */
-  saveBook(book: Book): string | null {
-    var info = "Updated";
-    var books: Book[] = [];
-    var existingBook = books.filter((b) => b.id == book.id)[0];
-    if (existingBook === undefined){
-      info = "Created";
-    }
-    if (isEqual(book, existingBook)) return 'No change!';
-    var restOfBooks = books.filter((b) => b.id != book.id);
-    restOfBooks.push(book);
-    var newBookList = restOfBooks;
-    localStorage.setItem('books', JSON.stringify(newBookList));
-    return `${info} successfully`;
+  saveBook(book: Book): Observable<HttpResponse> {
+    return this.http.put<HttpResponse>(
+      Config.backendUrl + `books/upsert`,
+      book,
+      {withCredentials: true}
+    )
   }
 
   removeBook(id: number): Observable<HttpResponse> {

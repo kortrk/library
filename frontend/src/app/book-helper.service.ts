@@ -19,7 +19,7 @@ export class BookHelperService {
       category: this.placeholderStr,
       isbn: this.placeholderStr,
       pageCount: 111,
-      id: 0,
+      id: null,
       coverImage: "generic.jpg",
       currentBorrower: null,
       duedate: null,

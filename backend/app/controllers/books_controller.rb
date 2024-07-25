@@ -24,11 +24,17 @@ class BooksController < ApplicationController
   def upsert
     data = JSON.parse(request.raw_post)
     begin
-      # Book.find_by_id(data[:id])
-      Book.upsert(data, unique_by: :id)
-      render :json => {success: true, msg: "Updated successfully"}
+      action = "Created"
+      if (data["id"] != nil)
+        action = "Updated"
+        Book.upsert(data, unique_by: :id)
+      else
+        data.delete("id") # makes the db generate a new id
+        Book.upsert(data)
+      end
+      render :json => {success: true, msg: "#{action} successfully"}
     rescue => e
-      render :json => {success: false, msg: "Could not update"}
+      render :json => {success: false, msg: "Book not #{action.downcase}"}
       raise e
     end
   end

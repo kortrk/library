@@ -83,7 +83,7 @@
     }
     <button class="ui blue button" routerLink='/search'>Back to Search</button>
     @if(assumeLibrarian()){
-      <button class="ui purple button" [routerLink]="['/edit-book', {id: book.id}]" hidden="{{!assumeLibrarian()}}">Edit</button>
+      <button class="ui purple button" [routerLink]="['/edit-book', {id: book.id}]">Edit</button>
     }
   }
 </div>

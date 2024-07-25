@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   skip_before_action :authenticate_request
+  # before_action :authenticate_librarian_request, only: [:remove]
 
   def index
     render :json => package_books_with_rating(Book.includes(:reviews).all)
@@ -48,8 +49,12 @@ class BooksController < ApplicationController
     books.map do |book|
       b = book.as_json
       ratings = book.reviews.pluck(:rating)
-      b["avgRating"] = ratings.sum / ratings.size.to_f
+      b["avgRating"] = (ratings.count == 0) ? nil : avg(ratings)
       b
     end
+  end
+
+  def avg(nums)
+    nums.sum / nums.size.to_f
   end
 end

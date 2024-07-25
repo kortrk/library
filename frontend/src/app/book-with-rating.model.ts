@@ -13,6 +13,7 @@ export class BookWithRating extends Book {
   }
 
   formatAvgRating(): string {
+    if (!this.avgRating) return "--";
     return this.avgRating.toFixed(2);
   }
 }

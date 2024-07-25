@@ -66,6 +66,12 @@ class BooksController < ApplicationController
     end
 
     duedate = book.check_out!(user)
+
+    if !duedate
+      render :json => {success: false, msg: "Could not borrow"}
+      return
+    end
+
     render :json => {
       success: true,
       msg: "All set! #{book.title} will be due on #{duedate}."

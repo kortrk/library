@@ -82,5 +82,8 @@
       <div class="ui red message"><em>Out - due on {{book.duedate}}</em></div><br>
     }
     <button class="ui blue button" routerLink='/search'>Back to Search</button>
+    @if(assumeLibrarian()){
+      <button class="ui purple button" [routerLink]="['/edit-book', {id: book.id}]" hidden="{{!assumeLibrarian()}}">Edit</button>
+    }
   }
 </div>

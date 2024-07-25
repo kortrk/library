@@ -63,6 +63,10 @@ export class DetailsBookComponent {
     return this.authHelperService.assumeLoggedIn();
   }
 
+  assumeLibrarian(): boolean {
+    return this.authHelperService.assumeLibrarian();
+  }
+
   calculateAvgRating(reviews: Review[]): string {
     if (reviews.length === 0) return "--";
     var sum = reviews.reduce((accumulator, currentValue) =>

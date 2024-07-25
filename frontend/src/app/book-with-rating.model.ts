@@ -7,7 +7,7 @@ export interface BookWithRatingFields extends BookFields {
 export class BookWithRating extends Book {
     avgRating: number
 
-	constructor(fields: BookWithRatingFields) {
+  constructor(fields: BookWithRatingFields) {
     super(fields);
     this.avgRating = fields.avgRating;
   }

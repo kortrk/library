@@ -59,8 +59,10 @@ export class EditBookComponent {
 
   deleteBook(){
     if (confirm(`Are you sure you want to delete ${this.book.title}?`)){
-      this.bookDbService.removeBook(this.book.id);
-      this.router.navigate(['/search']);
+      this.bookDbService.removeBook(this.book.id).subscribe(res => {
+        alert(res.msg);
+        if (res.success) this.router.navigate(['/search']);
+      });
     }
   }
 

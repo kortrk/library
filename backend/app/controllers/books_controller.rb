@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
   skip_before_action :authenticate_request
-  # before_action :authenticate_librarian_request, only: [:remove]
+  before_action :authenticate_librarian_request, only: [:remove]
 
   def index
     render :json => package_books_with_rating(Book.includes(:reviews).all)
@@ -19,6 +19,17 @@ class BooksController < ApplicationController
     search_str = "%" + ActiveRecord::Base.sanitize_sql(params[:query]) + "%"
     books = Book.includes(:reviews).where("title ILIKE ?", search_str)
     render :json => package_books_with_rating(books)
+  end
+
+  def remove
+    begin
+      b = Book.find_by_id(params[:id])
+      title = b.title
+      b.destroy!
+      render :json => {success: true, msg: "Removed #{title} successfully"}
+    rescue => e
+      render :json => {success: false, msg: "Could not remove #{title}"}
+    end
   end
 
   def check_out

@@ -67,11 +67,12 @@ export class BookDbService {
     return `${info} successfully`;
   }
 
-  removeBook(id: number): boolean {
-    var books: Book[] = [];
-    var finalBooks = books.filter((x) => x.id != id)
-    localStorage.setItem('books', JSON.stringify(finalBooks));
-    return true;
+  removeBook(id: number): Observable<HttpResponse> {
+    return this.http.post<HttpResponse>(
+      Config.backendUrl + `books/remove/${id}`,
+      null,
+      {withCredentials: true}
+    )
   }
 
   /**

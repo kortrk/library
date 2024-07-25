@@ -1,9 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Book } from './book.model';
 import { BookWithRating } from './book-with-rating.model';
-import { BookHelperService } from './book-helper.service';
-import { BookInitHelperService } from './book-init-helper.service';
-import { isEqual, max, sampleSize } from 'lodash';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Config, HttpResponse } from '../constants/general-consts';
@@ -12,22 +9,8 @@ import { Config, HttpResponse } from '../constants/general-consts';
   providedIn: 'root'
 })
 export class BookDbService {
-  bookHelperService: BookHelperService;
-  bookInitHelperService: BookInitHelperService;
 
-  constructor(private http: HttpClient) {
-    this.bookHelperService = inject(BookHelperService);
-    this.bookInitHelperService = inject(BookInitHelperService);
-
-    this.initBooks();
-  }
-
-  // TEMP: will be replaced by the db
-  initBooks(){
-    console.log("initializing books")
-    var books = this.bookInitHelperService.generateBooks();
-    localStorage.setItem('books', JSON.stringify(books));
-  }
+  constructor(private http: HttpClient) {}
 
   getAllBooks(): Observable<BookWithRating[]> {
     return this.http.get<BookWithRating[]>(`${Config.backendUrl}books/`)

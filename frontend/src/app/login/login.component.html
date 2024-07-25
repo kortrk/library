@@ -1,7 +1,7 @@
 <div class="ui green message">
   <form class="ui form">
     @if(assumeLoggedIn()){
-      <div style="padding-left: 12px">
+      <div>
         Logged in as <b>{{assumedUsername()}}</b>. &nbsp;
         <button class="ui tiny button" (click)="logout()">Log out</button>
       </div>

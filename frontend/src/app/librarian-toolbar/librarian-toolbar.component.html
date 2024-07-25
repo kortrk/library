@@ -1,4 +1,4 @@
-<header [hidden]="!assumeLibrarian()" class="librarian-toolbar">
-  <b>Librarian Toolbar</b><br><br>
-  <button class="ui purple button" (click)="createBook()">Create Book</button>
-</header>
+<div class="ui purple message" [hidden]="!assumeLibrarian()">
+  <b>Librarian Toolbar</b> &nbsp;
+  <button class="ui tiny purple button" (click)="createBook()">Create Book</button>
+</div>

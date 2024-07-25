@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Book } from '../book.model';
 import { DisplayBookComponent } from '../display-book/display-book.component'
-import { LibrarianToolbarComponent } from '../librarian-toolbar/librarian-toolbar.component';
 import { FormsModule, NgModel } from '@angular/forms';
 import { BookDbService } from '../book-db.service'
 import { AuthHelperService } from '../auth-helper.service';
@@ -10,7 +9,7 @@ import { BookWithRating } from '../book-with-rating.model';
 @Component({
   selector: 'search',
   standalone: true,
-  imports: [DisplayBookComponent, FormsModule, LibrarianToolbarComponent],
+  imports: [DisplayBookComponent, FormsModule],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })

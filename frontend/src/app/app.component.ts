@@ -4,6 +4,7 @@ import { DisplayBookComponent } from './display-book/display-book.component';
 import { LoginComponent } from './login/login.component';
 import { SearchComponent } from './search/search.component'
 import { AuthHelperService } from './auth-helper.service';
+import { LibrarianToolbarComponent } from './librarian-toolbar/librarian-toolbar.component';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ import { AuthHelperService } from './auth-helper.service';
     RouterLinkActive,
     DisplayBookComponent,
     LoginComponent,
+    LibrarianToolbarComponent,
     SearchComponent
   ],
   templateUrl: './app.component.html',

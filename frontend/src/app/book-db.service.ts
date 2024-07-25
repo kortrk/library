@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Book } from './book.model';
 import { BookWithRating } from './book-with-rating.model';
 import { HttpClient } from '@angular/common/http';

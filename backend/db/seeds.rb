@@ -19,6 +19,4 @@ end
 u = User.new(name: "username", password: "password", role: "patron")
 u.save!
 b = Book.all.sample
-b.currentBorrower = u.id
-b.duedate = DateTime.now + 10.days
-b.save!
+b.check_out!(u)

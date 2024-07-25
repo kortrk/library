@@ -13,21 +13,21 @@ export class BookDbService {
   constructor(private http: HttpClient) {}
 
   getAllBooks(): Observable<BookWithRating[]> {
-    return this.http.get<BookWithRating[]>(`${Config.backendUrl}books/`)
+    return this.http.get<BookWithRating[]>(Config.backendUrl + `books/`)
   }
 
   getBook(id: number): Observable<Book[]> {
-    return this.http.get<Book[]>(`${Config.backendUrl}books/${id}`)
+    return this.http.get<Book[]>(Config.backendUrl + `books/${id}`)
     // could expand this to be getBooks in the future; it would
     // accept multiple ids
   }
 
   search(query: string): Observable<BookWithRating[]> {
-    return this.http.get<BookWithRating[]>(`${Config.backendUrl}books/search/${query}`)
+    return this.http.get<BookWithRating[]>(Config.backendUrl + `books/search/${query}`)
   }
 
   checkOutBook(id: number): Observable<HttpResponse> {
-    return this.http.post<HttpResponse>(`${Config.backendUrl}books/check_out/${id}`, null, {withCredentials: true})
+    return this.http.post<HttpResponse>(Config.backendUrl + `books/check_out/${id}`, null, {withCredentials: true})
   }
 
   /**
@@ -55,6 +55,6 @@ export class BookDbService {
    * @param count how many random books you want
    */
   getRandomBooks(count: number): Observable<Book[]> {
-    return this.http.get<Book[]>(`${Config.backendUrl}books/random/${count}`)
+    return this.http.get<Book[]>(Config.backendUrl + `books/random/${count}`)
   }
 }

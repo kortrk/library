@@ -13,7 +13,7 @@ export class AuthService {
 
   login(username: string, password: string) {
     this.http.get<HttpLoginResponse>(
-      `${Config.backendUrl}auth/login`,
+      Config.backendUrl + `auth/login`,
       {
         headers: {
           'Authorization': `Simple ${username}:${password}`,
@@ -50,7 +50,7 @@ export class AuthService {
 
   signUp(username: string, password: string, signuprole: UserRole): Observable<HttpResponse> {
     return this.http.post<HttpResponse>(
-      `${Config.backendUrl}auth/signup`,
+      Config.backendUrl + `auth/signup`,
       {name: username, password: password, role: signuprole}
     )
   }

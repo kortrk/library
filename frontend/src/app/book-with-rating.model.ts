@@ -11,4 +11,8 @@ export class BookWithRating extends Book {
     super(fields);
     this.avgRating = fields.avgRating;
   }
+
+  formatAvgRating(): string {
+    return this.avgRating.toFixed(2);
+  }
 }

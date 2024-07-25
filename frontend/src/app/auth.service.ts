@@ -6,58 +6,10 @@ import { Router } from '@angular/router';
 
 export enum UserRole {Patron = "patron", Librarian = "librarian"};
 
-class User{
-  name: string;
-  password: string;
-  role: UserRole;
-
-  constructor(name: string, password: string, role: UserRole){
-    this.name = name;
-    this.password = password;
-    this.role = role;
-  }
-}
-
-// a stand-in class for what will eventually be the db stuff
-class DB{
-  users: User[];
-
-  constructor(users: User[]){
-    this.users = users;
-  }
-
-  hasUser(username: string): boolean {
-    return this.users.filter((u) => u.name === username).length > 0
-  }
-
-  addUser(user: User){
-    this.users.push(user)
-  }
-
-  getUserByCreds(username: string, password: string): User | undefined {
-    // will eventually be an API call
-    return this.users.filter((u)=>
-      u.name === username && u.password === password
-    )[0]
-  }
-
-  getCurrentUser(): string | null {
-    // uses the Http-Only token to find the user in the db
-    return localStorage.getItem('username');
-  }
-
-  validCreds(username: string, password: string): boolean {
-    return this.getUserByCreds(username, password) !== null
-  }
-}
-
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
   constructor(private http: HttpClient, private router: Router){}
-
-  // TEMP
-  db = new DB([new User("username", "password", UserRole.Patron)])
 
   login(username: string, password: string) {
     this.http.get<HttpLoginResponse>(
@@ -86,10 +38,9 @@ export class AuthService {
 
   logout(){
     this.http.get<string>(
-      `${Config.backendUrl}auth/logout`,
+      Config.backendUrl + `auth/logout`,
       {withCredentials: true} // need this whenever we need to use cookies
-    ).subscribe()
-    // won't trigger without subscribe()
+    ).subscribe()             // <-- won't trigger without subscribe()
 
     localStorage.removeItem("username");
     localStorage.removeItem("userRole");
@@ -102,20 +53,6 @@ export class AuthService {
       `${Config.backendUrl}auth/signup`,
       {name: username, password: password, role: signuprole}
     )
-  }
-
-  // TEMP - replace to use the Http-Only token
-  loggedIn(): boolean {
-    return localStorage.getItem('username') !== null;
-  }
-
-  // TEMP - replace to use the Http-Only token
-  isLibrarian(): boolean {
-    return localStorage.getItem('userRole') === UserRole.Librarian;
-  }
-
-  getCurrentUser(): string | null {
-    return this.db.getCurrentUser();
   }
 }
 

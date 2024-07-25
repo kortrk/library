@@ -7,12 +7,4 @@ A single-page app using Angular.
 
 [Check out a static live demo of the frontend here!](https://kortrk.github.io/library-gh-pages)
 
-How to run the app for development:
-```bash
-# within the docker container
-cd /app/backend
-rails s &
-cd /app/frontend
-./serve.sh
-# source: https://askubuntu.com/a/539293
-```
+![Cornerstone Library Cover Image](https://github.com/user-attachments/assets/b3d21a6c-5d34-40c3-abf8-b166d988a6eb)

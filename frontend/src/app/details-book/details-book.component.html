@@ -70,6 +70,10 @@
         </div>
       </div>
     }
+    @if(assumeLoggedIn()){
+      <button [routerLink]="['/review', {id: book.id, title: book.title}]" class="ui button">Add a Review</button>
+      <br><br>
+    }
     @if(!book.currentlyBorrowed()){
       @if(assumeLoggedIn()){
         <button class="ui green button" [hidden]="!assumeLoggedIn()" [routerLink]="['/checkout', {id: book.id, title: book.title}]">

@@ -42,7 +42,7 @@ export class ReviewComponent {
     .subscribe(res => {
       if (res.success){
         alert("Thanks for your review!");
-        this.router.navigate(['/search']);
+        this.router.navigate(['/details', {id: this.bookId}]);
       } else {
         alert(`Something went wrong: ${res.msg}`)
       }

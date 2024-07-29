@@ -8,7 +8,7 @@
     <p>By {{book.author}}</p>
     <p>Avg. Rating: {{book.formatAvgRating()}}</p>
     <p style="color: red" [hidden]="!book.currentlyBorrowed()">Currently out</p>
-    <p style="color: purple" [hidden]="book.visible || !assumeLibrarian()"><b>Not yet visible to patrons</b></p>
+    <p style="color: purple" [hidden]="book.visible || !assumeLibrarian()"><b>Not yet visible to customers</b></p>
   </div>
   <div class="description">
     {{book.description}}

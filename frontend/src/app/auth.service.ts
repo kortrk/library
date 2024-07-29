@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Config, HttpLoginResponse, HttpResponse } from '../constants/general-consts';
 import { Router } from '@angular/router';
 
-export enum UserRole {Patron = "patron", Librarian = "librarian"};
+export enum UserRole {Customer = "customer", Librarian = "librarian"};
 
 @Injectable({providedIn: 'root'})
 export class AuthService {

@@ -16,7 +16,7 @@ book_seeds.count.times do |x|
   Review.find_or_create_by!({rating: rating, text: review_text, bookId: book_id, username: reviewer})
 end
 
-u = User.new(name: "username", password: "password", role: "patron")
+u = User.new(name: "username", password: "password", role: "customer")
 u.save!
 b = Book.all.sample
 b.check_out!(u)

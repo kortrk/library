@@ -11,4 +11,6 @@ rake db:seed
 
 cd /app
 
+./boot_dev_servers.sh
+
 bash

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t library-node-ruby .
+docker build -t library2-node-ruby .

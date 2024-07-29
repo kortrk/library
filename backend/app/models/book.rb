@@ -1,7 +1,7 @@
 class Book < ApplicationRecord
   has_many :reviews, foreign_key: :bookId
 
-  BORROWING_PERIOD = 10.days
+  BORROWING_PERIOD = 5.days
 
   def check_out!(user)
     return nil if self.currentBorrower != nil

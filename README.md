@@ -7,5 +7,12 @@ A single-page app using Angular.
 
 [Check out a static live demo of the frontend here!](https://kortrk.github.io/library-gh-pages)
 
-![Cornerstone Library Cover Image](https://github.com/user-attachments/assets/b3d21a6c-5d34-40c3-abf8-b166d988a6eb)
+<!-- ![Cornerstone Library Cover Image](https://github.com/user-attachments/assets/b3d21a6c-5d34-40c3-abf8-b166d988a6eb) -->
+<img src="https://github.com/user-attachments/assets/b3d21a6c-5d34-40c3-abf8-b166d988a6eb" width=200>
 
+## How to Run
+- Start Docker Desktop on your machine.
+- Clone this project (cd to a suitable installation loc on your computer and run git clone <this project's link>)
+- `./build_env.sh`
+- `./run_env.sh`
+- Access <b>localhost:4200</b> on your browser

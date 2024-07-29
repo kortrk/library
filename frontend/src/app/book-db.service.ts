@@ -1,66 +1,33 @@
-import { Injectable, inject } from '@angular/core';
-import { Book, BookFields } from './book.model';
-import { BookHelperService } from './book-helper.service';
-import { BookInitHelperService } from './book-init-helper.service';
-import { isEqual, max, sampleSize } from 'lodash';
+import { Injectable } from '@angular/core';
+import { Book } from './book.model';
+import { BookWithRating } from './book-with-rating.model';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Config, HttpResponse } from '../constants/general-consts';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookDbService {
-  bookHelperService: BookHelperService;
-  bookInitHelperService: BookInitHelperService;
 
-  constructor() {
-    this.bookHelperService = inject(BookHelperService);
-    this.bookInitHelperService = inject(BookInitHelperService);
+  constructor(private http: HttpClient) {}
 
-    this.initBooks();
+  getAllBooks(): Observable<BookWithRating[]> {
+    return this.http.get<BookWithRating[]>(Config.backendUrl + `books/`)
   }
 
-  // TEMP: will be replaced by the db
-  initBooks(){
-    console.log("initializing books")
-    var books = this.bookInitHelperService.generateBooks();
-    localStorage.setItem('books', JSON.stringify(books));
+  getBook(id: number): Observable<Book[]> {
+    return this.http.get<Book[]>(Config.backendUrl + `books/${id}`)
+    // could expand this to be getBooks in the future; it would
+    // accept multiple ids
   }
 
-  getAllBooks(): Book[] {
-    var retrievedBooks = localStorage.getItem('books');
-    if (retrievedBooks){
-      return JSON.parse(retrievedBooks).map((x: Object) =>
-        new Book(x as BookFields)
-        // have to call `new` for Book to init with its methods
-      );
-    } else {
-      return [];
-    }
+  search(query: string): Observable<BookWithRating[]> {
+    return this.http.get<BookWithRating[]>(Config.backendUrl + `books/search/${query}`)
   }
 
-  getBook(id: number): Book | null {
-    var foundBook = this.getAllBooks().filter((b) =>
-      b.id == id // == is needed here, rather than ===
-    )[0]
-    if (foundBook) return foundBook;
-    return null;
-  }
-
-  borrowBook(id: number, duedate: string): boolean {
-    var books = this.getAllBooks();
-    var book = books.filter((b) => b.id == id)[0];
-    if (book === null){
-      console.log("No book!")
-      return false;
-    }
-    var username = localStorage.getItem('username');
-    if (username === null) {
-      console.log("No user!")
-      return false;
-    }
-    book.currentBorrower = localStorage.getItem('username');
-    book.duedate = duedate;
-    localStorage.setItem('books', JSON.stringify(books));
-    return true;
+  checkOutBook(id: number): Observable<HttpResponse> {
+    return this.http.post<HttpResponse>(Config.backendUrl + `books/check_out/${id}`, null, {withCredentials: true})
   }
 
   /**
@@ -68,52 +35,26 @@ export class BookDbService {
    ** type `string` if successful
    ** type `null` if unsuccessful
    */
-  saveBook(book: Book): string | null {
-    var info = "Updated";
-    var books = this.getAllBooks();
-    var existingBook = books.filter((b) => b.id == book.id)[0];
-    if (existingBook === undefined){
-      info = "Created";
-    }
-    if (isEqual(book, existingBook)) return 'No change!';
-    var restOfBooks = books.filter((b) => b.id != book.id);
-    restOfBooks.push(book);
-    var newBookList = restOfBooks;
-    localStorage.setItem('books', JSON.stringify(newBookList));
-    return `${info} successfully`;
+  saveBook(book: Book): Observable<HttpResponse> {
+    return this.http.put<HttpResponse>(
+      Config.backendUrl + `books/upsert`,
+      book,
+      {withCredentials: true}
+    )
   }
 
-  /**
-   * temporary - backend will handle this
-   */
-  getNextId(): number {
-    var books = this.getAllBooks();
-    var id;
-    if (books.length == 0){
-      id = 0;
-    } else {
-      var highestId = max(books.map((b) => b.id));
-      if (highestId === undefined) return 0; // shouldn't actually happen
-      id = highestId + 1;
-    }
-    return id;
-  }
-
-  removeBook(id: number): boolean {
-    var books = this.getAllBooks();
-    var finalBooks = books.filter((x) => x.id != id)
-    localStorage.setItem('books', JSON.stringify(finalBooks));
-    return true;
+  removeBook(id: number): Observable<HttpResponse> {
+    return this.http.post<HttpResponse>(
+      Config.backendUrl + `books/remove/${id}`,
+      null,
+      {withCredentials: true}
+    )
   }
 
   /**
    * @param count how many random books you want
    */
-  getRandomBooks(count: number, incl_unavailable: boolean = false){
-    var allBooks = this.getAllBooks();
-    if (!incl_unavailable){
-      allBooks = allBooks.filter((b) => b.visible)
-    }
-    return sampleSize(allBooks, count);
+  getRandomBooks(count: number): Observable<BookWithRating[]> {
+    return this.http.get<BookWithRating[]>(Config.backendUrl + `books/random/${count}`)
   }
 }

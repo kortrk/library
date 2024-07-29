@@ -1,57 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Review, ReviewFields } from './review.model';
+import { HttpClient } from '@angular/common/http';
+import { Config, HttpResponse } from '../constants/general-consts';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReviewDbService {
 
-  constructor() {
-    this.initReviews();
+  constructor(private http: HttpClient) {}
+
+  getReviewsFor(bookId: number): Observable<Review[]> {
+    return this.http.get<Review[]>(Config.backendUrl + `reviews/book/${bookId}`)
   }
 
-  // TEMP: will be replaced by the db
-  initReviews(){
-    console.log("initializing reviews");
-    var reviews: Review[] = [
-      new Review({
-        rating: 4,
-        text: "Good!",
-        bookId: 0,
-        username: "username"
-      }),
-      new Review({
-        rating: 5,
-        text: "Thought-provoking",
-        bookId: 2,
-        username: "Rehoboam"
-      })
-    ]
-    localStorage.setItem('reviews', JSON.stringify(reviews))
-  }
-
-  getAllReviews(): Review[] {
-    var retrievedReviews = localStorage.getItem('reviews');
-    if (retrievedReviews){
-      return JSON.parse(retrievedReviews).map((x: Object) =>
-        new Review(x as ReviewFields)
-        // have to call `new` for Book to init with its methods
-      );
-    } else {
-      return [];
-    }
-  }
-
-  getReviewsFor(bookId: number): Review[]{
-    return this.getAllReviews().filter((r) =>
-      r.bookId == bookId
-    );
-  }
-
-  submitReview(newReview: Review): boolean{
-    var reviews = this.getAllReviews();
-    reviews.push(newReview);
-    localStorage.setItem('reviews', JSON.stringify(reviews));
-    return true;
+  submitReview(newReview: Review): Observable<HttpResponse>{
+    return this.http.put<HttpResponse>(
+      Config.backendUrl + "reviews/create",
+      newReview,
+      {withCredentials: true}
+    )
   }
 }

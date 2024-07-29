@@ -4,11 +4,15 @@
   <div class="prata-regular" style="text-align: center;">-- Welcome --</div>
 </h2>
 
-<div class="slider">
-  @for(book of books; track book.id){
-    <div class="slide">
-      <simple-book [book]="book"></simple-book>
-    </div>
-  }
-</div>
+@if(loading){
+  Loading books
+} @else {
+  <div class="slider">
+    @for(book of books; track book.id){
+      <div class="slide">
+        <simple-book [book]="book"></simple-book>
+      </div>
+    }
+  </div>
+}
 <!--https://css-tricks.com/can-get-pretty-far-making-slider-just-html-css/-->

@@ -1,8 +1,8 @@
 import { CanActivateFn } from '@angular/router';
-import { AuthService } from './auth.service';
+import { inject } from '@angular/core';
+import { AuthHelperService } from './auth-helper.service';
 
 export const loggedInGuard: CanActivateFn = (route, state) => {
-  var authService = new AuthService();
-  console.log("loggedInGuard: checking login status")
-  return authService.loggedIn();
+  var authHelperService = inject(AuthHelperService);
+  return authHelperService.assumeLoggedIn();
 };

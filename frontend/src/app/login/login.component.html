@@ -1,7 +1,7 @@
 <div class="ui green message">
   <form class="ui form">
     @if(assumeLoggedIn()){
-      <div style="padding-left: 12px">
+      <div>
         Logged in as <b>{{assumedUsername()}}</b>. &nbsp;
         <button class="ui tiny button" (click)="logout()">Log out</button>
       </div>
@@ -25,7 +25,7 @@
           <br><br>
 
           <label for="password">Password:</label>
-          <input id="password" type="text" (keyup.enter)="login(username, password)" #password>
+          <input id="password" type="password" (keyup.enter)="login(username, password)" #password>
           <br><br>
 
           <button (click)="login(username, password)" style="margin-top: 5px" class="ui green button">Login</button>
@@ -35,7 +35,7 @@
           <br><br>
 
           <label for="password">Password:</label>
-          <input id="password" type="text" (keyup.enter)="signUp(username, password, signuprole)" #password>
+          <input id="password" type="password" (keyup.enter)="signUp(username, password, signuprole)" #password>
           <br><br>
 
           <label for="roles">I am a:  </label>

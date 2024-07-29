@@ -1,21 +1,22 @@
 import { Component, inject } from '@angular/core';
 import { Book } from '../book.model';
 import { DisplayBookComponent } from '../display-book/display-book.component'
-import { LibrarianToolbarComponent } from '../librarian-toolbar/librarian-toolbar.component';
 import { FormsModule, NgModel } from '@angular/forms';
 import { BookDbService } from '../book-db.service'
 import { AuthHelperService } from '../auth-helper.service';
+import { BookWithRating } from '../book-with-rating.model';
 
 @Component({
   selector: 'search',
   standalone: true,
-  imports: [DisplayBookComponent, FormsModule, LibrarianToolbarComponent],
+  imports: [DisplayBookComponent, FormsModule],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })
 export class SearchComponent {
   bookDbService: BookDbService;
-  books: Book[];
+  searchResults: BookWithRating[] = [];
+  books: BookWithRating[] = [];
   showAdvancedSearch: boolean;
   sortBy: SortType;
   titleSearch: string;
@@ -29,7 +30,6 @@ export class SearchComponent {
 
   constructor(){
     this.bookDbService = inject(BookDbService);
-    this.books = this.allBooks();
     this.showAdvancedSearch = false;
     this.sortBy = SortType.ISBN;
     this.titleSearch = "";
@@ -37,39 +37,57 @@ export class SearchComponent {
     this.availSearch = AvailType.All;
     this.authHelperService = inject(AuthHelperService);
 
-    // establish default display
-    this.filter();
+    // grab some featured books and label them as such
+    this.bookDbService.getRandomBooks(5).subscribe(books => {
+      books.forEach((b) => b.title += " (Featured)")
+      this.searchResults = books.map((b) => new BookWithRating(b));
+      this.books = this.searchResults;
+    })
   }
 
-  allBooks(): Book[]{
-    return this.bookDbService.getAllBooks();
+  /**
+   * This function exists for demo purposes and
+   * would not be present on a real library website.
+   */
+  allBooks(){
+    this.bookDbService.getAllBooks()
+    .subscribe(books =>{
+      var books = books.map((b) => new BookWithRating(b));
+      this.books = books;
+    })
   }
 
-  filter(){
-    this.books =
-      this.filterByTitle(
-        this.filterByAuthor(
-          this.filterByAvailability(
-            this.allBooks()
-          )
-        )
+  search(){
+    var s = null;
+    if (this.titleSearch == ""){
+      s = this.bookDbService.getAllBooks()
+    } else {
+      s = this.bookDbService.search(this.titleSearch)
+    }
+
+    s.subscribe(books => {
+      var books = books.map((b) => new BookWithRating(b));
+      this.searchResults = books;
+      this.filter(this.searchResults);
+    });
+  }
+
+  filter(books: BookWithRating[]){
+    var filtered = this.filterByAuthor(
+      this.filterByAvailability(
+        books
       )
-    this.sort()
+    )
+    this.books = this.sort(filtered)
   }
 
-  filterByAuthor(books: Book[]): Book[] {
+  filterByAuthor(books: BookWithRating[]): BookWithRating[] {
     return books.filter(
-      (b) => b.author.includes(this.authorSearch)
+      (b) => b.author.toLowerCase().includes(this.authorSearch.toLowerCase())
     )
   }
 
-  filterByTitle(books: Book[]): Book[] {
-    return books.filter(
-      (b) => b.title.includes(this.titleSearch)
-    )
-  }
-
-  filterByAvailability(books: Book[]): Book[] {
+  filterByAvailability(books: BookWithRating[]): BookWithRating[] {
     switch(this.availSearch as AvailType){
       case AvailType.In: {
         return books.filter((b) => b.currentBorrower === null)
@@ -83,9 +101,8 @@ export class SearchComponent {
     }
   }
 
-  sort(){
-    console.log(`sorting by ${this.sortBy}`)
-    this.books = this.books.sort((a, b) =>{
+  sort(books: BookWithRating[]): BookWithRating[] {
+    return books.sort((a, b) =>{
       if (this.sortBy === SortType.Title){
         return a.title < b.title ? -1 : 1
       } else if (this.sortBy === SortType.Author){
@@ -101,7 +118,7 @@ export class SearchComponent {
     })
   }
 
-  shouldHide(book: Book): boolean {
+  shouldHideBook(book: Book): boolean {
     if (book.visible) return false;
     if (this.authHelperService.assumeLibrarian()) return false;
     return true;
@@ -115,19 +132,7 @@ export class SearchComponent {
     this.titleSearch = "";
     this.authorSearch = "";
     this.availSearch = AvailType.All;
-    this.filter()
-  }
-
-  titleSearchInUse(): boolean{
-    return this.titleSearch.length > 0
-  }
-
-  authorSearchInUse(): boolean{
-    return this.authorSearch.length > 0
-  }
-
-  availSearchInUse(): boolean{
-    return (this.availSearch as AvailType) !== AvailType.All
+    this.books = [];
   }
 }
 

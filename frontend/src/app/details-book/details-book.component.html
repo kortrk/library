@@ -1,80 +1,93 @@
 <div style="margin: 20px">
-  <h1>{{book.title}}</h1>
-  <img height=200 src="{{book.imgLoc()}}" style="padding-bottom: 5px; margin: 15px;"><br>
-  <table class="ui definition table" style="width: fit-content;">
-    <tbody>
-      <tr>
-        <td class="two wide column">
-          Author
-        </td>
-        <td>{{book.author}}</td>
-      </tr>
-      <tr>
-        <td>Publisher</td>
-        <td>{{book.publisher}}</td>
-      </tr>
-      <tr>
-        <td>Publication Date</td>
-        <td>{{book.publicationDate}}</td>
-      </tr>
-      <tr>
-        <td>ISBN</td>
-        <td>{{book.isbn}}</td>
-      </tr>
-      <tr>
-        <td>Category</td>
-        <td>
-          {{book.category}}
-        </td>
-      </tr>
-      <tr>
-        <td>Page Count</td>
-        <td>{{book.pageCount}}</td>
-      </tr>
-      <tr>
-        <td>Description</td>
-        <td>{{book.description}}</td>
-      </tr>
-    </tbody>
-  </table>
-  @if(reviews.length > 0){
-    <div class="ui comments segment">
-      <h3 class="ui dividing header" >
-        Reviews -<span style="font-size: small; padding-left: 4px;">Average Rating: {{averageRating()}}</span>
-      </h3>
-      <div style="overflow-y: auto; height: 100px; width:inherit;">
-        @for(review of reviews; track review.username + review.text){
-          <div class="comment">
-            <div class="content">
-              <a class="author">{{review.username}}</a>
-              &nbsp;
-              <div class="metadata">
-                <div class="rating">
-                  {{review.rating}}
-                  @for(_ of [].constructor(review.rating); track _){
-                    <i class="star icon"></i>
-                  }
+  @if(loading){
+    Loading
+  } @else if(notFound) {
+    Not found
+  } @else {
+    <h1>{{book.title}}</h1>
+    <img height=200 src="{{book.imgLoc()}}" style="padding-bottom: 5px; margin: 15px;"><br>
+    <table class="ui definition table" style="width: fit-content;">
+      <tbody>
+        <tr>
+          <td class="two wide column">
+            Author
+          </td>
+          <td>{{book.author}}</td>
+        </tr>
+        <tr>
+          <td>Publisher</td>
+          <td>{{book.publisher}}</td>
+        </tr>
+        <tr>
+          <td>Publication Date</td>
+          <td>{{book.publicationDate}}</td>
+        </tr>
+        <tr>
+          <td>ISBN</td>
+          <td>{{book.isbn}}</td>
+        </tr>
+        <tr>
+          <td>Category</td>
+          <td>
+            {{book.category}}
+          </td>
+        </tr>
+        <tr>
+          <td>Page Count</td>
+          <td>{{book.pageCount}}</td>
+        </tr>
+        <tr>
+          <td>Description</td>
+          <td>{{book.description}}</td>
+        </tr>
+      </tbody>
+    </table>
+    @if(reviews.length > 0){
+      <div class="ui comments segment">
+        <h3 class="ui dividing header" >
+          Reviews -<span style="font-size: small; padding-left: 4px;">Average Rating: {{averageRating}}</span>
+        </h3>
+        <div style="overflow-y: auto; height: 100px; width:inherit;">
+          @for(review of reviews; track review.username + review.text){
+            <div class="comment">
+              <div class="content">
+                <a class="author">{{review.username}}</a>
+                &nbsp;
+                <div class="metadata">
+                  <div class="rating">
+                    {{review.rating}}
+                    @for(_ of [].constructor(review.rating); track _){
+                      <i class="star icon"></i>
+                    }
+                  </div>
+                </div>
+                <div class="text">
+                  {{review.text}}
                 </div>
               </div>
-              <div class="text">
-                {{review.text}}
-              </div>
             </div>
-          </div>
-        }
+          }
+        </div>
       </div>
-    </div>
-  }
-  @if(!book.currentlyBorrowed()){
-    @if(assumeLoggedIn()){
-      <button class="ui green button" [hidden]="!assumeLoggedIn()" [routerLink]="['/checkout', {id: book.id, title: book.title}]">
-        Check Out
-      </button>
-    } @else {
-      Please log in to borrow this book. <br> <br>
     }
-  } @else {
-    <div class="ui red message"><em>Out - due on {{book.duedate}}</em></div><br>
+    @if(assumeLoggedIn()){
+      <button [routerLink]="['/review', {id: book.id, title: book.title}]" class="ui button">Add a Review</button>
+      <br><br>
+    }
+    @if(!book.currentlyBorrowed()){
+      @if(assumeLoggedIn()){
+        <button class="ui green button" [hidden]="!assumeLoggedIn()" [routerLink]="['/checkout', {id: book.id, title: book.title}]">
+          Check Out
+        </button>
+      } @else {
+        Please log in to borrow this book. <br> <br>
+      }
+    } @else {
+      <div class="ui red message"><em>Out - due on {{book.duedate}}</em></div><br>
+    }
+    <button class="ui blue button" routerLink='/search'>Back to Search</button>
+    @if(assumeLibrarian()){
+      <button class="ui purple button" [routerLink]="['/edit-book', {id: book.id}]">Edit</button>
+    }
   }
-  <button class="ui blue button" routerLink='/search'>Back to Search</button>
 </div>

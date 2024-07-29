@@ -14,6 +14,7 @@ import { BookHelperService } from '../book-helper.service';
 })
 export class EditBookComponent {
   book: Book;
+  loading: boolean = true;
 
   bookDbService: BookDbService;
   bookHelperService: BookHelperService;
@@ -27,13 +28,16 @@ export class EditBookComponent {
 
   @Input()
   set id(providedId: number) {
-    var foundBook = this.bookDbService.getBook(providedId);
-    if (foundBook !== null){
-      this.book = foundBook;
-    } else {
-      this.book = this.bookHelperService.genericBook();
-      this.book.id = this.bookDbService.getNextId(); // tmp
-    }
+    this.bookDbService.getBook(providedId)
+    .subscribe(books => {
+      var books = books.map((b) => new Book(b));
+      if (books.length > 0){
+        this.book = books[0];
+      } else {
+        this.bookHelperService.genericBook();
+      }
+      this.loading = false;
+    });
   }
 
 
@@ -43,19 +47,21 @@ export class EditBookComponent {
   }
 
   saveBook(){
-    var successMessage = this.bookDbService.saveBook(this.book);
-    if (successMessage !== null){
-      alert(successMessage);
-      this.router.navigate(['/search']);
-    } else {
-      alert('There was a problem making this update');
-    }
+    this.bookDbService.saveBook(this.book)
+    .subscribe(res => {
+      alert(res.msg)
+      if (res.success){
+        this.router.navigate(['/search']);
+      }
+    })
   }
 
   deleteBook(){
     if (confirm(`Are you sure you want to delete ${this.book.title}?`)){
-      this.bookDbService.removeBook(this.book.id);
-      this.router.navigate(['/search']);
+      this.bookDbService.removeBook(this.book.id).subscribe(res => {
+        alert(res.msg);
+        if (res.success) this.router.navigate(['/search']);
+      });
     }
   }
 

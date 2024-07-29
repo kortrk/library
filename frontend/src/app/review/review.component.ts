@@ -32,17 +32,21 @@ export class ReviewComponent {
   }
 
   submitReview(){
-    var username = this.authService.getCurrentUser();
-    if (username === null) return;
     var review = new Review({
       rating: Number(this.userRating),
       text: this.userText,
       bookId: this.bookId,
-      username: username
+      username: "" // will be set on backend
     });
-    this.reviewDbService.submitReview(review);
-    alert("Thanks for your review!");
-    this.router.navigate(['/search']);
+    this.reviewDbService.submitReview(review)
+    .subscribe(res => {
+      if (res.success){
+        alert("Thanks for your review!");
+        this.router.navigate(['/details', {id: this.bookId}]);
+      } else {
+        alert(`Something went wrong: ${res.msg}`)
+      }
+    })
   }
 
   cancelReview(){

@@ -1,8 +1,8 @@
 import { CanActivateFn } from '@angular/router';
-import { AuthService } from './auth.service';
+import { inject } from '@angular/core';
+import { AuthHelperService } from './auth-helper.service';
 
 export const librarianGuard: CanActivateFn = (route, state) => {
-  var authService = new AuthService();
-  console.log("librarianGuard: checking if librarian")
-  return authService.isLibrarian();
+  var authHelperService = inject(AuthHelperService);
+  return authHelperService.assumeLibrarian();
 };

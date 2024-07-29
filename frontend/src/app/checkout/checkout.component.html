@@ -1,5 +1,5 @@
 <div class="ui form" style="margin: 20px">
-  <p>Checking out {{bookTitle}}.</p>
+  <p>Checking out {{bookTitle}} for 5 days.</p>
   <!-- Bonus: could cache the loan period from a GET call and display it here. -->
   <button class="ui green button" (click)="borrow()">Confirm</button>
   <button class="ui red button" [routerLink]="['/details', {id: bookId}]">Cancel</button>

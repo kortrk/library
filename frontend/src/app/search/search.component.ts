@@ -16,7 +16,7 @@ import { BookWithRating } from '../book-with-rating.model';
 export class SearchComponent {
   bookDbService: BookDbService;
   searchResults: BookWithRating[];
-  books: BookWithRating[];
+  books: BookWithRating[] = [];
   showAdvancedSearch: boolean;
   sortBy: SortType;
   titleSearch: string;
@@ -31,13 +31,18 @@ export class SearchComponent {
   constructor(){
     this.bookDbService = inject(BookDbService);
     this.searchResults = [];
-    this.books = [];
     this.showAdvancedSearch = false;
     this.sortBy = SortType.ISBN;
     this.titleSearch = "";
     this.authorSearch = "";
     this.availSearch = AvailType.All;
     this.authHelperService = inject(AuthHelperService);
+
+    // grab some featured books and label them as such
+    this.bookDbService.getRandomBooks(5).subscribe(books => {
+      books.forEach((b) => b.title += " (Featured)")
+      this.books = books.map((b) => new BookWithRating(b))
+    })
   }
 
   /**

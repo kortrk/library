@@ -3,6 +3,8 @@ class Book < ApplicationRecord
 
   BORROWING_PERIOD = 5.days
 
+  scope :currently_in, -> { where("\"currentBorrower\" is null") }
+
   def check_out!(user)
     return nil if self.currentBorrower != nil
     self.currentBorrower = user.id

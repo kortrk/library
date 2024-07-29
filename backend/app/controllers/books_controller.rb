@@ -7,7 +7,9 @@ class BooksController < ApplicationController
   end
 
   def random
-    render :json => Book.limit(params[:count]).order("RANDOM()")
+    render :json => package_books_with_rating(
+      Book.currently_in.limit(params[:count]).order("RANDOM()")
+    )
   end
 
   def get_book

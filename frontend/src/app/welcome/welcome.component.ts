@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { Book } from '../book.model';
 import { BookDbService } from '../book-db.service';
 import { SimpleBookComponent } from '../simple-book/simple-book.component';
 import { CommonModule } from '@angular/common';
+import { BookWithRating } from '../book-with-rating.model';
 
 @Component({
   selector: 'welcome',
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './welcome.component.css'
 })
 export class WelcomeComponent {
-  books: Book[] = [];
+  books: BookWithRating[] = [];
   loading: boolean = false;
 
   bookDbService: BookDbService;
@@ -26,7 +26,7 @@ export class WelcomeComponent {
     this.loading = true;
     this.bookDbService.getRandomBooks(count)
     .subscribe(books => {
-      this.books = books.map((b) => new Book(b));
+      this.books = books.map((b) => new BookWithRating(b));
       this.loading = false;
     });
   }

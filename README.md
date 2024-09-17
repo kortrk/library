@@ -8,9 +8,13 @@ A single-page app using Angular, Ruby on Rails, and PostgreSQL.
 <!-- ![Cornerstone Library Cover Image](https://github.com/user-attachments/assets/b3d21a6c-5d34-40c3-abf8-b166d988a6eb) -->
 <img src="https://github.com/user-attachments/assets/b3d21a6c-5d34-40c3-abf8-b166d988a6eb" width=300>
 
+## Static Live Demo
 [Check out a static live demo of the frontend here!](https://kortrk.github.io/library-gh-pages)
 
 ([v1.0.0](https://kortrk.github.io/library-gh-pages) is the old code it was built with)
+
+## Video
+[Quick Overview](https://www.youtube.com/watch?v=F46VmbSAUU8)
 
 ## How to Run
 - Start Docker Desktop on your machine.
